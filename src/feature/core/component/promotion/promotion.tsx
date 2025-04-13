@@ -1,4 +1,4 @@
-import React from 'react'
+
 import { SearchComponent } from '../searchComponent/searchComponent'
 import regatta from '../../../core/assets/img/regatta.png'
 import promotion from '../../../core/assets/img/imgTwoPromotion.png'
@@ -31,9 +31,13 @@ export const Promotion = () => {
             </div>
             </div>
         <div className='bg-primary-50 h-16 p-2 rounded-md mr-4 ml-4 mt-5  '>  
-             <SearchComponent  onSearch={(values) => {
-               console.log(values)
-            }} label={'Categorías +  | Ofertas | Mís Compras'} />
+             <SearchComponent  
+               onSearch={(values) => {
+                 console.log(values)
+               }} 
+               label={'Categorías +  | Ofertas | Mís Compras'} 
+               searchParams={''} 
+             />
             
             </div>
        </div>

@@ -6,7 +6,7 @@ import { InputField } from "../../ui/InputField"
 import { Search, SearchSchema } from "./search-schema";
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useLocation } from "react-router-dom";
-import { IoIosSearch } from "react-icons/io";
+
 
 
 

@@ -63,7 +63,7 @@ export const ListComponent = <T,>({ dataList }: ListComponentProps<T>) => {
     columnHelper.display({
       id: 'acciones',
       header: () => <div className="md:w-40 font-normal">Acciones</div>,
-      cell: ({ row }) => (
+      cell: () => (
         <div className="flex justify-center space-x-4">
           <Tooltip text="Información">
             <LuInfo onClick={() => setShowModal(true)} className="w-5 h-5 cursor-pointer text-[#a20f5c]" />
