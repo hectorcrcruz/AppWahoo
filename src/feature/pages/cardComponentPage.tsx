@@ -4,7 +4,6 @@ import { FaList } from "react-icons/fa";
 import { IoIosCreate } from "react-icons/io";
 import { MdOutlineSystemUpdateAlt } from "react-icons/md";
 import { BaseLayout } from '../core/ui/base-layout';
-import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 type CardContent = {
@@ -38,7 +37,7 @@ const titleCard: CardContent[] = [
 export  const CardComponentPage = () => {
   const { module } = useParams();
 
-  const [showNavBar, setShowNavBar] = useState(true);
+  
 
   const navigate = useNavigate();
 
@@ -53,7 +52,7 @@ export  const CardComponentPage = () => {
   return (
       <BaseLayout
         header
-        navBar={showNavBar}  
+        navBar={true}  
         
       >
 

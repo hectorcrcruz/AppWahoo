@@ -24,13 +24,11 @@ export default function DropList() {
     navigate(`/home/${module}`);
   }
 
-  const [openMenu, setOpenMenu] = useState(false);
+
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
 
-  const handleOpenMenu = () => {
-    setOpenMenu(!openMenu)
-  }
+  
  
 
 
