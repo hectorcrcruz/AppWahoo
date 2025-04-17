@@ -9,7 +9,7 @@ import { Search } from '../core/component/searchComponent/search-schema'
 import { useGetList } from '../core/services/useGetList'
 import { useState } from 'react'
 
-export const ListPage = <T,>() => {
+export const ListPage = <T extends { id: number }>() => {
   const [searchParams, setSearchParams] = useState<Search>()
   const { module = '' } = useParams();
   const navigate = useNavigate()
@@ -47,7 +47,7 @@ export const ListPage = <T,>() => {
     }} label={module} />
     </div>
     <div className=' mt-10 md:mt-5'>
-     <ListComponent<T> dataList={dataList} />
+     <ListComponent<T> dataList={dataList} module={module} />
      </div>
   </div>
     </BaseLayout>

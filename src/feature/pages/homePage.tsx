@@ -6,25 +6,35 @@ import { BaseLayout } from "@/feature/core/ui/base-layout";
 import { Spinner } from "../core";
 
 import { useAuthStore } from '../contex/AuthContext';
-
 import { CarruselHome } from "../core/component/carruselHome/carruselHome";
 import { Promotion } from "../core/component/promotion";
+import { useGetList } from "../core/services/useGetList";
 
 
-
+interface Producto {
+  id: number;
+  descripcionProducto: string;
+  detalleProducto: string;
+  stock: number;
+  valorProducto: number;
+  imagenProducto: number;
+  categoriaProductoId: number;
+  usuarioAdd: string;
+  estado: number;
+  fechaAdd: string; 
+}
 
 
 
 
 
 export const HomePage = () => {
-
   const { isAuthenticated } = useAuthStore()
   const navigate = useNavigate();
 
+  const {dataList} = useGetList<Producto>({moduleRour: 'Producto'}) 
 
-   
-   
+ 
   
   useEffect(() => {
     if (!isAuthenticated) {
@@ -51,7 +61,7 @@ export const HomePage = () => {
    <Promotion />
    </div>
    <div>
-    <CarruselHome />
+    <CarruselHome  Producto={dataList} />
    </div>
   </div>
     </BaseLayout>

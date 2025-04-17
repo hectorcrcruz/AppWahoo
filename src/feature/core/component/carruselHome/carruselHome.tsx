@@ -2,10 +2,13 @@ import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
 import { Button, Card } from '../../ui';
-import { dataCarousel } from '../../const/mockupData';
+import { FaClipboardQuestion } from "react-icons/fa6";
+
 
 import { FaAngleDoubleRight } from "react-icons/fa";
 import { FaAngleDoubleLeft } from "react-icons/fa";
+import { ModalDetailProduct } from '../modal';
+import { useState } from 'react';
 
 const CustomPrevArrow = (props) => {
   const { className, style, onClick } = props;
@@ -29,7 +32,31 @@ const CustomNextArrow = (props) => {
   );
 };
 
-export const CarruselHome = () => {
+
+interface Producto {
+  id: number;
+  descripcionProducto: string;
+  stock: number;
+  valorProducto: number;
+  imagenProducto: number;
+  categoriaProductoId: number;
+  detalleProducto:string
+  usuarioAdd: string;
+  estado: number;
+  fechaAdd: string;
+}
+
+interface CarruselHomeProps {
+  Producto: Producto[];
+}
+
+export const CarruselHome:React.FC<CarruselHomeProps> = ({Producto}) => {
+   
+
+  const [idProducto, setIdProducto] = useState(0);
+  const [showModal, setShowModal] = useState(false);
+
+  const productForId = Producto.find((item) => item.id === idProducto);
 
     const settings = {
         dots: true,  // Muestra los puntos de navegación
@@ -63,19 +90,27 @@ export const CarruselHome = () => {
 
       };
 
+      const handleClick = (itemId: number) => {
+        setIdProducto(itemId)
+        setShowModal(true)
+
+      }
+
   return (
+    <> 
     <div className="w-10/12 justify-center mx-auto p-6 ">
         
     <Slider {...settings }  className='  mr-4 '  >
-      {dataCarousel.map((item) => (
-          <Card  key={item.title}  className="md:!w-10/12 justify-center md:mx-4 rounded-b-none !rounded-t-2xl border-primary-700">
+      {Producto.map((item) => (
+          <Card  key={item.categoriaProductoId}  className="md:!w-10/12 justify-center md:mx-4 rounded-b-none !rounded-t-2xl border-primary-700">
             <div className="flex justify-center pt-4">
-                <img src={item.img} alt={item.title} className="w-72 h-48 object-cover rounded-md" />
+                {/* <img src={item.img} alt={item.title} className="w-72 h-48 object-cover rounded-md" /> */}
+                <span>{item.imagenProducto}</span>
             </div>
             <div className='text-center mt-3'>
-                <h1>{item.title}</h1>
-                <p className='font-medium'>{item.label}</p>
-                <p>Mas información aquí</p>
+                <h1>{item.descripcionProducto}</h1>
+                <p className='font-medium'>{item.valorProducto}</p>
+                <p onClick={() => handleClick(item.id)}>Mas información <span className='font-bold hover:cursor-pointer'>aquí</span></p>
             </div>
             <div className='flex justify-center mt-4  '>
                 <Button className='bg-gradient-to-b from-[#a20f5c] to-[#d53287] rounded-l-none rounded-r-none'>Añadir al carrito</Button>
@@ -85,6 +120,18 @@ export const CarruselHome = () => {
       ))}
     </Slider>
     </div>
+    <div>
+      <ModalDetailProduct
+      idProducto={idProducto}
+        showModal={showModal} 
+        onSucces={() => setShowModal(false)} 
+        nombre={productForId?.descripcionProducto ?? ''}
+        description={productForId?.detalleProducto ?? ''}
+        valor={productForId?.valorProducto ?? 0}
+        icon={<FaClipboardQuestion  />} 
+      />
+    </div>
+    </>
   )}
 
 

@@ -26,12 +26,7 @@ const titleCard: CardContent[] = [
     icon: <IoIosCreate className="text-4xl text-green-500" />,
     route: 'crearPage'
   },
-  {
-    id: 3,
-    title: 'Actualizar',
-    icon: <MdOutlineSystemUpdateAlt className="text-4xl text-blue-500" />,
-    route: 'actualizarPage'
-  }
+
 ];
 
 export  const CardComponentPage = () => {

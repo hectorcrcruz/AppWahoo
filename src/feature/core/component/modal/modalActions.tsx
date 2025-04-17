@@ -2,11 +2,12 @@
 import { Modal } from '@/feature/core/ui/Modal/Modal'
 import { Button } from '../../ui'
 
-interface ModalProps {
+export interface ModalProps {
   showModal: boolean
   onSucces: () => void
   title: string
   icon: React.ReactElement
+  description?: string
 }
 
 

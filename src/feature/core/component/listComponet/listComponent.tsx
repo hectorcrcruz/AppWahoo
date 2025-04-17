@@ -14,21 +14,26 @@ import Tooltip from '../../ui/Tooltip/Tooltip';
 import { ModalActions } from '../modal';
 import {  useMemo, useState } from 'react';
 import dayjs from "dayjs";
+import { useNavigate } from 'react-router-dom';
 
 
 
-export interface ListComponentProps<T> {
+export interface ListComponentProps<T extends { id: number }> {
 dataList: T[];
+module:string
 }
 
 
-export const ListComponent = <T,>({ dataList }: ListComponentProps<T>) => {
+export const ListComponent = <T extends { id: number }>({ dataList , module}: ListComponentProps<T>) => {
 
  const [showModal, setShowModal] = useState(false)
  const columnHelper = createColumnHelper<T>()
-   
   
-
+ const navigatee = useNavigate()
+  
+ const handleUpdate = (path:string, id:number) => {
+  navigatee(`/home/${path}/actualizarPage/${id}`)
+ }
 
  const columns = useMemo(() => {
   if (dataList.length === 0) return [];
@@ -63,13 +68,13 @@ export const ListComponent = <T,>({ dataList }: ListComponentProps<T>) => {
     columnHelper.display({
       id: 'acciones',
       header: () => <div className="md:w-40 font-normal">Acciones</div>,
-      cell: () => (
+      cell: ({row}) => (
         <div className="flex justify-center space-x-4">
           <Tooltip text="Información">
             <LuInfo onClick={() => setShowModal(true)} className="w-5 h-5 cursor-pointer text-[#a20f5c]" />
           </Tooltip>
           <Tooltip text="Actualizar">
-            <GrUpdate className="w-5 h-5 cursor-pointer text-[#a20f5c]" />
+            <GrUpdate onClick={() => handleUpdate(module,row.original.id)}   className="w-5 h-5 cursor-pointer text-[#a20f5c]" />
           </Tooltip>
           <Tooltip text="Eliminar">
             <MdDeleteOutline className="w-5 h-5 cursor-pointer text-[#a20f5c]" />

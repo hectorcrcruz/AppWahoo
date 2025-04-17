@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -6,9 +6,11 @@ import { Button } from "../../ui";
 import { InputField } from "../../ui/InputField";
 import { CiSaveDown1 } from "react-icons/ci";
 import { ImCancelCircle } from "react-icons/im";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { serviceSchemas } from "./createDinamicShema";
 import { useCreateData } from "./useCreateData";
+import { clearLabel } from "../../const/clearLabel";
+import { useGetList } from "../../services/useGetList";
 
 
 
@@ -18,13 +20,20 @@ type CreateComponentProps = {
 };
 
 export const CreateComponent: React.FC<CreateComponentProps> = ({ label }) => {
+  const location = useLocation();
+  const isUpdatePage = location.pathname.includes("/actualizarPage");
+   const { id } = useParams();
 
+
+   
 
   if (!label || !serviceSchemas[label]) {
     return <div>Error: No se encontró un esquema para "{label}"</div>;
   }
 
-  const { schema, postCreateForm } = useCreateData({ label   });
+  const {dataList} = useGetList<any>({moduleRour: label}) 
+  const filterData = dataList.find((item: any) => item.id === Number(id));
+  const { schema, postCreateForm } = useCreateData({ label , Update:isUpdatePage})
  
   type FormValues = z.infer<typeof schema>;
 
@@ -32,9 +41,11 @@ export const CreateComponent: React.FC<CreateComponentProps> = ({ label }) => {
     reset,
     control,
     handleSubmit,
+    register,
     formState: { errors },
   } = useForm<FormValues>({
     resolver: schema ? zodResolver(schema) : undefined,
+    defaultValues: {},
   });
 
 
@@ -45,20 +56,23 @@ export const CreateComponent: React.FC<CreateComponentProps> = ({ label }) => {
   
   const fields = schema instanceof z.ZodObject ? Object.keys(schema.shape) : [];
 
-  const location = useLocation();
-  const isUpdatePage = location.pathname.includes("/actualizarPage");
+ 
 
   const handleReset = () => {
     reset(); 
   };
 
  
-
-
  
   const onSubmit = async (data: FormValues) => {
      postCreateForm(data)
   };
+
+  useEffect(() => {
+    if (filterData) {
+      reset(filterData);
+    }
+  }, [filterData, reset]);
 
   return (
     <div className="mt-1">
@@ -66,10 +80,10 @@ export const CreateComponent: React.FC<CreateComponentProps> = ({ label }) => {
         {`${isUpdatePage ? "Actualizar" : "Crear"} ${label}`}
       </h1>
       <form onSubmit={handleSubmit(onSubmit,errors => console.log(errors)) }>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:mt-10 pt-14 md:border-2 p-3 border-primary-200 h-80">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:mt-5 pt-8 md:border-2 p-3 border-primary-200 h-80">
           {fields.map((field) => (
             <div key={field}>
-              <label>{field.toLocaleUpperCase()}</label>
+              <label>{clearLabel(field)}</label>
               <Controller
                 name={field}
                 control={control}
@@ -81,9 +95,10 @@ export const CreateComponent: React.FC<CreateComponentProps> = ({ label }) => {
                   return (
                     <InputField
                       {...field}
+
                       type={fieldType}
                       className="border p-2 rounded w-full"
-                      maxLength={fieldType === "text" ? 50 : 5}
+                      maxLength={fieldType === "text" ? 250 : 5}
                      
                     />
                   );
