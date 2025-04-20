@@ -21,7 +21,6 @@ export function BaseLayout({
   navBar = true,
 }: Readonly<BaseLayoutProps>) {
 
-  // const { user } = useAuthStore();
   const date = new Date()
    const dateRep = ( dayjs(date).format('YYYY'))
 

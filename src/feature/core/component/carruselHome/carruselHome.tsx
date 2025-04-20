@@ -51,7 +51,7 @@ interface CarruselHomeProps {
 }
 
 export const CarruselHome:React.FC<CarruselHomeProps> = ({Producto}) => {
-   
+    
 
   const [idProducto, setIdProducto] = useState(0);
   const [showModal, setShowModal] = useState(false);
@@ -60,9 +60,9 @@ export const CarruselHome:React.FC<CarruselHomeProps> = ({Producto}) => {
 
     const settings = {
         dots: true,  // Muestra los puntos de navegación
-        infinite: true,  // Permite el desplazamiento infinito
+        infinite: Producto.length > 3,  // Permite el desplazamiento infinito
         speed: 500,  // Velocidad de transición
-        slidesToShow: 3,  // Número de slides visibles
+        slidesToShow: Math.min(3, Producto.length),  // Número de slides visibles
         slidesToScroll: 1,  // Número de slides que se desplazan
         autoplay: true,  // Activa el auto-slide
         autoplaySpeed: 3000,  // Tiempo entre cada slide
@@ -72,9 +72,9 @@ export const CarruselHome:React.FC<CarruselHomeProps> = ({Producto}) => {
           {
             breakpoint: 1024,
             settings: {
-              slidesToShow: 2,
+              slidesToShow: Math.min(2, Producto.length),
               slidesToScroll: 2,
-              infinite: true,
+              infinite: Producto.length > 2,
               dots: true
             }
           },
@@ -98,11 +98,10 @@ export const CarruselHome:React.FC<CarruselHomeProps> = ({Producto}) => {
 
   return (
     <> 
-    <div className="w-10/12 justify-center mx-auto p-6 ">
-        
+    <div className="w-10/12 justify-center mx-auto p-6  mt-5 mb-5">
     <Slider {...settings }  className='  mr-4 '  >
-      {Producto.map((item) => (
-          <Card  key={item.categoriaProductoId}  className="md:!w-10/12 justify-center md:mx-4 rounded-b-none !rounded-t-2xl border-primary-700">
+       { Producto.length > 0 ?  Producto.map((item) => (
+          <Card  key={item.id}  className="md:!w-10/12 justify-center md:mx-4 rounded-b-none !rounded-t-2xl border-primary-700">
             <div className="flex justify-center pt-4">
                 {/* <img src={item.img} alt={item.title} className="w-72 h-48 object-cover rounded-md" /> */}
                 <span>{item.imagenProducto}</span>
@@ -117,7 +116,9 @@ export const CarruselHome:React.FC<CarruselHomeProps> = ({Producto}) => {
                 <Button className='w-40 bg-gradient-to-b from-yellow-400 to-yellow-600 rounded-r-none rounded-l-none'>Comprar</Button>
             </div>
           </Card>
-      ))}
+      )): <div className='flex justify-center items-center h-96 w-full '>
+      <h1 className='text-2xl font-bold text-primary-700 text-center'>No hay productos disponibles</h1>
+      </div>}
     </Slider>
     </div>
     <div>

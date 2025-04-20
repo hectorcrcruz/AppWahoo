@@ -1,5 +1,5 @@
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { BaseLayout } from "@/feature/core/ui/base-layout";
 
@@ -29,10 +29,10 @@ interface Producto {
 
 
 export const HomePage = () => {
-  const { isAuthenticated } = useAuthStore()
-  const navigate = useNavigate();
-
-  const {dataList} = useGetList<Producto>({moduleRour: 'Producto'}) 
+   const { isAuthenticated } = useAuthStore()
+   const [searchValues, setSearchValues] = useState<string | number | undefined>()
+   const navigate = useNavigate();
+   const {dataList} = useGetList<Producto>({moduleRour: 'Producto', searchId: searchValues}) 
 
  
   
@@ -54,11 +54,10 @@ export const HomePage = () => {
     <BaseLayout
     header
     navBar={true}  
-    
   >
-  <div className="p-0"> 
+  <div className="p-0 h-min-screen bg-primary-50/15"> 
     <div> 
-   <Promotion />
+   <Promotion searchValues={searchValues} OnchagueValues={(values) => setSearchValues(values)} />
    </div>
    <div>
     <CarruselHome  Producto={dataList} />

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "../../ui";
+import { Button, Spinner } from "../../ui";
 import { InputField } from "../../ui/InputField";
 import { CiSaveDown1 } from "react-icons/ci";
 import { ImCancelCircle } from "react-icons/im";
@@ -11,7 +11,6 @@ import { serviceSchemas } from "./createDinamicShema";
 import { useCreateData } from "./useCreateData";
 import { clearLabel } from "../../const/clearLabel";
 import { useGetList } from "../../services/useGetList";
-
 
 
 
@@ -31,7 +30,7 @@ export const CreateComponent: React.FC<CreateComponentProps> = ({ label }) => {
     return <div>Error: No se encontró un esquema para "{label}"</div>;
   }
 
-  const {dataList} = useGetList<any>({moduleRour: label}) 
+  const {dataList, isLoading} = useGetList<any>({moduleRour: label}) 
   const filterData = dataList.find((item: any) => item.id === Number(id));
   const { schema, postCreateForm } = useCreateData({ label , Update:isUpdatePage})
  
@@ -73,6 +72,11 @@ export const CreateComponent: React.FC<CreateComponentProps> = ({ label }) => {
       reset(filterData);
     }
   }, [filterData, reset]);
+
+  if(isLoading){
+    return (<Spinner  className='fixed inset-0 flex items-center justify-center text-red-300' />)
+  }
+ 
 
   return (
     <div className="mt-1">
