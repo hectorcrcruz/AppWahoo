@@ -10,7 +10,7 @@ import { GiShoppingCart } from "react-icons/gi";
 
 interface RegisterUserFormProps {
   className: string
-  onSuccess: (values: InfoRegisterUser | InfoBuyRegister) => void
+  onSuccess: (values: any) => void
   isLocation?: boolean
   onSucces?: (values:boolean) => void;
 }

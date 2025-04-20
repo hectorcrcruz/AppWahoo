@@ -2,7 +2,6 @@
 import { Card } from '../core/ui'
 import { FaList } from "react-icons/fa";
 import { IoIosCreate } from "react-icons/io";
-import { MdOutlineSystemUpdateAlt } from "react-icons/md";
 import { BaseLayout } from '../core/ui/base-layout';
 import { useNavigate, useParams } from 'react-router-dom';
 
