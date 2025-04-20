@@ -42,3 +42,39 @@ export const FormRegisterUser = z.object({
 })
 
 export type InfoRegisterUser = z.infer<typeof FormRegisterUser>
+
+
+
+export const buyRegister = z.object({
+  nombreUsuario: z.string().min(1, 'Campo obligatorio').refine((data) => /^[a-zA-Z\u00C0-\u017F\s.]+$/.test(data), {
+    message: 'Este campo solo permite carácteres alfabéticos'
+  }),
+  apellidoUsuario: z.string().min(1, 'Campo obligatorio').refine((data) => /^[a-zA-Z\u00C0-\u017F\s.]+$/.test(data), {
+    message: 'Este campo solo permite carácteres alfabéticos'
+  }),
+  tipoIdentificacionId:z
+  .string()
+  .pipe(z.coerce.number().positive('Campo requerido'))
+  .or(z.number().positive('Campo requerido'))
+  .nullable()
+  .optional(),
+  numberIdentification: z
+  .string()
+  .min(1, 'Campo requerido')
+  .max(10, 'Debe contener como máximo 10 caracteres.')
+  .refine((data) => /^\d+$/.test(data), {
+    message: 'Número documentos debe contener solo números.'
+  })
+  .or(z.number()),
+  correo: z.string().email('Por favor digita un correo válido').min(1, 'El correo es obligatorio'),
+  telefonoUsuario: z.string().min(1, 'El teléfono es obligatorio'),
+  direccionUsuario: z.string().min(1, 'La dirección es obligatoria'),
+  tipoFormaPago:z
+  .string()
+  .pipe(z.coerce.number().positive('Campo requerido'))
+  .or(z.number().positive('Campo requerido'))
+  .nullable()
+  .optional(),
+})
+
+export type InfoBuyRegister = z.infer<typeof buyRegister>

@@ -7,7 +7,7 @@ import { FaClipboardQuestion } from "react-icons/fa6";
 
 import { FaAngleDoubleRight } from "react-icons/fa";
 import { FaAngleDoubleLeft } from "react-icons/fa";
-import { ModalDetailProduct } from '../modal';
+import { ModalBuyProduct, ModalDetailProduct } from '../modal';
 import { useState } from 'react';
 
 const CustomPrevArrow = (props) => {
@@ -55,6 +55,7 @@ export const CarruselHome:React.FC<CarruselHomeProps> = ({Producto}) => {
 
   const [idProducto, setIdProducto] = useState(0);
   const [showModal, setShowModal] = useState(false);
+  const [showModalBuy, setShowModalBuy] = useState(false)
 
   const productForId = Producto.find((item) => item.id === idProducto);
 
@@ -113,7 +114,7 @@ export const CarruselHome:React.FC<CarruselHomeProps> = ({Producto}) => {
             </div>
             <div className='flex justify-center mt-4  '>
                 <Button className='bg-gradient-to-b from-[#a20f5c] to-[#d53287] rounded-l-none rounded-r-none'>Añadir al carrito</Button>
-                <Button className='w-40 bg-gradient-to-b from-yellow-400 to-yellow-600 rounded-r-none rounded-l-none'>Comprar</Button>
+                <Button type='button' onClick={() => setShowModalBuy(true)} className='w-40 bg-gradient-to-b from-yellow-400 to-yellow-600 rounded-r-none rounded-l-none'>Comprar</Button>
             </div>
           </Card>
       )): <div className='flex justify-center items-center h-96 w-full '>
@@ -131,6 +132,12 @@ export const CarruselHome:React.FC<CarruselHomeProps> = ({Producto}) => {
         valor={productForId?.valorProducto ?? 0}
         icon={<FaClipboardQuestion  />} 
       />
+    </div>
+    <div>
+    <ModalBuyProduct
+      showModal={showModalBuy} 
+      onSucces={() => setShowModalBuy(false)}  
+    />
     </div>
     </>
   )}

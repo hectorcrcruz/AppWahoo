@@ -40,7 +40,6 @@ export const CreateComponent: React.FC<CreateComponentProps> = ({ label }) => {
     reset,
     control,
     handleSubmit,
-    register,
     formState: { errors },
   } = useForm<FormValues>({
     resolver: schema ? zodResolver(schema) : undefined,
