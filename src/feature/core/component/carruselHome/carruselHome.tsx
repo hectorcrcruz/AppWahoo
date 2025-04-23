@@ -7,8 +7,10 @@ import { FaClipboardQuestion } from "react-icons/fa6";
 
 import { FaAngleDoubleRight } from "react-icons/fa";
 import { FaAngleDoubleLeft } from "react-icons/fa";
+import { Toaster, toast } from 'react-hot-toast'
 import { ModalBuyProduct, ModalDetailProduct } from '../modal';
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { useProductContext } from '@/feature/contex/buyNotifications';
 
 const CustomPrevArrow = (props) => {
   const { className, style, onClick } = props;
@@ -33,7 +35,7 @@ const CustomNextArrow = (props) => {
 };
 
 
-interface Producto {
+export interface Producto {
   id: number;
   descripcionProducto: string;
   stock: number;
@@ -56,6 +58,8 @@ export const CarruselHome:React.FC<CarruselHomeProps> = ({Producto}) => {
   const [idProducto, setIdProducto] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const [showModalBuy, setShowModalBuy] = useState(false)
+  const [product, setProduct] = useState<Producto[]>([])
+  const {  setTotalProductos ,setProductNotificacion } = useProductContext();
 
   const productForId = Producto.find((item) => item.id === idProducto);
 
@@ -97,6 +101,43 @@ export const CarruselHome:React.FC<CarruselHomeProps> = ({Producto}) => {
 
       }
 
+   
+     const totalProduct =  useMemo(() => 
+        product.reduce((producaa, item) => producaa + item.valorProducto, 0)
+        , [product])
+
+     
+     
+ 
+        useEffect(() => {
+          setTotalProductos(totalProduct);
+        }, [totalProduct, setTotalProductos]);
+     
+    
+      
+
+      const handleBuy = (itemId: number) => {
+        const itemToAdd = Producto.find((item) => item.id === itemId);
+        if (!itemToAdd) return; 
+
+        const alreadyInCart = product.find((item) => item.id === itemToAdd.id);
+     
+        if(alreadyInCart) {
+          toast.error('El producto ya está en el carrito', {
+            icon: '❌',
+          });
+        }else {
+          toast.success('🛒  Producto añadido al carrito', {
+            icon: '✅', 
+          });
+           setProduct((prev) => [...prev, itemToAdd]);
+           setProductNotificacion((prev) => [...prev, itemToAdd]);
+           
+        }
+       
+        
+      }
+
   return (
     <> 
     <div className="w-10/12 justify-center mx-auto p-6  mt-5 mb-5">
@@ -113,7 +154,7 @@ export const CarruselHome:React.FC<CarruselHomeProps> = ({Producto}) => {
                 <p onClick={() => handleClick(item.id)}>Mas información <span className='font-bold hover:cursor-pointer'>aquí</span></p>
             </div>
             <div className='flex justify-center mt-4  '>
-                <Button className='bg-gradient-to-b from-[#a20f5c] to-[#d53287] rounded-l-none rounded-r-none'>Añadir al carrito</Button>
+                <Button type='button' onClick={() => handleBuy(item.id)} className='bg-gradient-to-b from-[#a20f5c] to-[#d53287] rounded-l-none rounded-r-none '>Añadir al carrito</Button>
                 <Button type='button' onClick={() => setShowModalBuy(true)} className='w-40 bg-gradient-to-b from-yellow-400 to-yellow-600 rounded-r-none rounded-l-none'>Comprar</Button>
             </div>
           </Card>
@@ -139,6 +180,18 @@ export const CarruselHome:React.FC<CarruselHomeProps> = ({Producto}) => {
       onSucces={() => setShowModalBuy(false)}  
     />
     </div>
+    <Toaster
+      position="top-right"
+      reverseOrder={true}
+      toastOptions={{
+        className: '',
+        duration: 3000,
+        style: {
+          background: '#363636',
+          color: '#fff',
+        },
+      }}
+    />
     </>
   )}
 

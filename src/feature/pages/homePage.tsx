@@ -9,6 +9,8 @@ import { useAuthStore } from '../contex/AuthContext';
 import { CarruselHome } from "../core/component/carruselHome/carruselHome";
 import { Promotion } from "../core/component/promotion";
 import { useGetList } from "../core/services/useGetList";
+import { ProductProvider } from "../contex/buyNotifications";
+
 
 
 interface Producto {
@@ -60,7 +62,9 @@ export const HomePage = () => {
    <Promotion searchValues={searchValues} OnchagueValues={(values) => setSearchValues(values)} />
    </div>
    <div>
+   
     <CarruselHome  Producto={dataList} />
+   
    </div>
   </div>
     </BaseLayout>

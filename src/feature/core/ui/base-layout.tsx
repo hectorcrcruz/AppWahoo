@@ -5,12 +5,13 @@ import { cn } from '../lib'
 import { BaseLayoutProps } from '../types/base-layout'
 import { Navbar } from './navbar'
 import { Wrapper } from './wrapper'
-import { IoMdPower } from "react-icons/io";
-import { IoIosNotificationsOutline } from "react-icons/io";
+import { IoMdPower, IoIosNotificationsOutline } from "react-icons/io";
 import { useAuth } from '@/feature/contex/AuthContext';
-
 import logoWhite from '@/feature/auth/assets/logoWhite.png'
 import dayjs from 'dayjs';
+import { useProductContext } from '@/feature/contex/buyNotifications';
+import { ModalBuyEarrings } from '../component/modal';
+import { useState } from 'react';
 
 
 export function BaseLayout({
@@ -20,12 +21,10 @@ export function BaseLayout({
   header,
   navBar = true,
 }: Readonly<BaseLayoutProps>) {
-
+ const [showModal, setShowModal] = useState(false)
   const date = new Date()
    const dateRep = ( dayjs(date).format('YYYY'))
-
   const { logout } = useAuth();
-
   const navigation = useNavigate();
 
   const handleNavigate = () => {
@@ -37,7 +36,13 @@ export function BaseLayout({
     navigation('/login');
   }
 
+  const { productNotificacion } = useProductContext();
+
+
+
+
   return (
+    <>
     <div className={cn('relative flex min-h-screen bg-primary-50/15', className)}>
        {navBar && (  <Navbar /> )}
       <div className='flex w-full flex-col '>
@@ -52,6 +57,13 @@ export function BaseLayout({
 
            <div className='flex justify-end '>
            <IoIosNotificationsOutline  className='text-white w-7 h-7 absolute top-6 2xl:top-8 mx-16 hover:text-gray-500 cursor-pointer' />
+           {productNotificacion.length > 0 && (
+            <button 
+              onClick={() => setShowModal(true)} 
+              className='absolute top-5 md:top-6 2xl:top-7 right-20 bg-red-500 text-white rounded-full w-3 h-3 flex items-center justify-center text-xs font-bold'
+              type='button'
+            />
+           )}
            </div>
           </div>
         )}
@@ -74,5 +86,13 @@ export function BaseLayout({
           </div>
       </div>
     </div>
+    
+    <div>
+      <ModalBuyEarrings
+        showModal={showModal} 
+        onSucces={(values) => setShowModal(values)}
+       />
+      </div>
+    </>
   )
 }
