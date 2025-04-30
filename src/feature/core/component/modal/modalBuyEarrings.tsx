@@ -6,6 +6,7 @@ import { Card } from "../../ui";
 import { useEffect, useState } from "react";
 import { Toaster, toast } from 'react-hot-toast'
 import { CustomNextArrow, CustomPrevArrow } from "../carruselHome/carruselHome";
+import { ModalPayProduct } from "./modalPayProduct";
 
 
 
@@ -18,7 +19,7 @@ interface ModalBuyProductProps {
 export const ModalBuyEarrings:React.FC<ModalBuyProductProps> = ({showModal,onSucces}) => {
     const {  totalProduct, productNotificacion , setProductNotificacion , setTotalProductos } = useProductContext();
         
- 
+     const [showModalBuy, setShowModalBuy] = useState(false)
     const [cantidades, setCantidades] = useState<{ [id: string]: number }>({});
 
    
@@ -138,7 +139,7 @@ export const ModalBuyEarrings:React.FC<ModalBuyProductProps> = ({showModal,onSuc
                       Eliminar
                     </button>
                     <button
-                      onClick={() => onSucces(true)}
+                      type='button' onClick={() => setShowModalBuy(true)}
                       className="bg-primary-700 hover:bg-primary-800 text-white py-2 rounded-md transition-colors"
                     >
                       Comprar
@@ -161,6 +162,11 @@ export const ModalBuyEarrings:React.FC<ModalBuyProductProps> = ({showModal,onSuc
         )}
       </Modal.Body>
     </Modal>
+
+     <ModalPayProduct
+          showModal={showModalBuy} 
+          onSucces={() => setShowModalBuy(false)}  
+        />
 
     <Toaster
       position="top-right"
