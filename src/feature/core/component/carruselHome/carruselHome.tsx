@@ -59,7 +59,7 @@ export const CarruselHome:React.FC<CarruselHomeProps> = ({Producto}) => {
   const [showModal, setShowModal] = useState(false);
   const [showModalBuy, setShowModalBuy] = useState(false)
   const [product, setProduct] = useState<Producto[]>([])
-  const {  setTotalProductos ,setProductNotificacion } = useProductContext();
+  const {  setTotalProductos ,setProductNotificacion, productNotificacion } = useProductContext();
 
   const productForId = Producto.find((item) => item.id === idProducto);
 
@@ -105,9 +105,6 @@ export const CarruselHome:React.FC<CarruselHomeProps> = ({Producto}) => {
      const totalProduct =  useMemo(() => 
         product.reduce((producaa, item) => producaa + item.valorProducto, 0)
         , [product])
-
-     
-     
  
         useEffect(() => {
           setTotalProductos(totalProduct);
@@ -120,7 +117,7 @@ export const CarruselHome:React.FC<CarruselHomeProps> = ({Producto}) => {
         const itemToAdd = Producto.find((item) => item.id === itemId);
         if (!itemToAdd) return; 
 
-        const alreadyInCart = product.find((item) => item.id === itemToAdd.id);
+        const alreadyInCart = productNotificacion.find((item) => item.id === itemToAdd.id);
      
         if(alreadyInCart) {
           toast.error('El producto ya está en el carrito', {

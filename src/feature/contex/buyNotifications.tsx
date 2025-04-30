@@ -1,4 +1,4 @@
-import { createContext, useContext, useMemo, useState } from 'react';
+import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { Producto } from '../core/component/carruselHome/carruselHome';
 
 
@@ -14,14 +14,30 @@ const ProductContext = createContext<BuyNotificationContextType | undefined>(und
 
 
 export const ProductProvider = ({children}: {children: React.ReactNode}) => {
-    const [productNotificacion, setProductNotificacion] = useState<Producto[]>([])
     const [totalProduct, setTotalProductos] = useState<number>(0);
+    const [productNotificacion, setProductNotificacion] = useState<Producto[]>(() => {
+        const stored = localStorage.getItem('productNotificacion');
+        return stored ? JSON.parse(stored) : [];
+      });
+
+  
+    useEffect(() => {
+        localStorage.setItem('productNotificacion', JSON.stringify(productNotificacion));
+      }, [productNotificacion]);
+
+      useEffect(() => {
+        const total = productNotificacion.reduce((acc, item) => acc + item.valorProducto, 0);
+        setTotalProductos(total);
+      }, [productNotificacion]);
+
+    
 
     const contextValue = useMemo(() => ({
         productNotificacion,
         setProductNotificacion,
         totalProduct,
-        setTotalProductos
+        setTotalProductos,
+    
     }), [productNotificacion, totalProduct]);
 
     return (

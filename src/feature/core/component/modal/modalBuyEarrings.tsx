@@ -3,6 +3,8 @@ import { IoCloseCircleOutline } from "react-icons/io5";
 import { Modal } from "../../ui/Modal"
 import { Card } from "../../ui";
 
+
+
 interface ModalBuyProductProps {
     showModal: boolean;
     onSucces: (values:boolean) => void;
@@ -11,6 +13,11 @@ interface ModalBuyProductProps {
 
 export const ModalBuyEarrings:React.FC<ModalBuyProductProps> = ({showModal,onSucces}) => {
     const {  totalProduct, productNotificacion , setProductNotificacion } = useProductContext();
+
+
+
+   
+
   return (
    <Modal show={showModal} size='sm' className='shadow-2xl w-full rounded-3xl'>
          <Modal.Body>
@@ -21,7 +28,7 @@ export const ModalBuyEarrings:React.FC<ModalBuyProductProps> = ({showModal,onSuc
                <IoCloseCircleOutline  height={10} width={10}/>
                </span>
            </div>
-           <div className={`grid grid-cols-${productNotificacion.length} space-x-4 `}>
+           <div className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 space-x-4 `}>
                 {productNotificacion.map((item) => (
                   <Card key={item.id} className="    mt-4 rounded-b-none !rounded-t-2xl border-primary-700">
                     
@@ -36,7 +43,11 @@ export const ModalBuyEarrings:React.FC<ModalBuyProductProps> = ({showModal,onSuc
                     </div>
                     <div className="flex justify-center mt-4 mb-4 text-sm">
                         <button onClick={() => onSucces(true)} className="bg-primary-700 text-white  w-20  py-2 rounded-md">Comprar</button>      
-                        <button onClick={() => setProductNotificacion((prev) => prev.filter((i) => i.id !== item.id))} className="bg-red-500 w-16 text-center text-white  py-2 rounded-md ml-2">Eliminar</button>
+                        <button onClick={() => 
+                            setProductNotificacion((prev) => prev.filter((i) => i.id !== item.id))
+                        }
+                            
+                             className="bg-red-500 w-16 text-center text-white  py-2 rounded-md ml-2">Eliminar</button>
                     </div>  
                     </Card> ))
                 }
