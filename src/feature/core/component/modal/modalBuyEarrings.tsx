@@ -48,9 +48,9 @@ export const ModalBuyEarrings:React.FC<ModalBuyProductProps> = ({showModal,onSuc
 
   const settings = {
           dots: true,  // Muestra los puntos de navegación
-          infinite: productNotificacion.length > 3,  // Permite el desplazamiento infinito
+          infinite: productNotificacion.length > 2,  // Permite el desplazamiento infinito
           speed: 500,  // Velocidad de transición
-          slidesToShow: Math.min(3, productNotificacion.length),  // Número de slides visibles
+          slidesToShow: Math.min(2, productNotificacion.length),  // Número de slides visibles
           slidesToScroll: 1,  // Número de slides que se desplazan
           autoplay: true,  // Activa el auto-slide
           autoplaySpeed: 3000,  // Tiempo entre cada slide
@@ -101,8 +101,8 @@ export const ModalBuyEarrings:React.FC<ModalBuyProductProps> = ({showModal,onSuc
         <div className="mt-4">
           <Slider {...settings}>
             {productNotificacion.map((item) => (
-              <div key={item.id} className="px-2"> 
-                <Card className="w-[250px] mx-auto border border-primary-200 shadow-md rounded-xl flex flex-col justify-between p-4">
+              <div  key={item.id} className="mx-1"> 
+                <Card  className="w-[250px] mx-auto border border-primary-200 shadow-md rounded-xl flex flex-col justify-between p-4 ">
                   <div className="text-center mb-2">
                     <small className="text-gray-400 block">No tiene imagen</small>
                   </div>
@@ -145,7 +145,8 @@ export const ModalBuyEarrings:React.FC<ModalBuyProductProps> = ({showModal,onSuc
                     </button>
                   </div>
                 </Card>
-              </div>
+                </div>
+             
             ))}
           </Slider>
         </div>
