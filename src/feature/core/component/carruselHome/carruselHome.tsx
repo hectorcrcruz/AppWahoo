@@ -7,6 +7,8 @@ import { FaClipboardQuestion } from "react-icons/fa6";
 
 import { FaAngleDoubleRight } from "react-icons/fa";
 import { FaAngleDoubleLeft } from "react-icons/fa";
+import { GiShoppingCart } from "react-icons/gi";
+import { FaShopify } from "react-icons/fa6";
 import { Toaster, toast } from 'react-hot-toast'
 import { ModalDetailProduct, ModalPayProduct } from '../modal';
 import { useEffect, useMemo, useState } from 'react';
@@ -152,8 +154,12 @@ export const CarruselHome:React.FC<CarruselHomeProps> = ({Producto}) => {
                 <p onClick={() => handleClick(item.id)}>Mas información <span className='font-bold hover:cursor-pointer'>aquí</span></p>
             </div>
             <div className='flex justify-center mt-4  '>
-                <Button type='button' onClick={() => handleBuy(item.id)} className='bg-gradient-to-b from-[#a20f5c] to-[#d53287] rounded-l-none rounded-r-none '>Añadir al carrito</Button>
-                <Button type='button' onClick={() => setShowModalBuy(true)} className='w-40 bg-gradient-to-b from-yellow-400 to-yellow-600 rounded-r-none rounded-l-none'>Comprar</Button>
+                <Button type='button' onClick={() => handleBuy(item.id)} className='bg-gradient-to-b from-[#a20f5c] to-[#d53287] rounded-l-none rounded-r-none '>
+                  <GiShoppingCart />
+                  Añadir al carrito</Button>
+                <Button type='button' onClick={() => setShowModalBuy(true)} className='w-40 bg-gradient-to-b from-yellow-400 to-yellow-600 rounded-r-none rounded-l-none'>
+                  <FaShopify/>
+                  Comprar</Button>
             </div>
           </Card>
       )): <div className='flex justify-center items-center h-96 w-full '>

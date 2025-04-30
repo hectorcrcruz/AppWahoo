@@ -2,9 +2,8 @@ import { Button } from "../../ui";
 import { Modal } from "../../ui/Modal"
 
 import { IoMdClose } from "react-icons/io";
-import { GiShoppingCart } from "react-icons/gi";
-import { FaShopify } from "react-icons/fa6";
-import { useState } from "react";
+
+
 
 interface ModalDetailProductProps {
     showModal: boolean;
@@ -18,11 +17,7 @@ interface ModalDetailProductProps {
   
 
 export const ModalDetailProduct:React.FC<ModalDetailProductProps> = ({showModal, onSucces, nombre,valor, icon, description})=> {
-    const [cantidad, setCantidad] = useState(1);
-
-    const incrementar = () => setCantidad(prev => prev + 1);
-    const decrementar = () => setCantidad(prev => prev > 1 ? prev - 1 : 1);
-
+   
     return (
         <Modal show={showModal} size='xs' className='shadow-2xl w-full rounded-3xl'>
             <Modal.Body>
@@ -43,41 +38,6 @@ export const ModalDetailProduct:React.FC<ModalDetailProductProps> = ({showModal,
                         <div className="col-span-1 flex justify-center items-center h-full w-full mr-4">
                             {description}
                         </div>
-                    </div>
-
-                    <div className="flex justify-between items-center space-x-4 mt-4">
-
-                        <Button
-                            className='w-48 flex bg-gradient-to-b from-[#d7d886] to-[#d2d532] text-white transition-all hover:brightness-110 duration-500'
-                        >
-                            <GiShoppingCart /> Añadir al carrito 
-                        </Button> <span className="my-1 text-lg font-semibold">{cantidad}</span>
-
-                        {/* Contador de cantidad */}
-                        <div className="flex flex-col items-center h-10 justify-center border rounded-sm p-2 bg-gray-100">
-                            <button
-                                onClick={incrementar}
-                                className="text-lg font-bold text-gray-700 hover:text-green-600 pt-5 leading-5"
-                            >
-                                +
-                            </button>
-
-                            <button
-                                onClick={decrementar}
-                                className="text-lg font-bold text-gray-700 hover:text-red-600    pb-9 items-start flex leading-3"
-                            >
-                                _
-                            </button>
-
-                           
-                        </div>
-
-                        <Button
-                            className="flex bg-gradient-to-b from-[#a20f5c] to-[#d53287]"
-                            onClick={() => onSucces()}
-                        >
-                            <FaShopify /> Comprar
-                        </Button>
                     </div>
                 </div>
             </Modal.Body>
