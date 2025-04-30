@@ -6,25 +6,12 @@ import { BaseLayout } from "@/feature/core/ui/base-layout";
 import { Spinner } from "../core";
 
 import { useAuthStore } from '../contex/AuthContext';
-import { CarruselHome } from "../core/component/carruselHome/carruselHome";
+import { CarruselHome, Producto } from "../core/component/carruselHome/carruselHome";
 import { Promotion } from "../core/component/promotion";
 import { useGetList } from "../core/services/useGetList";
-import { ProductProvider } from "../contex/buyNotifications";
 
 
 
-interface Producto {
-  id: number;
-  descripcionProducto: string;
-  detalleProducto: string;
-  stock: number;
-  valorProducto: number;
-  imagenProducto: number;
-  categoriaProductoId: number;
-  usuarioAdd: string;
-  estado: number;
-  fechaAdd: string; 
-}
 
 
 

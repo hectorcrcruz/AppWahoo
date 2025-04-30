@@ -8,7 +8,7 @@ interface ModalBuyProductProps {
     onSucces: (values:boolean) => void;
 }
 
-export const ModalBuyProduct:React.FC<ModalBuyProductProps> = ({showModal, onSucces}) => {
+export const ModalPayProduct:React.FC<ModalBuyProductProps> = ({showModal, onSucces}) => {
 const location = useLocation()
 const isLocation = location.pathname.includes('/home')
     

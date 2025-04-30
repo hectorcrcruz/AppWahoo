@@ -8,7 +8,7 @@ import { FaClipboardQuestion } from "react-icons/fa6";
 import { FaAngleDoubleRight } from "react-icons/fa";
 import { FaAngleDoubleLeft } from "react-icons/fa";
 import { Toaster, toast } from 'react-hot-toast'
-import { ModalBuyProduct, ModalDetailProduct } from '../modal';
+import { ModalDetailProduct, ModalPayProduct } from '../modal';
 import { useEffect, useMemo, useState } from 'react';
 import { useProductContext } from '@/feature/contex/buyNotifications';
 
@@ -46,6 +46,7 @@ export interface Producto {
   usuarioAdd: string;
   estado: number;
   fechaAdd: string;
+ 
 }
 
 interface CarruselHomeProps {
@@ -172,7 +173,7 @@ export const CarruselHome:React.FC<CarruselHomeProps> = ({Producto}) => {
       />
     </div>
     <div>
-    <ModalBuyProduct
+    <ModalPayProduct
       showModal={showModalBuy} 
       onSucces={() => setShowModalBuy(false)}  
     />
