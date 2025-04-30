@@ -12,7 +12,7 @@ import { ModalDetailProduct, ModalPayProduct } from '../modal';
 import { useEffect, useMemo, useState } from 'react';
 import { useProductContext } from '@/feature/contex/buyNotifications';
 
-const CustomPrevArrow = (props) => {
+export const CustomPrevArrow = (props) => {
   const { className, style, onClick } = props;
   return (
     <FaAngleDoubleRight
@@ -23,7 +23,7 @@ const CustomPrevArrow = (props) => {
   );
 };
 
-const CustomNextArrow = (props) => {
+export const CustomNextArrow = (props) => {
   const { className, style, onClick } = props;
   return (
     <FaAngleDoubleLeft
