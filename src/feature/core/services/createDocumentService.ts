@@ -11,3 +11,7 @@ export const getList = async <T>(params: T, url: string): Promise<any> =>{
 export const postList = async <T>(params: T, url: string): Promise<any> =>{
     return await wahooApi.post(url, params)
 }
+
+export const putList = async <T>(params: T, url: string): Promise<any> =>{
+    return await wahooApi.put(url, params)
+}

@@ -54,7 +54,7 @@ const adminRoutes: CustomRouteObject[] = [
  
   {
     name: '',
-    path: '/home/:module/actualizarPage',
+    path: '/home/:module/actualizarPage/:id',
     element: <CreatePage />
   },
 

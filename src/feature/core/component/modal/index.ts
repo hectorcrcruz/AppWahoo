@@ -1,1 +1,4 @@
 export * from './modalActions'
+export * from './modalDetailProduct'
+export * from './modalPayProduct'
+export * from './modalBuyEarrings'

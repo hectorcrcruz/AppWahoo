@@ -1,3 +1,4 @@
+
 export const arrayModules = [
   {
     id: 1,
@@ -203,4 +204,7 @@ export const arrayModules = [
     pathGet: "Usuario/ListUsuario",
     pathPost: "Usuario/CreateUsuario"
   }
-];
+].map(module => ({
+  ...module,
+  pathPut: module.pathPost.replace('Create', 'Update')
+}));

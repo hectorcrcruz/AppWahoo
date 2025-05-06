@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
-import { postList } from '../../services/createDocumentService';
+import { postList, putList } from '../../services/createDocumentService'; // Ensure these functions return Promises
 import { arrayModules } from '../../const/modules';
 import { z } from "zod";
 import { serviceSchemas } from './createDinamicShema';
@@ -9,15 +9,21 @@ import { serviceSchemas } from './createDinamicShema';
 
 type useProps = {
     label: string ;
-    };
+    Update:boolean;
+}
 
-export const useCreateData = ({ label}:useProps) => {
+export const useCreateData = ({ label, Update }: useProps) => {
+
+  console.log(Update)
      const navigate = useNavigate()
      const newUrlGet = arrayModules.find(module => module.name === label)
-     const paramFilter = newUrlGet?.pathPost
+     const paramFilter = Update ?  newUrlGet?.pathPut: newUrlGet?.pathPost
       const numberIdentification = localStorage.getItem('user');
       const originalSchema = serviceSchemas[label];
-      const schema = originalSchema.omit({ fechaAdd: true, usuarioAdd: true });
+      const schema = originalSchema.omit({ fechaAdd: true, usuarioAdd: true , id: !Update });
+    
+
+      const labelProps  = Update ? 'actualizado' : 'creado'
     
       type FormValues = z.infer<typeof schema>;
     
@@ -28,12 +34,12 @@ export const useCreateData = ({ label}:useProps) => {
                  ...data,
                  fechaAdd: new Date().toISOString(),
                  usuarioAdd: numberIdentification, 
-               }
-         
-                await postList<FormValues>(finalData, paramFilter as string);
+               } 
+                 Update ? await putList<FormValues>(finalData, paramFilter as string) :
+                 await postList<FormValues>(finalData, paramFilter as string);
                 const result = await Swal.fire({
-                 title: "Creación exitosa",
-                 text: `El ${label} se ha creado correctamente.`,
+                 title: `${labelProps} de manera  exitosa`,
+                 text: `El ${label} se ha ${labelProps} correctamente.`,
                  icon: "success",
                  confirmButtonText: "Aceptar",
                });
@@ -42,9 +48,10 @@ export const useCreateData = ({ label}:useProps) => {
                  navigate(`/home/${label}/listarPage`);
                }
              } catch (error) {
+              console.error(error);
                Swal.fire({
                  title: "Ups!",
-                 text: `Error al crear el ${label}. Por favor, tenemos problemas con el servidor`,
+                 text: `Error al ${labelProps} el ${label}. Por favor, tenemos problemas con el servidor`,
                  icon: "error",
                });
              }

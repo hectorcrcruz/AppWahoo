@@ -30,7 +30,7 @@ export const useGetList = <T>({ moduleRour ,searchId }: Props) => {
        setDataList(resp);
         setDataList(resp)
        } catch (error) {
-        
+        console.error('Error fetching data:', error);
        } finally{
         setIsLoading(false)
        }

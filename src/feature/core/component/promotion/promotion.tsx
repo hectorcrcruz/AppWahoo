@@ -3,7 +3,12 @@ import { SearchComponent } from '../searchComponent/searchComponent'
 import regatta from '../../../core/assets/img/regatta.png'
 import promotion from '../../../core/assets/img/imgTwoPromotion.png'
 
-export const Promotion = () => {
+interface PromotionProps {
+OnchagueValues: (values: string | number) => void;
+searchValues: string | number | undefined
+}
+
+export const Promotion:React.FC<PromotionProps> = ({OnchagueValues, searchValues}) => {
   return (
     <div>
        <div className='bg-primary-50 h-12 p-2 rounded-md mr-4 ml-4 mt-5'> 
@@ -33,12 +38,11 @@ export const Promotion = () => {
         <div className='bg-primary-50 h-16 p-2 rounded-md mr-4 ml-4 mt-5  '>  
              <SearchComponent  
                onSearch={(values) => {
-                 console.log(values)
+                OnchagueValues(values.id)
                }} 
                label={'Categorías +  | Ofertas | Mís Compras'} 
-               searchParams={''} 
+               searchParams={searchValues} 
              />
-            
             </div>
        </div>
 
