@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import socket from './useChatbox';
 import { FaUserLarge } from "react-icons/fa6";
 import { InputField } from '../../ui/InputField';
