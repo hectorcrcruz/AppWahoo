@@ -12,6 +12,7 @@ type Props = {
 
 
 export const useGetList = <T>({ moduleRour ,searchId }: Props) => { 
+
     const [dataList, setDataList] = useState<T[]>([])
     const [isLoading, setIsLoading] = useState(false)
     const newUrlGet = arrayModules.find(module => module.name === moduleRour)

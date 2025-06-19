@@ -100,6 +100,11 @@ export const ModalBuyEarrings:React.FC<ModalBuyProductProps> = ({showModal,onSuc
         </div>
 
         <div className="mt-4">
+          {productNotificacion.length === 0 && (
+            <div className="text-center text-gray-500">
+              No tienes productos en el carrito.
+            </div>
+          )}
           <Slider {...settings}>
             {productNotificacion.map((item) => (
               <div  key={item.id} className="mx-1"> 

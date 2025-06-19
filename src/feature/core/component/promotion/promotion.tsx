@@ -35,7 +35,7 @@ export const Promotion:React.FC<PromotionProps> = ({OnchagueValues, searchValues
             </picture>
             </div>
             </div>
-        <div className='bg-primary-50 h-16 p-2 rounded-md mr-4 ml-4 mt-5  '>  
+        <div className='bg-primary-50  md:h-16 p-2 rounded-md mr-4 ml-4 mt-10  '>  
              <SearchComponent  
                onSearch={(values) => {
                 OnchagueValues(values.id)

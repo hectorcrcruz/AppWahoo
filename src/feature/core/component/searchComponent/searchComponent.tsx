@@ -41,16 +41,17 @@ const handleReset = () => {
 
 
   return (
-    <div className="md:flex  h-12 ">
-       <Label className="leading-3 text-xl font-normal  w-full mt-2   mx-3">{` Listado de ${label} `}</Label>  
-    <div className="justify-end flex mx-auto w-full  "> 
-      <form  className={`flex  ${!locationSearch ? 'flex-row-reverse' : 'flex-row' }  `} onSubmit={handleSubmit(onSearch , (errors) => console.log(errors))}>
+    <div className="">
+       <Label className="md:leading-3 text-xl font-normal  w-full mt-2   md:mx-3">{` Listado de ${label} `}</Label>  
+    <div className="justify-end mt-5 md:flex mx-auto w-full md:-mt-6  "> 
+      <form  className={` md:flex  ${!locationSearch ? 'md:flex-row-reverse' : 'md:flex-row' }  `} onSubmit={handleSubmit(onSearch , (errors) => console.log(errors))}>
       <div> 
       <InputField {...register('id')}
        disabled={!!searchParams}
         type="number"
         label={locationSearch ? 'Buscar productos de interés ' : 'Buscar'}
-        placeholder='Buscar por id'  className={`mt-[4px] mx-2 w-full ${locationSearch ?  'md:w-72' :'md:w-36'}`}
+        placeholder='Buscar por id' 
+         className={`mt-[4px] md:mx-2 w-full ${locationSearch ?  'md:w-72' :'md:w-36'}`}
         error={searchParams ? ''  : errors.id?.message} />
       </div>
        <div className="mt-2" >
@@ -58,13 +59,13 @@ const handleReset = () => {
   <Button
     type="button"
     onClick={handleReset}
-    className={` ${!locationSearch ? 'w-24' : 'w-auto'} rounded-md bg-gradient-to-b from-[#a20f5c] to-[#d53287] text-white transition-all hover:brightness-110`}>
+    className={` ${!locationSearch ? 'md:w-24' : 'md:w-auto w-full'} rounded-md bg-gradient-to-b from-[#a20f5c] to-[#d53287] text-white transition-all hover:brightness-110`}>
     Limpiar
   </Button>
 ) : (
   <Button
     type="submit"
-    className={` ${!locationSearch ? 'w-24' : 'w-auto'} rounded-md bg-gradient-to-b from-[#a20f5c] to-[#d53287] text-white transition-all hover:brightness-110`}>
+    className={` ${!locationSearch ? 'md:w-24 ' : 'md:w-auto w-full'} rounded-md bg-gradient-to-b from-[#a20f5c] to-[#d53287] text-white transition-all hover:brightness-110`}>
     Buscar
   </Button>
 )}
