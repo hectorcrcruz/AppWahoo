@@ -20,6 +20,7 @@ import { ModalChatBox } from "../core/component/modal/modalChatBox";
 
 
 
+
 export const HomePage = () => {
    const { isAuthenticated } = useAuthStore()
    const [searchValues, setSearchValues] = useState<string | number | undefined>()
@@ -27,6 +28,10 @@ export const HomePage = () => {
    const navigate = useNavigate();
    const {dataList} = useGetList<Producto>({moduleRour: 'Producto', searchId: searchValues}) 
 
+
+
+
+  
  
   
   useEffect(() => {
@@ -34,6 +39,10 @@ export const HomePage = () => {
       navigate('/login');
     }
   }, [isAuthenticated, navigate]);
+
+
+
+
 
   if (!isAuthenticated) {
     return (
