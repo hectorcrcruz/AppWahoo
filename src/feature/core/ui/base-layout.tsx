@@ -7,7 +7,7 @@ import { Navbar } from './navbar'
 import { Wrapper } from './wrapper'
 import { IoMdPower, IoIosNotificationsOutline } from "react-icons/io";
 import { useAuth } from '@/feature/contex/AuthContext';
-import logoWhite from '@/feature/auth/assets/logoWhite.png'
+
 import dayjs from 'dayjs';
 import { useProductContext } from '@/feature/contex/buyNotifications';
 import { ModalBuyEarrings } from '../component/modal';

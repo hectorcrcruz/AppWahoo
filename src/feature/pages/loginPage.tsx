@@ -12,7 +12,7 @@ import { Link } from '../core/ui/Link';
 
 import { useParametrizacionContext } from '@/context/parametrizacionContext';
 import { Button, Spinner } from '../core';
-import { ModalSelectParametrizacion } from '../core/component/modal';
+
 
 
 
@@ -24,7 +24,7 @@ import { ModalSelectParametrizacion } from '../core/component/modal';
 
 export function LoginPage() {
   const {  login,error } = useAuth()
-  const [showModal, setshowModal] = useState(false)
+  
   const navigate = useNavigate()
   
   const { isAuthenticated } = useAuthStore() 
