@@ -11,7 +11,7 @@ import { useAuth } from '@/feature/contex/AuthContext';
 import dayjs from 'dayjs';
 import { useProductContext } from '@/feature/contex/buyNotifications';
 import { ModalBuyEarrings } from '../component/modal';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParametrizacionContext } from '@/context/parametrizacionContext';
 
 
@@ -23,6 +23,7 @@ export function BaseLayout({
   navBar = true,
 }: Readonly<BaseLayoutProps>) {
  const [showModal, setShowModal] = useState(false)
+ const [colorbg, setColorBg] = useState('blue')
   const date = new Date()
    const dateRep = ( dayjs(date).format('YYYY'))
   const { logout } = useAuth();
@@ -43,6 +44,16 @@ export function BaseLayout({
 
   const colorPrimary  = parametros?.colorPrimario
 
+  useEffect(() => {
+    if(colorPrimary !== undefined){
+      setColorBg(colorPrimary)
+    }
+    
+  }, [colorPrimary])
+  
+
+  
+
 
   return (
     <>
@@ -50,7 +61,7 @@ export function BaseLayout({
        {navBar && (  <Navbar /> )}
       <div className='flex w-full flex-col '>
         {header && (
-          <div className={`!bg-[${colorPrimary}] h-20 `}> 
+          <div style={{backgroundColor: colorbg}} className={` h-20 `}> 
            <button onClick={() => handleNavigate()} className='mx-auto flex justify-center mt-3 cursor-pointer' role='button' tabIndex={0} onKeyPress={(e) => { if (e.key === 'Enter' || e.key === ' ') handleNavigate(); }}>
               <img  src={parametros?.logo} alt='Logo'  className='w-48 h-auto'/>
            </button>

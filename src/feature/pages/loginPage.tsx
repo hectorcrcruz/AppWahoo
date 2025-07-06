@@ -4,7 +4,7 @@ import { Wrapper } from '../core/ui/wrapper';
 import { LoginForm } from '../auth/login';
 import { AuthValues } from '../core/types/user';
 import { useAuth, useAuthStore } from '../contex/AuthContext';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Alert } from '../core/ui/Alert';
 import { useNavigate } from 'react-router-dom';
 
@@ -24,6 +24,7 @@ import { Button, Spinner } from '../core';
 
 export function LoginPage() {
   const {  login,error } = useAuth()
+   const [colorBg, setColorBg] = useState('#3343a0')
   
   const navigate = useNavigate()
   
@@ -32,6 +33,7 @@ export function LoginPage() {
   const { parametros, loading} = useParametrizacionContext()
   const colorPrimary = parametros?.colorPrimario
 
+   
   // 
   
 
@@ -55,6 +57,15 @@ export function LoginPage() {
        }
 
 
+       useEffect(() => {
+        if(colorPrimary !== undefined){
+          setColorBg(colorPrimary)
+        }
+         
+       }, [colorPrimary])
+       
+
+
          if(loading || parametros?.nombreApp === undefined){
            return (<Spinner  className='fixed inset-0 flex items-center justify-center text-red-300' />)
          }
@@ -63,7 +74,7 @@ export function LoginPage() {
   return (
   
     <div className="min-h-screen w-auto items-center justify-center  flex "> 
-    <div className={`bg-[${colorPrimary}] w-full h-16 absolute top-0`}>
+    <div style={{backgroundColor: colorBg}} className={` w-full h-16 absolute top-0`}>
       <Button onClick={() =>  {localStorage.removeItem("id")
         window.location.reload()
       }} className='absolute top-3 bg-transparent'>
