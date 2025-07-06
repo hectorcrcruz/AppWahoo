@@ -4,7 +4,7 @@ import { Wrapper } from '../core/ui/wrapper';
 import { LoginForm } from '../auth/login';
 import { AuthValues } from '../core/types/user';
 import { useAuth, useAuthStore } from '../contex/AuthContext';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Alert } from '../core/ui/Alert';
 import { useNavigate } from 'react-router-dom';
 
