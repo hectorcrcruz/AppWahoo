@@ -29,9 +29,9 @@ export interface ListParams {
 
 
 type ListResponse = {
-   IdParametrizacion: number,
+   IdParametrizacion?: number,
 }
 
-export const getListParametrizacion = async (params:ListResponse) : Promise<ListParams> =>{
+export const getListParametrizacion = async (params?:ListResponse) : Promise<ListParams[]> =>{
     return await wahooApi.get('/Parametrizacion/ListParametrizacion', { params })
 } 

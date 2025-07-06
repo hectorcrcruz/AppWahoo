@@ -11,6 +11,7 @@ import { serviceSchemas } from "./createDinamicShema";
 import { useCreateData } from "./useCreateData";
 import { clearLabel } from "../../const/clearLabel";
 import { useGetList } from "../../services/useGetList";
+import { useParametrizacionContext } from "@/context/parametrizacionContext";
 
 
 
@@ -45,6 +46,8 @@ export const CreateComponent: React.FC<CreateComponentProps> = ({ label }) => {
     resolver: schema ? zodResolver(schema) : undefined,
     defaultValues: {},
   });
+
+   const { parametros} = useParametrizacionContext()
 
 
   if (!schema) {
@@ -120,7 +123,7 @@ export const CreateComponent: React.FC<CreateComponentProps> = ({ label }) => {
             <Button
               onClick={handleReset}
               type="button"
-              className="w-44 h-14 rounded-md bg-gradient-to-b from-[#a20f5c] to-[#d53287] text-white transition-all hover:brightness-110"
+              className={`w-44 h-14 rounded-md bg-[${parametros?.colorSecundario}] text-black transition-all hover:brightness-110`}
             >
               <ImCancelCircle /> Cancelar
             </Button>
@@ -128,7 +131,7 @@ export const CreateComponent: React.FC<CreateComponentProps> = ({ label }) => {
           <div>
             <Button
               type="submit"
-              className="w-44 h-14 rounded-md bg-gradient-to-b from-[#a20f5c] to-[#d53287] text-white transition-all hover:brightness-110"
+              className={`w-44 h-14 rounded-md bg-[${parametros?.colorSecundario}] text-black transition-all hover:brightness-110`}
             >
               <CiSaveDown1 /> Guardar
             </Button>

@@ -12,6 +12,7 @@ import dayjs from 'dayjs';
 import { useProductContext } from '@/feature/contex/buyNotifications';
 import { ModalBuyEarrings } from '../component/modal';
 import { useState } from 'react';
+import { useParametrizacionContext } from '@/context/parametrizacionContext';
 
 
 export function BaseLayout({
@@ -37,8 +38,10 @@ export function BaseLayout({
   }
 
   const { productNotificacion } = useProductContext();
+   const { parametros} = useParametrizacionContext()
+  
 
-
+  const colorPrimary  = parametros?.colorPrimario
 
 
   return (
@@ -47,9 +50,9 @@ export function BaseLayout({
        {navBar && (  <Navbar /> )}
       <div className='flex w-full flex-col '>
         {header && (
-          <div className='bg-primary-700 h-20 '> 
+          <div className={`!bg-[${colorPrimary}] h-20 `}> 
            <button onClick={() => handleNavigate()} className='mx-auto flex justify-center mt-3 cursor-pointer' role='button' tabIndex={0} onKeyPress={(e) => { if (e.key === 'Enter' || e.key === ' ') handleNavigate(); }}>
-              <img  src={logoWhite} alt='Logo'  className='w-48 h-auto'/>
+              <img  src={parametros?.logo} alt='Logo'  className='w-48 h-auto'/>
            </button>
            <div className='flex justify-end '>
            <IoMdPower onClick={() => handleLogout()}  className='text-white w-7 h-7 absolute top-6 2xl:top-8 mx-5 hover:text-gray-500 cursor-pointer' />

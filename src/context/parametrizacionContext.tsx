@@ -21,12 +21,17 @@ export const ParametrizacionProvider = ({
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+
+
   useEffect(() => {
+    const localStorageKey = `parametros-${idParametrizacion}`;
     const fetchParametros = async () => {
       try {
         setLoading(true);
-        const response = await getListParametrizacion({ IdParametrizacion: idParametrizacion });
-        setParametros(response);
+        const data = await getListParametrizacion({ IdParametrizacion: idParametrizacion });
+        setParametros(data[0]);
+        
+        localStorage.setItem(localStorageKey, JSON.stringify(data));
         setError(null);
       } catch (e) {
         setError("Error cargando la parametrización");

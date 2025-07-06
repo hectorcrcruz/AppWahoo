@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Modal } from '../../ui/Modal';
-import { IoIosCloseCircle } from "react-icons/io";
+import { getListParametrizacion, ListParams } from '../../services/listParametrizacionService';
+
 
 interface Props {
   onSelect: (id: number) => void;
@@ -8,11 +9,26 @@ interface Props {
 }
 
 export const ModalSelectParametrizacion: React.FC<Props> = ({ onSelect,   showModal }) => {
-  const opciones = [
-    { id: 1, nombre: 'DomiYa' },
-    { id: 2, nombre: 'SuperApp' },
-    { id: 3, nombre: 'Tienda X' }
-  ];
+
+   const [params, setParams] = useState<ListParams[]>()
+ 
+  
+  const getParametros = async () => {
+    try {
+       const resp = await getListParametrizacion()
+       setParams(resp)
+    } catch (error) {
+       console.log(error)
+    }
+
+  }
+
+
+
+  useEffect(() => {
+    getParametros()
+  }, [])
+  
 
   return (
    
@@ -21,13 +37,13 @@ export const ModalSelectParametrizacion: React.FC<Props> = ({ onSelect,   showMo
                    <Modal.Body>
                     <h2 className="text-xl mb-4 font-semibold">Selecciona tu parametrización</h2>
                        <ul className="space-y-2">
-          {opciones.map((opcion) => (
+          {params && params.map((opcion) => (
             <li key={opcion.id}>
               <button
                 className="w-full px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
                 onClick={() => onSelect(opcion.id)}
               >
-                {opcion.nombre}
+                {opcion.nombreApp}
               </button>
             </li>
           ))}
