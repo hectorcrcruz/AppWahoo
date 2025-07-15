@@ -2,7 +2,6 @@ import axios from 'axios'
 
 import {API_BASE_URL} from '@/feature/core/const/app'
 
-console.log('🚨 API_BASE_URL:', API_BASE_URL);
 
 export const wahooApi = axios.create({
   baseURL: API_BASE_URL
