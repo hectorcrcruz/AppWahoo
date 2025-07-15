@@ -8,7 +8,6 @@ import { useEffect, useState } from 'react';
 import { ModalSelectParametrizacion } from './feature/core/component/modal';
 
 function App() {
-
     const [idParam, setIdParam] = useState<number>(() => {
   const stored = localStorage.getItem("id");
   return stored ? Number(stored) : 0;
