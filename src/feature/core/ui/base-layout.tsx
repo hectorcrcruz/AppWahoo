@@ -6,7 +6,7 @@ import { BaseLayoutProps } from '../types/base-layout'
 import { Navbar } from './navbar'
 import { Wrapper } from './wrapper'
 import { IoMdPower, IoIosNotificationsOutline } from "react-icons/io";
-import { BiSolidCartAlt } from "react-icons/bi";
+import { GiShoppingCart } from "react-icons/gi";
 import { useAuth } from '@/feature/contex/AuthContext';
 
 import dayjs from 'dayjs';
@@ -75,7 +75,7 @@ export function BaseLayout({
            
            </div>
           <div className='flex justify-end '>
-           <BiSolidCartAlt  className='text-white w-7 h-7 absolute top-6 2xl:top-8 mx-28 hover:text-gray-500 cursor-pointer' />
+           <GiShoppingCart   className='text-white w-7 h-7 absolute top-6 2xl:top-8 mx-28 hover:text-gray-500 cursor-pointer' />
            {productNotificacion.length > 0 && (
             <button 
               onClick={() => setShowModal(true)} 
