@@ -24,7 +24,7 @@ type CreateComponentProps = {
 export const CreateComponent: React.FC<CreateComponentProps> = ({ label, idCustomer, ModalOpen }) => {
   const location = useLocation();
   const isUpdatePage = location.pathname.includes("/actualizarPage");
-  const isCreatePage = location.pathname.includes("/crearPage");  
+   
    const { id } = useParams();
  
 
