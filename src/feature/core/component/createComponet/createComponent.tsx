@@ -86,7 +86,7 @@ export const CreateComponent: React.FC<CreateComponentProps> = ({ label }) => {
         {`${isUpdatePage ? "Actualizar" : "Crear"} ${label}`}
       </h1>
       <form onSubmit={handleSubmit(onSubmit,errors => console.log(errors)) }>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:mt-5 pt-8 md:border-2 p-3 border-primary-200 h-80">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:mt-5 pt-8 md:border-2 p-3 border-primary-200 ">
           {fields.map((field) => (
             <div key={field}>
               <label>{clearLabel(field)}</label>

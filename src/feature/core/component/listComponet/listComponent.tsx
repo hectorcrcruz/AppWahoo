@@ -46,7 +46,7 @@ export const ListComponent = <T extends { id: number }>({ dataList , module}: Li
       cell: ({ getValue }) => <div className="text-center whitespace-nowrap">{String(getValue())}</div>,
     }),
     ...keys
-      .filter((key) => !["id","usuarioId", "estado", "usuarioAdd", "usuarioUp", "login", "password",  "fechaAdd", "fechaUp", 
+      .filter((key) => !["id","usuarioId", "estado", "usuarioAdd", "usuarioUp",  "circulacion" ,"login", "password",  "fechaAdd", "fechaUp", 
           "imagenUsuario", "direccionUsuario", "causacionPagos", "expedicionCedula", "tipoIdentificacionId","licenciaConduccion"].includes(String(key)))
       .map((key) =>
         columnHelper.accessor(key as any, {
