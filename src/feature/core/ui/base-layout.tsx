@@ -6,6 +6,7 @@ import { BaseLayoutProps } from '../types/base-layout'
 import { Navbar } from './navbar'
 import { Wrapper } from './wrapper'
 import { IoMdPower, IoIosNotificationsOutline } from "react-icons/io";
+import { BiSolidCartAlt } from "react-icons/bi";
 import { useAuth } from '@/feature/contex/AuthContext';
 
 import dayjs from 'dayjs';
@@ -71,14 +72,20 @@ export function BaseLayout({
 
            <div className='flex justify-end '>
            <IoIosNotificationsOutline  className='text-white w-7 h-7 absolute top-6 2xl:top-8 mx-16 hover:text-gray-500 cursor-pointer' />
+           
+           </div>
+          <div className='flex justify-end '>
+           <BiSolidCartAlt  className='text-white w-7 h-7 absolute top-6 2xl:top-8 mx-28 hover:text-gray-500 cursor-pointer' />
            {productNotificacion.length > 0 && (
             <button 
               onClick={() => setShowModal(true)} 
-              className='absolute top-5 md:top-6 2xl:top-7 right-20 bg-red-500 text-white rounded-full w-3 h-3 flex items-center justify-center text-xs font-bold'
+              className='absolute top-5 md:top-6 2xl:top-7 right-32 bg-red-500 text-white rounded-full w-3 h-3 flex items-center justify-center text-xs font-bold'
               type='button'
             />
            )}
            </div>
+
+
           </div>
         )}
         <Wrapper>

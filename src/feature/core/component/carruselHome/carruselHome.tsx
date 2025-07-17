@@ -140,33 +140,55 @@ export const CarruselHome:React.FC<CarruselHomeProps> = ({Producto}) => {
 
   return (
     <> 
-    <div className="w-10/12 justify-center mx-auto p-6  mt-5 mb-5">
-    <Slider {...settings }  className='  mr-4 '  >
-       { Producto.length > 0 ?  Producto.map((item) => (
-          <Card  key={item.id}  className="md:!w-10/12 justify-center md:mx-4 rounded-b-none !rounded-t-2xl border-primary-700">
-            <div className="flex justify-center pt-4">
-                {/* <img src={item.img} alt={item.title} className="w-72 h-48 object-cover rounded-md" /> */}
-                <span>{item.imagenProducto}</span>
-            </div>
-            <div className='text-center mt-3'>
-                <h1>{item.descripcionProducto}</h1>
-                <p className='font-medium'>{item.valorProducto}</p>
-                <p onClick={() => handleClick(item.id)}>Mas información <span className='font-bold hover:cursor-pointer'>aquí</span></p>
-            </div>
-            <div className='flex justify-center mt-4  '>
-                <Button type='button' onClick={() => handleBuy(item.id)} className='bg-gradient-to-b from-[#a20f5c] to-[#d53287] rounded-l-none rounded-r-none '>
-                  <GiShoppingCart />
-                  Añadir al carrito</Button>
-                <Button type='button' onClick={() => setShowModalBuy(true)} className='w-40 bg-gradient-to-b from-yellow-400 to-yellow-600 rounded-r-none rounded-l-none'>
-                  <FaShopify/>
-                  Comprar</Button>
-            </div>
-          </Card>
-      )): <div className='flex justify-center items-center h-96 w-full '>
-      <h1 className='text-2xl font-bold text-primary-700 text-center'>No hay productos disponibles</h1>
-      </div>}
-    </Slider>
-    </div>
+    <div className="w-11/12 mx-auto p-6 mt-5 mb-5">
+  <Slider {...settings}>
+    {Producto.length > 0 ? Producto.map((item) => (
+      <Card 
+        key={item.id} 
+        className="w-full max-w-sm mx-auto flex flex-col justify-between rounded-xl border border-primary-700"
+      >
+        <div className="flex justify-center pt-4">
+          {/* <img src={item.img} alt={item.title} className="w-72 h-48 object-cover rounded-md" /> */}
+          <span>{item.imagenProducto}</span>
+        </div>
+
+        <div className="text-center mt-3 px-4">
+          <h1 className="text-lg font-semibold">{item.descripcionProducto}</h1>
+          <p className="font-medium">{item.valorProducto}</p>
+          <p onClick={() => handleClick(item.id)} className="cursor-pointer">
+            Más información <span className="font-bold hover:underline">aquí</span>
+          </p>
+        </div>
+
+        <div className="grid grid-cols-2 gap-0 mt-4">
+          <Button 
+            type='button' 
+            onClick={() => handleBuy(item.id)} 
+            className="w-full bg-gradient-to-b from-[#a20f5c] to-[#d53287] rounded-tr-none rounded-br-none rounded-bl-lg rounded-tl-none  "
+          >
+            <GiShoppingCart />
+            Añadir al carrito
+          </Button>
+
+          <Button 
+            type='button' 
+            onClick={() => setShowModalBuy(true)} 
+            className="w-full bg-gradient-to-b from-yellow-400 to-yellow-600 rounded-r   rounded-br-xl rounded-tl-none rounded-bl-none   "
+          >
+            <FaShopify />
+            Comprar
+          </Button>
+        </div>
+      </Card>
+    )) : (
+      <div className="flex justify-center items-center h-96 w-full">
+        <h1 className="text-2xl font-bold text-primary-700 text-center">
+          No hay productos disponibles
+        </h1>
+      </div>
+    )}
+  </Slider>
+</div>
     <div>
       <ModalDetailProduct
       idProducto={idProducto}
