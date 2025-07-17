@@ -17,14 +17,20 @@ import { useParametrizacionContext } from "@/context/parametrizacionContext";
 
 type CreateComponentProps = {
   label: string | undefined;
+   idCustomer?: string | number;
+   ModalOpen?: boolean;
 };
 
-export const CreateComponent: React.FC<CreateComponentProps> = ({ label }) => {
+export const CreateComponent: React.FC<CreateComponentProps> = ({ label, idCustomer, ModalOpen }) => {
   const location = useLocation();
   const isUpdatePage = location.pathname.includes("/actualizarPage");
+  const isCreatePage = location.pathname.includes("/crearPage");  
    const { id } = useParams();
+ 
 
-
+   const customerId = isUpdatePage ? id : idCustomer
+ 
+    
    
 
   if (!label || !serviceSchemas[label]) {
@@ -32,7 +38,7 @@ export const CreateComponent: React.FC<CreateComponentProps> = ({ label }) => {
   }
 
   const {dataList, isLoading} = useGetList<any>({moduleRour: label}) 
-  const filterData = dataList.find((item: any) => item.id === Number(id));
+  const filterData = dataList.find((item: any) => item.id === Number(customerId));
   const { schema, postCreateForm } = useCreateData({ label , Update:isUpdatePage})
  
   type FormValues = z.infer<typeof schema>;
@@ -82,11 +88,12 @@ export const CreateComponent: React.FC<CreateComponentProps> = ({ label }) => {
 
   return (
     <div className="mt-1">
-      <h1 className="text-xl bg-primary-50 h-11 pl-2 pt-2 rounded-md">
+       {!ModalOpen && ( <h1 className="text-xl bg-primary-50 h-11 pl-2 pt-2 rounded-md">
         {`${isUpdatePage ? "Actualizar" : "Crear"} ${label}`}
-      </h1>
+      </h1> )} 
+      
       <form onSubmit={handleSubmit(onSubmit,errors => console.log(errors)) }>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:mt-5 pt-8 md:border-2 p-3 border-primary-200 ">
+        <div className={`grid grid-cols-1 md:grid-cols-3 gap-4 md:mt-5 pt-8 md:border-2 p-3  ${isUpdatePage ? 'border-primary-200' : 'border-none'}  `}>
           {fields.map((field) => (
             <div key={field}>
               <label>{clearLabel(field)}</label>
@@ -103,6 +110,7 @@ export const CreateComponent: React.FC<CreateComponentProps> = ({ label }) => {
                       {...field}
 
                       type={fieldType}
+                      disabled={!isUpdatePage}
                       className="border p-2 rounded w-full"
                       maxLength={fieldType === "text" ? 250 : 5}
                      
@@ -118,7 +126,9 @@ export const CreateComponent: React.FC<CreateComponentProps> = ({ label }) => {
             </div>
           ))}
         </div>
-        <div className="w-full justify-center space-x-3 md:space-x-0 md:justify-between mx-auto flex mt-10">
+      
+      {  !ModalOpen  &&  (<div  className="w-full justify-center space-x-3 md:space-x-0 md:justify-between mx-auto flex mt-10">
+         
           <div>
             <Button
               onClick={handleReset}
@@ -136,7 +146,8 @@ export const CreateComponent: React.FC<CreateComponentProps> = ({ label }) => {
               <CiSaveDown1 /> Guardar
             </Button>
           </div>
-        </div>
+        </div> )}
+        
       </form>
     </div>
   );

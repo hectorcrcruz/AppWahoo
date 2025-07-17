@@ -27,6 +27,7 @@ module:string
 export const ListComponent = <T extends { id: number }>({ dataList , module}: ListComponentProps<T>) => {
 
  const [showModal, setShowModal] = useState(false)
+ const [idCustomer, setIdCustomer] = useState<number | string>(0)
  const columnHelper = createColumnHelper<T>()
   
  const navigatee = useNavigate()
@@ -77,7 +78,9 @@ export const ListComponent = <T extends { id: number }>({ dataList , module}: Li
       cell: ({row}) => (
         <div className="flex justify-center space-x-4">
           <Tooltip text="Información">
-            <LuInfo onClick={() => setShowModal(true)} className="w-5 h-5 cursor-pointer text-[#a20f5c]" />
+            <LuInfo onClick={() => {setShowModal(true)
+              setIdCustomer(row.original.id)
+            }} className="w-5 h-5 cursor-pointer text-[#a20f5c]" />
           </Tooltip>
           <Tooltip text="Actualizar">
             <GrUpdate onClick={() => handleUpdate(module,row.original.id)}   className="w-5 h-5 cursor-pointer text-[#a20f5c]" />
@@ -150,7 +153,7 @@ export const ListComponent = <T extends { id: number }>({ dataList , module}: Li
       </section>
      
       <ModalActions 
-      
+        id={idCustomer} 
       title='Información'
       icon={<LuInfo className='h-10 w-10 text-primary' />}
       onSucces={() => setShowModal(false)}

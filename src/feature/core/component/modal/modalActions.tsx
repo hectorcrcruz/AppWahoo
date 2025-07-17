@@ -1,6 +1,8 @@
 
 import { Modal } from '@/feature/core/ui/Modal/Modal'
 import { Button } from '../../ui'
+import { CreateComponent } from '../createComponet'
+import { useParams } from 'react-router-dom'
 
 export interface ModalProps {
   showModal: boolean
@@ -8,10 +10,13 @@ export interface ModalProps {
   title: string
   icon: React.ReactElement
   description?: string
+  id: string | number
 }
 
 
-export const ModalActions:React.FC<ModalProps> = ({showModal, onSucces, title, icon}) => {
+export const ModalActions:React.FC<ModalProps> = ({showModal, onSucces, title, icon, id}) => {
+   
+    const { module } = useParams();
 
   return (
     <div>
@@ -37,11 +42,9 @@ export const ModalActions:React.FC<ModalProps> = ({showModal, onSucces, title, i
                 </div>
               </div>
             </div>
-            <div>
-              <span className='flex justify-center mt-6 mb-6'>
-                ¡Criterios creados correctamente!
-              </span>
-            </div>
+                 <div className="mt-5">  
+                   <CreateComponent idCustomer={id} label={module} ModalOpen={true} />
+                   </div>
 
             <div className='flex w-full justify-end'>
               <div>
