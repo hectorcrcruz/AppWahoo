@@ -13,7 +13,6 @@ const Tooltip: React.FC<TooltipProps> = ({
   children,
   text,
   position = 'top',
-  className,
   textClass
 }) => {
   const positionClasses = {
