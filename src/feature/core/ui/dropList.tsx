@@ -51,7 +51,7 @@ export default function DropList() {
         <IoIosMenu className="  font-medium   "  size={130} />  {!isMobile ? 'Menu' : ''}
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-72 max-h-screen h-full overflow-y-auto pb-3">
+      <DropdownMenuContent className="w-72 max-h-screen h-full overflow-y-auto pb-14">
         {arrayModules.map((module) => (
           <DropdownMenuItem className="hover:!bg-primary-100 hover:!text-white cursor-pointer " key={module.id} onClick={() => handleNavigate(module.name)}>
              { `Modulo de ${module.name}  `}

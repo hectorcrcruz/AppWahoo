@@ -14,7 +14,7 @@ type useProps = {
 
 export const useCreateData = ({ label, Update }: useProps) => {
 
-  console.log(Update)
+
      const navigate = useNavigate()
      const newUrlGet = arrayModules.find(module => module.name === label)
      const paramFilter = Update ?  newUrlGet?.pathPut: newUrlGet?.pathPost

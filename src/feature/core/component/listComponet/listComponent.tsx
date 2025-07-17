@@ -46,13 +46,19 @@ export const ListComponent = <T extends { id: number }>({ dataList , module}: Li
       cell: ({ getValue }) => <div className="text-center whitespace-nowrap">{String(getValue())}</div>,
     }),
     ...keys
-      .filter((key) => !["id","usuarioId", "estado", "usuarioAdd", "usuarioUp", "fechaAdd", "fechaUp"].includes(String(key)))
+      .filter((key) => !["id","usuarioId", "estado", "usuarioAdd", "usuarioUp", "login", "password",  "fechaAdd", "fechaUp", 
+          "imagenUsuario", "direccionUsuario", "causacionPagos", "expedicionCedula", "tipoIdentificacionId","licenciaConduccion"].includes(String(key)))
       .map((key) =>
         columnHelper.accessor(key as any, {
           header: () => {
             const headerText = String(key);
-            const truncatedHeader = headerText.length > 10 ? headerText.substring(0, 13) + "..." : headerText;
-            return <div className="font-normal text-center capitalize whitespace-nowrap">{truncatedHeader}</div>;
+            const truncatedHeader = headerText.length > 5 ? headerText.substring(0, 7) + "..." : headerText;
+            return <div className="font-normal text-center capitalize whitespace-nowrap ">
+              <Tooltip text={headerText}  position='bottom' 
+              >
+               {truncatedHeader}
+              </Tooltip>
+              </div>;
           },
           cell: ({ getValue }) => {
             const value = getValue();
