@@ -9,7 +9,7 @@ interface ModalDetailProductProps {
     showModal: boolean;
     onSucces: () => void;
     nombre: string;
-    icon: React.ReactElement;
+    icon: string
     valor:number
     description: string;
     idProducto:number
@@ -33,7 +33,7 @@ export const ModalDetailProduct:React.FC<ModalDetailProductProps> = ({showModal,
 
                     <div className="grid grid-cols-2 gap-4 mt-4 mb-4">
                         <div className="col-span-1 flex justify-center items-center w-full mr-4 h-32">
-                            {icon}
+                            <img src={icon} alt={nombre} className="w-24 h-24 object-cover rounded-md" />
                         </div>
                         <div className="col-span-1 flex justify-center items-center h-full w-full mr-4">
                             {description}

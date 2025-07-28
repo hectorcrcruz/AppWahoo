@@ -195,7 +195,7 @@ export const CarruselHome:React.FC<CarruselHomeProps> = ({Producto}) => {
         nombre={productForId?.descripcionProducto ?? ''}
         description={productForId?.detalleProducto ?? ''}
         valor={productForId?.valorProducto ?? 0}
-        icon={<FaClipboardQuestion  />} 
+        icon={productForId?.imagenProducto ?? ''} 
       />
     </div>
     <div>
