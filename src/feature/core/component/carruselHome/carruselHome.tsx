@@ -2,13 +2,12 @@ import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
 import { Button, Card } from '../../ui';
-import { FaClipboardQuestion } from "react-icons/fa6";
+import { FaClipboardQuestion , FaShopify} from "react-icons/fa6";
 
 
-import { FaAngleDoubleRight } from "react-icons/fa";
-import { FaAngleDoubleLeft } from "react-icons/fa";
+import { FaAngleDoubleRight, FaAngleDoubleLeft } from "react-icons/fa";
 import { GiShoppingCart } from "react-icons/gi";
-import { FaShopify } from "react-icons/fa6";
+
 import { Toaster, toast } from 'react-hot-toast'
 import { ModalDetailProduct, ModalPayProduct } from '../modal';
 import { useEffect, useMemo, useState } from 'react';
@@ -42,7 +41,7 @@ export interface Producto {
   descripcionProducto: string;
   stock: number;
   valorProducto: number;
-  imagenProducto: number;
+  imagenProducto: string;
   categoriaProductoId: number;
   detalleProducto:string
   usuarioAdd: string;
@@ -148,8 +147,7 @@ export const CarruselHome:React.FC<CarruselHomeProps> = ({Producto}) => {
         className="w-full max-w-sm mx-auto flex flex-col justify-between rounded-xl border border-primary-700"
       >
         <div className="flex justify-center pt-4">
-          {/* <img src={item.img} alt={item.title} className="w-72 h-48 object-cover rounded-md" /> */}
-          <span>{item.imagenProducto}</span>
+           <img src={item.imagenProducto} alt={item.descripcionProducto} className="w-72 h-48 object-cover rounded-md" /> 
         </div>
 
         <div className="text-center mt-3 px-4">

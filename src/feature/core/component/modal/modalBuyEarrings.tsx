@@ -110,7 +110,11 @@ export const ModalBuyEarrings:React.FC<ModalBuyProductProps> = ({showModal,onSuc
               <div  key={item.id} className="mx-1"> 
                 <Card  className="w-[250px] mx-auto border border-primary-200 shadow-md rounded-xl flex flex-col justify-between p-4 ">
                   <div className="text-center mb-2">
-                    <small className="text-gray-400 block">No tiene imagen</small>
+                    <img
+                      src={item.imagenProducto}
+                      alt={item.descripcionProducto}
+                      className="w-72 h-48 object-cover rounded-md"
+                    />
                   </div>
                   <div className="text-center space-y-1">
                     <h2 className="font-medium text-base">
