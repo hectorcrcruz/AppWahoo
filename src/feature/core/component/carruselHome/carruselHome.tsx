@@ -2,7 +2,7 @@ import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
 import { Button, Card } from '../../ui';
-import { FaClipboardQuestion , FaShopify} from "react-icons/fa6";
+import { FaShopify} from "react-icons/fa6";
 
 
 import { FaAngleDoubleRight, FaAngleDoubleLeft } from "react-icons/fa";
