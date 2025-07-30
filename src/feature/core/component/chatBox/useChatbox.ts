@@ -4,10 +4,14 @@ const socket = io("https://chatboxwhaoo.onrender.com", {
   transports: ["websocket"],
    autoConnect: true,
 });
+
+const roomId = socket.id || crypto.randomUUID();
+
+
+
 socket.on("connect", () => {
   console.log("Socket conectado con ID:", socket.id);
-
-  
+  socket.emit("join_room", roomId);
 });
 
 socket.on("connect_error", (err) => {
