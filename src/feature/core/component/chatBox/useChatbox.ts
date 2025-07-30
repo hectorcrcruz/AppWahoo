@@ -19,6 +19,10 @@ socket.on("connect_error", (err) => {
 
 });
 
+socket.on("receive_message", (data) => {
+  console.log("💬 Mensaje recibido del bot:", data);
+});
+
 // socket.on("receive_message", (data) => {
 //   console.log("Socket conectado con ID:", data);
 // });

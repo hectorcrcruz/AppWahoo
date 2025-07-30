@@ -21,7 +21,7 @@ export const ChatBox = () => {
   useEffect(() => {
     socket.on("connect", () => {
       setMySocketId(socket.id as any);
-      socket.emit("join_room", "chatroom");
+      socket.emit("join_room", socket.id);
     });
 
     socket.on(
