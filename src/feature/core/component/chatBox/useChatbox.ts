@@ -12,7 +12,6 @@ socket.on("connect_error", (err) => {
   console.error("❌ Error de conexión con Socket.IO:", err);
 });
 
-
 // socket.on("receive_message", (data) => {
 //   console.log("Socket conectado con ID:", data);
 // });
