@@ -31,24 +31,22 @@ export const ChatBox = () => {
       );
     });
 
-    socket.on(
-      "receive_message",
-      (data: { message: string; sender: string; timestamp: string }) => {
-
-        if(data.sender !== 'bot') return 
-         const nuevo = {
-          mensaje: data.message,
-          usuario:
-            data.sender === "bot"
-              ? "Asesor"
-              : data.sender === mySocketId
-              ? "Tú"
-              : "Otro usuario",
-          fecha: data.timestamp,
-        };
-        setChat((prev) => [...prev, nuevo]);
-      }
-    );
+  socket.on(
+  "receive_message",
+  (data: { message: string; sender: string; timestamp: string }) => {
+    const nuevo = {
+      mensaje: data.message,
+      usuario:
+        data.sender === "bot"
+          ? "Asesor"
+          : data.sender === mySocketId
+          ? "Tú"
+          : "Otro usuario",
+      fecha: data.timestamp,
+    };
+    setChat((prev) => [...prev, nuevo]);
+  }
+);
 
     return () => {
       socket.off("receive_message");
