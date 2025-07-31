@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import socket from './useChatbox';
 import { FaUserLarge } from "react-icons/fa6";
 import { InputField } from '../../ui/InputField';
+import { useAuth } from '@/feature/contex/AuthContext';
 
 
 type Mensaje = {
@@ -15,13 +16,19 @@ export const ChatBox = () => {
   const [chat, setChat] = useState<Mensaje[]>([]);
   const [mySocketId, setMySocketId] = useState<string | null>(null);
 
+  const { user } = useAuth();
+
    
+  
+
    
 
   useEffect(() => {
     socket.on("connect", () => {
       setMySocketId(socket.id as any);
-      socket.emit("join_room", socket.id);
+      socket.emit("join_room", user.token
+        
+      );
     });
 
     socket.on(
@@ -60,7 +67,7 @@ export const ChatBox = () => {
     setChat((prev) => [...prev, nuevoMensaje]); 
 
     socket.emit("send_message", {
-      room: "chatroom",
+       room: user.token,
       message: message,
     });
 
