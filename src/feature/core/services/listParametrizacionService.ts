@@ -17,6 +17,7 @@ export interface ListParams {
     colorBotonCrear: string,
     colorBotonActualizar: string,
     colorBotonEliminar: string,
+    backgroundImagen:string,
     colorTexto: string,
     tipoLetra: string,
     textoPrimario: string,

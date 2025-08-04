@@ -66,7 +66,7 @@ export function LoginPage() {
           <div className="col-span-7 hidden mx-auto h-full md:flex items-center justify-center">
             <picture>
               <img
-                src={parametros.logo}
+                src={parametros.backgroundImagen}
                 alt="backgroundLogin"
                 className="w-9/12 h-9/12 2xl:w-10/12 2xl:h-10/12 mx-20 2xl:mx-16 object-cover"
               />
