@@ -62,7 +62,7 @@ export const CreateComponent: React.FC<CreateComponentProps> = ({ label, idCusto
 
       formData.append("file", file);
       formData.append("fechaAdd", new Date().toISOString());
-      formData.append("usuarioAdd", "34234"); // <- puedes usar un valor real si lo tienes
+      formData.append("usuarioAdd", "34234"); 
 
       postCreateForm(formData as any);
     } else {
