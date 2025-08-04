@@ -31,6 +31,14 @@ export const serviceSchemas = {
       message: 'Fecha inválida',
     }),
   }),
+
+  AzureBlob: z.object({
+    file: z
+      .any()
+      .refine((file) => file instanceof FileList && file.length > 0, {
+        message: "Debe seleccionar un archivo",
+      }),
+  }),
  
   CategoriaProducto: z.object({
     id: z.preprocess((val) => Number(val), z.number()),

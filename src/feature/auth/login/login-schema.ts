@@ -5,7 +5,7 @@ const minExpeditionDate = new Date();
 minExpeditionDate.setFullYear(today.getFullYear() - 18);
 
 export const loginSchema = z.object({
-  numberIdentification: z.string().min(1, 'El nombre de usuario es obligatorio'),
+  username: z.string().min(1, 'El nombre de usuario es obligatorio'),
   password: z.string().min(1, 'La contraseña es obligatoria')
 })
 export type Login = z.infer<typeof loginSchema>

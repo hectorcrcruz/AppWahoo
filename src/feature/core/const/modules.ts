@@ -203,6 +203,12 @@ export const arrayModules = [
     name: "Usuario",
     pathGet: "Usuario/ListUsuario",
     pathPost: "Usuario/CreateUsuario"
+  },
+   {
+    id: 34,
+    name: "AzureBlob",
+    pathGet: "AzureBlob/ListAzureBlog",
+    pathPost: "AzureBlob/UploadFile"
   }
 ].map(module => ({
   ...module,

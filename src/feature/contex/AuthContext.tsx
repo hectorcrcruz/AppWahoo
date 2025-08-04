@@ -4,7 +4,7 @@ import { useBoundStore } from "@/store";
 import { shallow } from 'zustand/shallow'
 import { Spinner } from "../core";
 import { AuthValues } from "../core/types/user";
-import { v4 as uuidv4 } from 'uuid';
+import { login as loginWithApi } from "./auth";
 
 
 type ActionCallback = () => void
@@ -34,30 +34,30 @@ export const AuthProvider: React.FC<ProviderProps> = ({children}) => {
 const useAuthProvider = (): AuthContextValue => {
    const authStore: AuthSlice = useBoundStore(
     ({
-      
       isAuthenticated,
       loggedInDate,
-      login,
-      logout,
-      firstName,
-      lastName,
-      roleId,
-      roleName,
+      setLogin,
+      setLogout,
+      nombreUsuario,
+      apellidoUsuario,
+      id,
       token,
-      userId
-      
-       
+      message,
+      login,
+      password
+
    }) => ({
-    isAuthenticated,
+      isAuthenticated,
       loggedInDate,
-      login,
-      logout,
-      firstName,
-      lastName,
-      roleId,
-      roleName,
+      setLogin,
+      setLogout,
+      nombreUsuario,
+      apellidoUsuario,  
+      id,
       token,
-      userId
+      message,
+      login,
+      password
    }),
    shallow
   )
@@ -72,16 +72,20 @@ const useAuthProvider = (): AuthContextValue => {
     setIsLoggingIn(true)
     setError('')
     try {
-     const mockUser = {
-      userId: '1',
-      firstName:values.numberIdentification,
-      lastName: values.numberIdentification, 
-      roleName: 'admin',
-      roleId: '1',
-      token: uuidv4(),
-     }
-     localStorage.setItem('user', values.numberIdentification)
-      authStore.login({ ...mockUser });
+    const response = await loginWithApi(values)
+
+    // Mapea los campos correctamente según lo que espera setLogin
+    const mappedData = {
+      id: response.id,
+      token: response.token,
+      nombreUsuario: response.nombreUsuario,
+      apellidoUsuario: response.apellidoUsuario,
+      login: response.login,
+      password: response.password,
+      message: response.message ?? "",
+    }
+
+    authStore.setLogin(mappedData)
      callback?.()
     } catch (error) {
        console.log(error)
@@ -95,7 +99,7 @@ const useAuthProvider = (): AuthContextValue => {
 
 
   const logout: AuthContextValue['logout'] = (callback) => {
-    authStore.logout()
+    authStore.setLogout()
     callback?.()
   }
 
@@ -103,12 +107,15 @@ const useAuthProvider = (): AuthContextValue => {
     user: {
       isAuthenticated: authStore.isAuthenticated,
       token: authStore.token,
-      roleName: authStore.roleName,
-      userId: authStore.userId,
       loggedInDate: authStore.loggedInDate,
-      firstName: authStore.firstName,
-      lastName: authStore.lastName,
-      roleId: authStore.roleId
+      nombreUsuario: authStore.nombreUsuario,
+      apellidoUsuario: authStore.apellidoUsuario,
+      id: authStore.id,
+      // Add missing AuthState properties with default values or from authStore
+      login: authStore.login ?? "",
+      password: authStore.password ?? "",
+      message: authStore.message ?? "",
+    
     },
     login,
     isLoggingIn,
@@ -123,14 +130,24 @@ const useAuthProvider = (): AuthContextValue => {
 export const useAuth = (): AuthContextValue => useContext(AuthContext)
 export const useAuthStore = (): Omit<AuthState, 'token' | 'refreshToken'> =>
   useBoundStore(
-    ({ isAuthenticated, loggedInDate, firstName, lastName, roleId, roleName, userId }) => ({
+    ({
       isAuthenticated,
       loggedInDate,
-      firstName,
-      lastName,
-      roleId,
-      roleName,
-      userId
+      nombreUsuario,
+      apellidoUsuario,
+      id,
+      login,
+      password,
+      message
+    }) => ({
+      isAuthenticated,
+      loggedInDate,
+      nombreUsuario,
+      apellidoUsuario,
+      id,
+      login,
+      password,
+      message
     }),
     shallow
   )

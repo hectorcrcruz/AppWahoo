@@ -25,11 +25,12 @@ export const UserSchema = z.object({
 })
 
 export const AuthUserSchema = z.object({
-  userId: z.string(),
-  firstName: z.string().optional(),
-  lastName: z.string(),
-  roleId: z.string(),
-  roleName: z.string(),
+  id: z.string(),
+  nombreUsuario: z.string().optional(),
+  apellidoUsuario: z.string(),
+  login: z.string(),
+  password: z.string(),
+  message: z.string(),
   token: z.string(),
 })
 

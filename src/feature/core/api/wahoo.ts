@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 import {API_BASE_URL} from '@/feature/core/const/app'
+import { useBoundStore } from '@/store'
 
 
 export const wahooApi = axios.create({
@@ -19,11 +20,11 @@ export const wahooApi = axios.create({
 
  wahooApi.interceptors.request.use((config) => {
    // Aquí puedes obtener el token cuando el login esté implementado
-  // const { token } = useBoundStore.getState();
+  const { token } = useBoundStore.getState();
   
-  // if (token) {
-  //   config.headers.Authorization = `Bearer ${token}`;
-  // }
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
 
    return config
  })

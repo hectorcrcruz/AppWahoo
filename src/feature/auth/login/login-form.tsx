@@ -39,9 +39,9 @@ export const LoginForm:React.FC<LoginFormProps> = ({className, onSuccess}) => {
         <InputField 
          type='number'
           label='Número de documento'
-         {...register('numberIdentification')}
+         {...register('username')}
           className='text-sm rounded-md '
-          error={errors.numberIdentification?.message}
+          error={errors.username?.message}
         
         />
       </div>

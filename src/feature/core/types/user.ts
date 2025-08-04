@@ -8,7 +8,7 @@ export type User = z.infer<typeof UserSchema>
 export type AuthUser = z.infer<typeof AuthUserSchema>
 
 export interface AuthValues {
-  numberIdentification: string
+  username: string
   password: string
 } 
 

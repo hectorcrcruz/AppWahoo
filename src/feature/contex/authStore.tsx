@@ -20,8 +20,8 @@ export interface AuthState extends Nulleable<AuthUser> {
 
 
 export interface AuthActions {
-  login: (user:  AuthUser) => void;
-  logout: () => void;
+   setLogin: (params: AuthUser) => void
+  setLogout: () => void
 }
 
 export type AuthSlice = AuthState & AuthActions
@@ -30,24 +30,25 @@ export type AuthSlice = AuthState & AuthActions
 const initialState: AuthState = {
   isAuthenticated: false,
   loggedInDate: null,
-  firstName: null,
-  lastName: null,
-  roleId: null,
-  roleName: null,
+  apellidoUsuario: null,
+  nombreUsuario: null,
+  id: null,
+  login: null,
   token: null,
-  userId: null
+  password: null,
+  message: null,
 }
 
 export  const createAuthSlice: StateCreator<AuthSlice> = (set) => ({
   ...initialState,
-  login(newState){
+  setLogin(newState){
     set({
       isAuthenticated: true,
       loggedInDate: new Date(),
         ...newState,
     })
   },
-  logout() {
+  setLogout() {
       set(initialState)
   },
 })
