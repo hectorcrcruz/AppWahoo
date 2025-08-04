@@ -11,7 +11,7 @@ import { useParametrizacionContext } from '@/context/parametrizacionContext';
 import { Button, Spinner } from '../core';
 
 export function LoginPage() {
-  const { login, error, isLoggingIn } = useAuth();
+  const { login, error } = useAuth();
   const [colorBg, setColorBg] = useState('#3343a0');
 
   const navigate = useNavigate();
