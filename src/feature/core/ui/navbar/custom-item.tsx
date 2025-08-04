@@ -2,7 +2,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { CustomItemProps } from '../../types'
 import { TextIcon } from '../text-icon'
 
-import logo from '@/feature/auth/assets/logoType.png'
+import logo from '@/assets/imagenFondoLogo.png'
 
 
 export const CustomItem = ({
