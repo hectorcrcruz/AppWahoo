@@ -64,7 +64,7 @@ export function BaseLayout({
         {header && (
           <div style={{backgroundColor: colorbg}} className={` h-20 `}> 
            <button onClick={() => handleNavigate()} className='mx-auto flex justify-center mt-3 cursor-pointer' role='button' tabIndex={0} onKeyPress={(e) => { if (e.key === 'Enter' || e.key === ' ') handleNavigate(); }}>
-              <img  src={parametros?.logo} alt='Logo'  className='w-48 h-auto'/>
+              <img  src={parametros?.logo} alt='Logo'  className=' w-24 pt-4  mr-10 md:mr-0 md:pt-0 md:w-48 h-auto'/>
            </button>
            <div className='flex justify-end '>
            <IoMdPower onClick={() => handleLogout()}  className='text-white w-7 h-7 absolute top-6 2xl:top-8 mx-5 hover:text-gray-500 cursor-pointer' />

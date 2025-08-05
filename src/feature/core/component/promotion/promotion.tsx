@@ -26,22 +26,22 @@ export const Promotion:React.FC<PromotionProps> = ({OnchagueValues, searchValues
 
   return (
     <div>
-       <div className='bg-primary-50 h-12 p-2 rounded-md mr-4 ml-4 mt-5'> 
+       <div className='bg-primary-50 h-auto p-2 rounded-md mr-4 ml-4 mt-5'> 
         <h1 className='w-full text-lg '>Promociones y descuentos especiales</h1>
         </div>
-        <div className='grid  grid-cols-1 md:grid-cols-3 gap-4 justify-center mx-auto mt-5' style={{
+        <div className='grid  grid-cols-1     md:grid-cols-1  gap-4 h-14 md:h-40 lg:h-48 justify-center mx-auto mt-5' style={{
           backgroundImage: `url(${dataList[0]?.imagenPromocion})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
         }}>
             
-            <div className='text-center   col-span-3 justify-center mx-auto '> 
-             <span className='text-center font-medium' >Promociones en  <br /> la Regatta en:
-                Camarones <br />
-                Langostas <br />
-                Ostiones <br />
+            <div className='text-center    w-48   leading-none mx-auto md:w-auto md:col-span-3   justify-center item-center  md:flex flex-col '> 
+             <span className='text-center    font-medium text-xs  md:text-2xl md:w-5/12 justify-center mx-auto' >Promociones en   la Regatta en:
+                Camarones 
+                Langostas 
+                Ostiones 
                 Cazuelas de Mariscos
-
              </span>
              </div>
             </div>
