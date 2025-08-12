@@ -10,7 +10,7 @@ import { CustomNextArrow, CustomPrevArrow } from "../carruselHome/carruselHome";
 import Tooltip from "../../ui/Tooltip/Tooltip";
 import { MdDelete } from "react-icons/md";
 import { FaShopify} from "react-icons/fa6";
-import { ModalTypePay } from "../modal/modaltypePay";
+import { ModalTypePay } from "../modal/modalTypePay";
 import { useNavigate } from "react-router-dom";
 
 
