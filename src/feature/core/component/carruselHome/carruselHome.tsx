@@ -62,7 +62,7 @@ export const CarruselHome:React.FC<CarruselHomeProps> = ({Producto}) => {
 
   const [idProducto, setIdProducto] = useState(0);
   const [showModal, setShowModal] = useState(false);
-  const [showModalBuy, setShowModalBuy] = useState(false)
+  
   const [product, setProduct] = useState<Producto[]>([])
   const {  setTotalProductos ,setProductNotificacion, productNotificacion } = useProductContext();
 

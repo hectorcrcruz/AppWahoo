@@ -6,8 +6,7 @@ import { useForm, Controller } from 'react-hook-form'
 import { z } from 'zod'
 import { FormRegisterUser, buyRegister } from './login-schema'
 import { FaUser } from "react-icons/fa"
-import { GiShoppingCart } from "react-icons/gi";
-import { useAuth } from '@/feature/contex/AuthContext'
+import { GiShoppingCart } from "react-icons/gi"
 import { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 
