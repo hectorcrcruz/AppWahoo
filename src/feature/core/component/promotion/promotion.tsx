@@ -4,12 +4,13 @@ import { SearchComponent } from '../searchComponent/searchComponent'
 import { useGetList } from '../../services/useGetList';
 
 interface PromotionItem {
-  imagenPromocion?: string;
+  imagenPrimariaPromocion?: string;
+  imagenSecundariaPromocion?: string;
   codigoPromocional: string;
   descripcionPromocion: string;
   usuarioAdd?: string;
   usuarioUp?: string;
-  // agrega aquí otras propiedades si es necesario
+
 }
 
 interface PromotionProps {
@@ -29,23 +30,20 @@ export const Promotion:React.FC<PromotionProps> = ({OnchagueValues, searchValues
        <div className='bg-primary-50 h-auto p-2 rounded-md mr-4 ml-4 mt-5'> 
         <h1 className='w-full text-lg '>Promociones y descuentos especiales</h1>
         </div>
-        <div className='grid  grid-cols-1     md:grid-cols-1  gap-4 h-14 md:h-40 lg:h-48 justify-center mx-auto mt-5' style={{
-          backgroundImage: `url(${dataList[0]?.imagenPromocion})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-        }}>
+        <div className='grid  grid-cols-1     md:grid-cols-3  gap-4 h-14 md:h-40 lg:h-48 justify-center mx-auto mt-5' >
+          <div className=' col-span-1  flex   justify-center item-center  '>
+            <img src={dataList[0]?.imagenPrimariaPromocion} alt='Promoción' className=' h-14 md:h-32 lg:h-40  w-full  md:w-96 lg:w-full  mx-auto object-cover '/>
+          </div>
             
-            <div className='text-center    w-48   leading-none mx-auto md:w-auto md:col-span-3   justify-center item-center  md:flex flex-col '> 
-             <span className='text-center    font-medium text-xs  md:text-2xl md:w-5/12 justify-center mx-auto' >Promociones en   la Regatta en:
-                Camarones 
-                Langostas 
-                Ostiones 
-                Cazuelas de Mariscos
-             </span>
+            <div className=' col-span-1  text-center    w-48   leading-none mx-auto md:w-auto   justify-center item-center  md:flex flex-col '> 
+             <span className='text-center    font-medium text-xs  md:text-2xl md:w-5/12 justify-center mx-auto' >{dataList[0]?.descripcionPromocion}</span>
+      
+             </div>
+             <div className=' col-span-1  flex   justify-center item-center   '>
+               <img src={dataList[0]?.imagenSecundariaPromocion} alt='Promoción' className=' h-14 md:h-32 lg:h-40  w-full  md:w-96 lg:w-full  mx-auto object-cover '/>
              </div>
             </div>
-        <div className='bg-primary-50  md:h-16 p-2 rounded-md mr-4 ml-4 mt-10  '>  
+        <div className='bg-primary-50  md:h-16 p-2 rounded-md mr-4 ml-4 mt-32 md:mt-10  '>  
              <SearchComponent  
                onSearch={(values) => {
                 OnchagueValues(values.id)

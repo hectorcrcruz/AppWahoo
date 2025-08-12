@@ -5,60 +5,77 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   Button
-} from "@/feature/core/ui"
-import { IoIosMenu } from "react-icons/io"; // Asegúrate de importar correctamente
-import { arrayModules } from "../const/modules";
-import { useNavigate } from "react-router-dom";
+} from "@/feature/core/ui";
+import { IoIosMenu } from "react-icons/io";
 import { useEffect, useState } from "react";
+import { useParametrizacionContext } from "@/context/parametrizacionContext";
+import { useGetList } from "../services/useGetList";
+import { useAuth } from "@/feature/contex/AuthContext";
 
+
+export interface DropListProps {
+   descripcionCategoriaProducto:string
+    id: number
+    estado:number
+    usuarioAdd: string
+    usuarioUp: string
+    fechaAdd: string  
+    fechaUp: string
+
+}
 
 
 
 export default function DropList() {
-
-  const navigate = useNavigate();
-
-
-
-  const handleNavigate = (module: string) => {
-    navigate(`/home/${module}`);
-  }
-
-
+  const { parametros } = useParametrizacionContext();
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const { dataList } = useGetList<DropListProps>({ moduleRour: "CategoriaProducto" });
+  const { user } = useAuth();
 
-
-  
- 
-
-
-
-     useEffect(() => {
-        const handleResize = () => {
-          setIsMobile(window.innerWidth < 768);
-        };
-    
-        window.addEventListener("resize", handleResize);
-        return () => window.removeEventListener("resize", handleResize);
-      }, []);
-
-  
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button className="px-4 py-2 bg-primary-700 text-white rounded md:text-lg w-33 ">
-        <IoIosMenu className="  font-medium   "  size={130} />  {!isMobile ? 'Menu' : ''}
+        <Button style={{ backgroundColor: parametros?.colorPrimario }}
+                className="px-4 py-2 text-white rounded-md shadow-none md:text-lg">
+          <IoIosMenu size={24} /> {!isMobile && "Menu"}
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-72 max-h-screen h-full overflow-y-auto pb-14">
-        {arrayModules.map((module) => (
-          <DropdownMenuItem className="hover:!bg-primary-100 hover:!text-white cursor-pointer " key={module.id} onClick={() => handleNavigate(module.name)}>
-             { `Modulo de ${module.name}  `}
+      <DropdownMenuContent
+        className="
+          w-60 bg-white rounded-md shadow-xl
+          h-screen overflow-y-auto
+          
+          transition-all duration-300 ease-in-out
+          max-h-0 data-[state=open]:max-h-screen
+        "
+        onCloseAutoFocus={(e) => e.preventDefault()} // evita el foco al cerrar:contentReference[oaicite:1]{index=1}
+      >
+        {dataList.map((module) => (
+          <DropdownMenuItem key={module.id}
+                            className="hover:!bg-primary-200 hover:text-white cursor-pointer">
+            <h1 className="text-lg hover:text-xl">{module.descripcionCategoriaProducto}</h1>
+            <span>›</span>
           </DropdownMenuItem>
         ))}
-        <DropdownMenuSeparator />
+
+        <DropdownMenuSeparator className="my-2" />
+
+       
+        <DropdownMenuItem
+         
+          className=" mx-auto items-end"
+        >
+          <h1 className="text-md">
+            {`Bienvenido ${user?.nombreUsuario }`}</h1>
+         
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
-  )
+  );
 }

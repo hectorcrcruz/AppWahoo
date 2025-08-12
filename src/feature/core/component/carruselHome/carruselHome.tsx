@@ -1,17 +1,20 @@
-import Slider from 'react-slick';
+
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
-import { Button, Card } from '../../ui';
-import { FaShopify} from "react-icons/fa6";
+import { Button } from '../../ui';
+
+
 
 
 import { FaAngleDoubleRight, FaAngleDoubleLeft } from "react-icons/fa";
 import { GiShoppingCart } from "react-icons/gi";
 
 import { Toaster, toast } from 'react-hot-toast'
-import { ModalDetailProduct, ModalPayProduct } from '../modal';
+import { ModalDetailProduct } from '../modal';
 import { useEffect, useMemo, useState } from 'react';
 import { useProductContext } from '@/feature/contex/buyNotifications';
+import Tooltip from "../../ui/Tooltip/Tooltip";
+
 
 export const CustomPrevArrow = (props) => {
   const { className, style, onClick } = props;
@@ -65,37 +68,7 @@ export const CarruselHome:React.FC<CarruselHomeProps> = ({Producto}) => {
 
   const productForId = Producto.find((item) => item.id === idProducto);
 
-    const settings = {
-        dots: true,  // Muestra los puntos de navegación
-        infinite: Producto.length > 3,  // Permite el desplazamiento infinito
-        speed: 500,  // Velocidad de transición
-        slidesToShow: Math.min(3, Producto.length),  // Número de slides visibles
-        slidesToScroll: 1,  // Número de slides que se desplazan
-        autoplay: true,  // Activa el auto-slide
-        autoplaySpeed: 3000,  // Tiempo entre cada slide
-        prevArrow: <CustomNextArrow  />,
-        nextArrow: <CustomPrevArrow  />,
-        responsive: [
-          {
-            breakpoint: 1024,
-            settings: {
-              slidesToShow: Math.min(2, Producto.length),
-              slidesToScroll: 2,
-              infinite: Producto.length > 2,
-              dots: true
-            }
-          },
-          {
-            breakpoint: 600,
-            settings: {
-              slidesToShow: 1,
-              slidesToScroll: 1,
-              initialSlide: 1
-            }
-          }
-        ]
-
-      };
+ 
 
       const handleClick = (itemId: number) => {
         setIdProducto(itemId)
@@ -139,45 +112,41 @@ export const CarruselHome:React.FC<CarruselHomeProps> = ({Producto}) => {
 
   return (
     <> 
-    <div className="w-11/12 mx-auto p-6 mt-5 mb-5">
-  <Slider {...settings}>
+    
+  <div className="w-full h-full grid md:grid-cols-3 justify-center items-center"> 
     {Producto.length > 0 ? Producto.map((item) => (
-      <Card 
-        key={item.id} 
-        className="w-full max-w-sm mx-auto flex flex-col justify-between rounded-xl border border-primary-700"
-      >
-        <div className="flex justify-center pt-4">
-           <img src={item.imagenProducto} alt={item.descripcionProducto} className="w-72 h-48 object-cover rounded-md" /> 
-        </div>
-
-        <div className="text-center mt-3 px-4">
-          <h1 className="text-lg font-semibold">{item.descripcionProducto}</h1>
-          <p className="font-medium">{item.valorProducto}</p>
-          <p onClick={() => handleClick(item.id)} className="cursor-pointer">
-            Más información <span className="font-bold hover:underline">aquí</span>
-          </p>
-        </div>
-
-        <div className="grid grid-cols-2 gap-0 mt-4">
-          <Button 
-            type='button' 
-            onClick={() => handleBuy(item.id)} 
-            className="w-full bg-gradient-to-b from-[#a20f5c] to-[#d53287] rounded-tr-none rounded-br-none rounded-bl-lg rounded-tl-none  "
+       <div key={item.id} className="flex flex-col items-center mt-10">
+    <div onClick={() => handleClick(item.id)} className="overflow-hidden rounded-md">
+      <img
+        src={item.imagenProducto}
+        alt={item.descripcionProducto}
+        className="
+          w-72 h-48 object-cover
+          transform transition-transform duration-300
+          hover:scale-125 hover:shadow-md hover:cursor-pointer
+        "
+      />
+    </div>
+    <div className="mt-2 w-72 flex flex-col items-start">
+      <h1 className="font-semibold">{item.descripcionProducto}</h1>
+      <div className="flex items-center justify-between w-full mt-1">
+        <span className="font-semibold text-lg"> {` $${item.valorProducto}`}</span>
+        <div className="flex gap-2">
+          
+          <Tooltip text="Añadir al carrito" >
+          <Button
+            type="button"
+            onClick={() => handleBuy(item.id)}
+            className="w-10 h-10 bg-gradient-to-b from-[#a20f5c] to-[#d53287] rounded-full flex items-center justify-center transition-shadow shadow-sm hover:shadow-lg"
           >
             <GiShoppingCart />
-            Añadir al carrito
           </Button>
-
-          <Button 
-            type='button' 
-            onClick={() => setShowModalBuy(true)} 
-            className="w-full bg-gradient-to-b from-yellow-400 to-yellow-600 rounded-r   rounded-br-xl rounded-tl-none rounded-bl-none   "
-          >
-            <FaShopify />
-            Comprar
-          </Button>
+          </Tooltip>
         </div>
-      </Card>
+      </div>
+    </div>
+  </div>
+
     )) : (
       <div className="flex justify-center items-center h-96 w-full">
         <h1 className="text-2xl font-bold text-primary-700 text-center">
@@ -185,8 +154,8 @@ export const CarruselHome:React.FC<CarruselHomeProps> = ({Producto}) => {
         </h1>
       </div>
     )}
-  </Slider>
-</div>
+   </div>
+
     <div>
       <ModalDetailProduct
       idProducto={idProducto}
@@ -198,12 +167,8 @@ export const CarruselHome:React.FC<CarruselHomeProps> = ({Producto}) => {
         icon={productForId?.imagenProducto ?? ''} 
       />
     </div>
-    <div>
-    <ModalPayProduct
-      showModal={showModalBuy} 
-      onSucces={() => setShowModalBuy(false)}  
-    />
-    </div>
+     
+    
     <Toaster
       position="top-right"
       reverseOrder={true}

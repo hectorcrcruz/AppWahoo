@@ -9,6 +9,7 @@ import { lazyImport } from '../core/utils/lazyImport'
 
 
 const { HomePage } = lazyImport(() => import('@/feature/pages/homePage'), 'HomePage')
+const { VoucherPage } = lazyImport(() => import('@/feature/pages/voucherPage'), 'VoucherPage')
 const { CardComponentPage } = lazyImport(() => import('@/feature/pages/cardComponentPage'), 'CardComponentPage')
 
 const { ListPage } = lazyImport(() => import('@/feature/pages/listPage'), 'ListPage')
@@ -27,6 +28,12 @@ const adminRoutes: CustomRouteObject[] = [
     name: '',
     path: '/home/:module',
     element: <CardComponentPage />
+  },
+
+  {
+    name: '',
+    path: '/home/voucher/:method',
+    element: <VoucherPage />
   },
 
   {

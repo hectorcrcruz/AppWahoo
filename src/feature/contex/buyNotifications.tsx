@@ -7,6 +7,8 @@ type BuyNotificationContextType = {
     setProductNotificacion: React.Dispatch<React.SetStateAction<Producto[]>>   
     totalProduct: number       
     setTotalProductos: React.Dispatch<React.SetStateAction<number>>
+    setTotalCantidad: React.Dispatch<React.SetStateAction<{ [id: string]: number }>>;
+    totalCantidad: { [id: string]: number }
 }
 
 
@@ -15,6 +17,7 @@ const ProductContext = createContext<BuyNotificationContextType | undefined>(und
 
 export const ProductProvider = ({children}: {children: React.ReactNode}) => {
     const [totalProduct, setTotalProductos] = useState<number>(0);
+    const [totalCantidad, setTotalCantidad] = useState<{ [id: string]: number }>({});
     const [productNotificacion, setProductNotificacion] = useState<Producto[]>(() => {
         const stored = localStorage.getItem('productNotificacion');
         return stored ? JSON.parse(stored) : [];
@@ -36,6 +39,8 @@ export const ProductProvider = ({children}: {children: React.ReactNode}) => {
         productNotificacion,
         setProductNotificacion,
         totalProduct,
+        setTotalCantidad,
+        totalCantidad,
         setTotalProductos,
     
     }), [productNotificacion, totalProduct]);

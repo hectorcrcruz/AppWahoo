@@ -264,6 +264,14 @@ select {
     
 }
 
+.nameProduct {
+  font-family: 'Space Grotesk', cursive;
+  font-weight: 200;
+}
+.DropdownMenuItem::after {
+  text-align: right;
+  text-shadow: #a2d033;
+}
 
 
 .rct-icon-parent-close{

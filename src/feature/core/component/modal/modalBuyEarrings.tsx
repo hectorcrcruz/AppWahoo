@@ -2,11 +2,16 @@ import { useProductContext } from "@/feature/contex/buyNotifications";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import { Modal } from "../../ui/Modal"
 import Slider from 'react-slick';
-import { Card } from "../../ui";
+import { Button, Card } from "../../ui";
 import { useEffect, useState } from "react";
 import { Toaster, toast } from 'react-hot-toast'
 import { CustomNextArrow, CustomPrevArrow } from "../carruselHome/carruselHome";
-import { ModalPayProduct } from "./modalPayProduct";
+
+import Tooltip from "../../ui/Tooltip/Tooltip";
+import { MdDelete } from "react-icons/md";
+import { FaShopify} from "react-icons/fa6";
+import { ModalTypePay } from "./modaltypePay";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -17,25 +22,32 @@ interface ModalBuyProductProps {
 
 
 export const ModalBuyEarrings:React.FC<ModalBuyProductProps> = ({showModal,onSucces}) => {
-    const {  totalProduct, productNotificacion , setProductNotificacion , setTotalProductos } = useProductContext();
+    const {  totalProduct, productNotificacion , setProductNotificacion , setTotalProductos ,setTotalCantidad } = useProductContext();
+
         
      const [showModalBuy, setShowModalBuy] = useState(false)
     const [cantidades, setCantidades] = useState<{ [id: string]: number }>({});
-
-   
+       
+   const navigate = useNavigate();
        
   const handleInputChange = (id: number, value: string) => {
     const numero = parseInt(value);
     if (!isNaN(numero) && numero > 0) {
       setCantidades((prev) => ({ ...prev, [id]: numero }));
+      setTotalCantidad((prev) => ({ ...prev, [id]: numero }));
     } else {
       toast.error("Ingrese un número válido mayor que 0");
     }
   };
 
+  const handleNavigate = (method:string) => {
+    navigate(`/home/voucher/:${method}`);
+  }
+
   useEffect(() => {
     const inicial = Object.fromEntries(productNotificacion.map(p => [p.id, 1]));
     setCantidades(inicial);
+   
   }, [productNotificacion]);
 
   useEffect(() => {
@@ -87,7 +99,7 @@ export const ModalBuyEarrings:React.FC<ModalBuyProductProps> = ({showModal,onSuc
       className="shadow-2xl w-full rounded-3xl max-h-[90vh] overflow-y-auto"
     >
       <Modal.Body>
-        <div className="flex justify-between items-center border-b border-gray-200 pb-2">
+        <div className="flex justify-between items-center  pb-2">
           <h1 className="text-lg font-semibold text-primary-700">
             {productNotificacion.length > 0
               ? "Compras pendientes en el carrito"
@@ -108,12 +120,13 @@ export const ModalBuyEarrings:React.FC<ModalBuyProductProps> = ({showModal,onSuc
           <Slider {...settings}>
             {productNotificacion.map((item) => (
               <div  key={item.id} className="mx-1"> 
-                <Card  className="w-[250px] mx-auto border border-primary-200 shadow-md rounded-xl flex flex-col justify-between p-4 ">
+                <Card  className="w-[250px] mx-auto border-none shadow-none   flex flex-col justify-between p-4 ">
                   <div className="text-center mb-2">
                     <img
                       src={item.imagenProducto}
                       alt={item.descripcionProducto}
-                      className="w-72 h-48 object-cover rounded-md"
+                      className="w-72 h-48 object-cover transform transition-transform duration-300
+                      hover:scale-105 hover:shadow-md hover:cursor-pointer"
                     />
                   </div>
                   <div className="text-center space-y-1">
@@ -127,32 +140,42 @@ export const ModalBuyEarrings:React.FC<ModalBuyProductProps> = ({showModal,onSuc
                       Cantidad:{" "}
                       <input
                         placeholder="1"
-                        value={cantidades[item.id] || ""}
-                        onChange={(e) =>
+                        defaultValue={cantidades[item.id] || ""}
+                        onChange={(e) =>{
                           handleInputChange(item.id, e.target.value)
+                         
+                        }
                         }
                         className="w-10 text-center text-black border border-gray-300 rounded"
                         maxLength={2}
                       />
                     </p>
                   </div>
-                  <div className="mt-4 flex flex-col gap-2">
-                    <button
-                      onClick={() =>
+                  <div className="mt-4 flex flex-row justify-center  gap-2 ">
+                  <Tooltip text="Eliminar" >
+                  <Button
+                    type="button"
+                    onClick={() =>
                         setProductNotificacion((prev) =>
                           prev.filter((i) => i.id !== item.id)
                         )
                       }
-                      className="bg-white text-gray-500 hover:bg-red-600 hover:text-white py-2 rounded-md transition-colors"
-                    >
-                      Eliminar
-                    </button>
-                    <button
-                      type='button' onClick={() => setShowModalBuy(true)}
-                      className="bg-primary-700 hover:bg-primary-800 text-white py-2 rounded-md transition-colors"
-                    >
-                      Comprar
-                    </button>
+                    className="w-10 h-10 bg-gradient-to-b from-primary-400 to-primary-600 rounded-full flex items-center justify-center transition-shadow shadow-sm hover:shadow-lg"
+                  >
+                    <MdDelete  />
+                  </Button>
+                  </Tooltip>
+                   <Tooltip text="Comprar" >
+                  <Button
+                    type="button"
+                    onClick={() => 
+                      setShowModalBuy(true)
+                    }
+                    className="w-10 h-10 bg-gradient-to-b from-yellow-400 to-yellow-600 rounded-full flex items-center justify-center transition-shadow shadow-sm hover:shadow-lg"
+                  >
+                    <FaShopify />
+                  </Button>
+                  </Tooltip>
                   </div>
                 </Card>
                 </div>
@@ -160,6 +183,8 @@ export const ModalBuyEarrings:React.FC<ModalBuyProductProps> = ({showModal,onSuc
             ))}
           </Slider>
         </div>
+
+              
 
         {productNotificacion.length > 0 && (
           <div className="mt-6 text-right text-sm">
@@ -172,10 +197,27 @@ export const ModalBuyEarrings:React.FC<ModalBuyProductProps> = ({showModal,onSuc
       </Modal.Body>
     </Modal>
 
-     <ModalPayProduct
-          showModal={showModalBuy} 
-          onSucces={() => setShowModalBuy(false)}  
-        />
+  
+              <ModalTypePay 
+               showModal={showModalBuy} 
+              onClose={() => setShowModalBuy(false)}  
+              onSelect={(method) => {
+                if (method === 'virtual') {
+                  toast.success('Pago virtual seleccionado', {
+                    icon: '✅',
+                  });
+                  handleNavigate(method);
+                } else {
+                  toast.success('Pago en efectivo seleccionado', {
+                    icon: '✅',
+                  });
+                  handleNavigate(method);
+                }
+                setShowModalBuy(false);
+              }}
+              
+              />
+             
 
     <Toaster
       position="top-right"

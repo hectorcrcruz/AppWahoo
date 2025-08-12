@@ -58,7 +58,7 @@ export const HomePage = () => {
     header
     navBar={true}  
   >
-  <div className="p-0 h-min-screen bg-primary-50/15"> 
+  <div className="p-0 h-min-screen "> 
     <div > 
    <Promotion searchValues={searchValues} OnchagueValues={(values) => setSearchValues(values)} />
    </div>
@@ -66,7 +66,7 @@ export const HomePage = () => {
     <CarruselHome  Producto={dataList} />
    </div>
 
-     <div  onClick={() => setShowModal(true)} className="justify-end flex h-10   pt-3 absolute right-0">
+     <div  onClick={() => setShowModal(true)} className="justify-end flex h-10   xl:pt-28  2xl:pt-3 absolute right-0">
       <Tooltip  text="Chat" className="!top-0 !left-0">
       <BiSolidUserPin  className="text-7xl md:text-9xl text-primary-600 -mt-10 md:-mt-24    2xl:mt-10 hover:cursor-pointer hover:text-primary-700" />
       </Tooltip>

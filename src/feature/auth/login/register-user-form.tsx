@@ -3,26 +3,24 @@ import { InputField } from '@/feature/core/ui/InputField'
 import { SelectField } from '@/feature/core/ui/SelectField'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm, Controller } from 'react-hook-form'
-import { FormRegisterUser, InfoRegisterUser, buyRegister, InfoBuyRegister } from './login-schema'
+import { z } from 'zod'
+import { FormRegisterUser, buyRegister } from './login-schema'
 import { FaUser } from "react-icons/fa"
 import { GiShoppingCart } from "react-icons/gi";
-
+import { useAuth } from '@/feature/contex/AuthContext'
+import { useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 
 interface RegisterUserFormProps {
   className: string
   onSuccess: (values: any) => void
   isLocation?: boolean
-  onSucces?: (values:boolean) => void;
+  onSucces?: (values: boolean) => void;
 }
 
 const optionTipeDocument = [
   { value: 1, label: 'Cédula de ciudadanía' },
   { value: 2, label: 'Cédula de extranjería' },
-]
-
-const optionTipeFormaPago = [
-  { value: 1, label: 'Pse' },
-  { value: 2, label: 'Otro' },
 ]
 
 
@@ -31,12 +29,25 @@ const classStyle = 'hover:!border-primary-500 focus:outline-none focus:ring focu
 
 export const RegisterUserForm: React.FC<RegisterUserFormProps> = ({ className, onSuccess, isLocation, onSucces }) => {
 
-  const schema = isLocation ? buyRegister : FormRegisterUser
-  const { control, formState: { errors }, handleSubmit } = useForm<InfoRegisterUser | InfoBuyRegister>({
+  // 1) Creamos una versión del esquema buyRegister sin el campo tipoFormaPago (runtime)
+  const buyRegisterNoPayment = buyRegister.omit({ tipoFormaPago: true })
+
+  // 2) Elegimos el esquema runtime según isLocation
+  const schema = isLocation ? buyRegisterNoPayment : FormRegisterUser
+
+  // 3) Tipos TypeScript derivados de cada esquema (usamos unión para cubrir ambos casos)
+  type RegisterUserType = z.infer<typeof FormRegisterUser>
+  type BuyRegisterType = z.infer<typeof buyRegisterNoPayment>
+  type FormValues = RegisterUserType | BuyRegisterType
+
+  // 4) Hook de formulario — el resolver usa el schema runtime correcto
+  const { control, formState: { errors }, handleSubmit, setValue } = useForm<FormValues>({
     resolver: zodResolver(schema),
   })
 
-  const fields = Object.keys(schema.shape) as Array<keyof InfoRegisterUser | keyof InfoBuyRegister>
+  // 5) Extraemos los campos del esquema runtime y garantizamos que 'tipoFormaPago' quede fuera.
+  const fields = (Object.keys((schema as any).shape)
+    .filter((f) => f !== 'tipoFormaPago')) as Array<keyof RegisterUserType | keyof BuyRegisterType>;
 
   const clearLabel = (field: string) => {
     const labels: Record<string, string> = {
@@ -50,52 +61,75 @@ export const RegisterUserForm: React.FC<RegisterUserFormProps> = ({ className, o
       telefonoUsuario: 'Teléfono',
       direccionUsuario: 'Dirección',
       login: 'Login',
-      tipoFormaPago: 'Tipo de Forma de Pago'
     }
     return labels[field] ?? field
   }
+  
+
+const location = useLocation();
+
+useEffect(() => {
+    if (location.pathname.includes('home/voucher/:virtual')) {
+      const authData = localStorage.getItem('auth-store');
+      console.log(authData)
+      if (authData) {
+        try {
+          const parsed = JSON.parse(authData);
+          const state = parsed?.state;
+          if (state) {
+            setValue('nombreUsuario', state.nombreUsuario || '')
+            setValue('apellidoUsuario', state.apellidoUsuario || '');
+          }
+        } catch (error) {
+          console.error('Error parsing auth-store', error);
+        }
+      }
+    }
+  }, [location.pathname, setValue]);
+
 
   const isSelectField = (fieldName: string) => {
-    return fieldName === 'tipoIdentificacionId' || fieldName === 'tipoFormaPago'
+    return fieldName === 'tipoIdentificacionId'
   }
 
   return (
     <form className={className} onSubmit={handleSubmit(onSuccess, (errors) => console.log(errors))}>
       <div className={`grid grid-cols-1 mt-10 md:mt-0 md:p-0 ${isLocation ? 'md:grid-cols-1' : 'md:grid-cols-2'} gap-4`}>
         {fields.map((field) => (
-          <div className='col-span-1' key={field}>
-            <label className="block mb-1 font-medium">{clearLabel(field)}</label>
+          <div className='col-span-1' key={String(field)}>
+            <label className="block mb-1 font-medium">{clearLabel(String(field))}</label>
             <Controller
               name={field as any}
               control={control}
               render={({ field: controllerField }) => {
-                if (isSelectField(field)) {
+                if (isSelectField(String(field))) {
                   return (
                     <SelectField
                       {...controllerField}
-                      options={controllerField.name === 'tipoIdentificacionId' ? optionTipeDocument : optionTipeFormaPago}
+                      options={optionTipeDocument}
                       className={classStyle}
                       error={(errors as any)[field]?.message}
-                      label="Seleccione"
                     />
-                  )
+                  );
                 }
 
-                const type = field === 'expeditionCedula' ? 'date' :
-                  typeof schema.shape[field]._def.typeName === 'string' && schema.shape[field]._def.typeName === 'ZodNumber'
+                // detección segura del tipo Zod para elegir input type
+                const zodDef = (schema as any).shape?.[field]
+                const zodTypeName = zodDef?._def?.typeName
+                const type = String(field) === 'expeditionCedula' ? 'date'
+                  : zodTypeName === 'ZodNumber'
                     ? 'number'
-                    : 'text'
+                    : 'text';
 
                 return (
                   <InputField
                     {...controllerField}
                     className={classStyle}
                     type={type}
-                    maxLength={field === 'numberIdentification' || field === 'telefonoUsuario' ? 10 : undefined}
-                   
+                    maxLength={String(field) === 'numberIdentification' || String(field) === 'telefonoUsuario' ? 10 : undefined}
                     label=""
                   />
-                )
+                );
               }}
             />
             {(errors as any)[field]?.message && (
@@ -109,7 +143,7 @@ export const RegisterUserForm: React.FC<RegisterUserFormProps> = ({ className, o
         {isLocation && (<Button type='button' onClick={() => onSucces?.(false)} className='w-44 rounded-md bg-gradient-to-b from-[#d1d356] to-[#d3e719] text-white transition-all hover:brightness-110' >
            Cancelar
         </Button>)}
-        
+
         <Button className='w-44 rounded-md bg-gradient-to-b from-[#a20f5c] to-[#d53287] text-white transition-all hover:brightness-110' type='submit'>
            {isLocation ? <GiShoppingCart/> : <FaUser />}
           {isLocation ? 'Continuar ' : 'Crear Usuario'}
