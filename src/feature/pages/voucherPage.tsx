@@ -65,7 +65,7 @@ export const VoucherPage = () => {
                   setShowModal(true);
                 }
               }}
-              className="w-24 h-24 bg-gradient-to-b hover:bg-yellow-400 hover:font-semibold from-yellow-400 to-yellow-600 rounded-full flex-col items-center justify-center transition-shadow shadow-sm hover:shadow-md"
+              className=" w-auto bg-gradient-to-b hover:bg-yellow-400 hover:font-semibold from-yellow-400 to-yellow-600 rounded-md flex-row items-center justify-center transition-shadow shadow-sm hover:shadow-md"
             > 
               <p className='leading-4 hover:font-semibold'>Finalizar </p> 
               <p className='leading-4 hover:font-semibold'>Compra</p>
