@@ -1,7 +1,6 @@
-
+import React, { useEffect, useState } from 'react'
 import { SearchComponent } from '../searchComponent/searchComponent'
-
-import { useGetList } from '../../services/useGetList';
+import { useGetList } from '../../services/useGetList'
 
 interface PromotionItem {
   imagenPrimariaPromocion?: string;
@@ -10,53 +9,87 @@ interface PromotionItem {
   descripcionPromocion: string;
   usuarioAdd?: string;
   usuarioUp?: string;
-
 }
 
 interface PromotionProps {
-OnchagueValues: (values: string | number) => void;
-searchValues: string | number | undefined
+  OnchagueValues: (values: string | number) => void;
+  searchValues: string | number | undefined
 }
 
-export const Promotion:React.FC<PromotionProps> = ({OnchagueValues, searchValues}) => {
-  
+export const Promotion: React.FC<PromotionProps> = ({ OnchagueValues, searchValues }) => {
+  const { dataList } = useGetList({ moduleRour: 'Promoción' }) as { dataList: PromotionItem[], isLoading: boolean };
 
+  const [currentIndex, setCurrentIndex] = useState(0);
 
-   const {dataList} = useGetList({moduleRour: 'Promoción'}) as { dataList: PromotionItem[], isLoading: boolean };
- 
+  // Auto slider cada 5 segundos
+  useEffect(() => {
+    if (!dataList || dataList.length === 0) return;
+
+    const interval = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % dataList.length);
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [dataList]);
+
+  const currentPromotion = dataList[currentIndex];
 
   return (
     <div>
-       <div className='bg-primary-50 h-auto p-2 rounded-md mr-4 ml-4 mt-5'> 
-        <h1 className='w-full text-lg '>Promociones y descuentos especiales</h1>
-        </div>
-        <div className="relative w-12/12 mr-5 ml-5 justify-center mx-auto h-40 md:h-60 lg:h-72 mt-5 content">
-  {/* Imagen del banner */}
-  <img
-    src={dataList[0]?.imagenPrimariaPromocion}
-    alt="Promoción"
-    className="w-full h-full object-cover rounded-lg"
-  />
-
-  {/* Capa oscura semitransparente para mejorar contraste del texto */}
-     <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
-    <span className="text-white font-bold text-center text-lg md:text-3xl px-2">
-      {dataList[0]?.descripcionPromocion}
-    </span>
+      <div className='bg-primary-50 h-auto p-2 rounded-md mr-4 ml-4 mt-5'>
+        <h1 className='w-full text-lg'>Promociones y descuentos especiales</h1>
       </div>
-     </div>
-        <div className='bg-primary-50  md:h-16 p-2 rounded-md mr-4 ml-4 mt-10  '>  
-             <SearchComponent  
-               onSearch={(values) => {
-                OnchagueValues(values.id)
-               }} 
-               label={'Categorías +  | Ofertas | Mís Compras'} 
-               searchParams={searchValues} 
-             />
-            </div>
-       </div>
 
-   
+      {/* SLIDER */}
+      <div className="relative mr-5 ml-5 h-40 md:h-60 lg:h-72 mt-5 px-5 ">
+        {currentPromotion && (
+          <img
+            src={currentPromotion.imagenPrimariaPromocion}
+            alt="Promoción"
+            className="w-full h-full object-cover rounded-lg transition duration-1000 ease-in-out"
+          />
+        )}
+
+        {/* Capa oscura y texto */}
+        <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center rounded-lg">
+          <span className="text-white font-bold text-center text-lg md:text-3xl px-2">
+            {currentPromotion?.descripcionPromocion}
+          </span>
+        </div>
+
+        {/* Controles manuales */}
+        <button
+          className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-80"
+          onClick={() =>
+            setCurrentIndex((prevIndex) =>
+              prevIndex === 0 ? dataList.length - 1 : prevIndex - 1
+            )
+          }
+        >
+          ‹
+        </button>
+        <button
+          className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-80"
+          onClick={() =>
+            setCurrentIndex((prevIndex) =>
+              (prevIndex + 1) % dataList.length
+            )
+          }
+        >
+          ›
+        </button>
+      </div>
+
+      {/* Search Component */}
+      <div className='bg-primary-50 md:h-16 p-2 rounded-md mr-4 ml-4 mt-10'>
+        <SearchComponent
+          onSearch={(values) => {
+            OnchagueValues(values.id)
+          }}
+          label={'Categorías +  | Ofertas | Mís Compras'}
+          searchParams={searchValues}
+        />
+      </div>
+    </div>
   )
 }
-

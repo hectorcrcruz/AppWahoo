@@ -14,31 +14,37 @@ export const ModalDelivery: React.FC<ModalDeliveryProps> = ({
   numeroEntrega,
 }) => {
   const navigate = useNavigate();
-
-  const {  setProductNotificacion} = useProductContext();
+  const { setProductNotificacion } = useProductContext();
 
   const handleAceptar = () => {
-    onClose(); 
+    onClose();
     navigate("/");
-    setProductNotificacion([])
+    setProductNotificacion([]);
   };
 
   return (
-    <Modal show={showModal} size="sm" className="shadow-2xl rounded-2xl">
+    <Modal
+      show={showModal}
+      size="sm"
+      className="shadow-2xl rounded-2xl w-full max-w-md mx-auto"
+    >
       <Modal.Body>
-        <div className="flex flex-col items-center text-center p-6">
-          <h2 className="text-xl font-bold text-gray-800">
+        <div className="flex flex-col items-center text-center px-4 py-6 sm:px-6">
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-800">
             ¡Pedido confirmado!
           </h2>
-          <p className="mt-4 text-gray-600">
+
+          <p className="mt-4 text-sm sm:text-base text-gray-600">
             Tu número de entrega es:
           </p>
-          <p className="mt-2 text-2xl font-bold text-indigo-600">
+
+          <p className="mt-2 text-2xl sm:text-3xl font-bold text-indigo-600 break-all">
             {numeroEntrega}
           </p>
+
           <button
             onClick={handleAceptar}
-            className="mt-6 w-full  bg-gradient-to-tr  from-primary-600  to-primary-400 hover:bg-primary-700 text-white py-2 rounded-lg transition"
+            className="mt-6 w-full bg-gradient-to-tr from-primary-600 to-primary-400 hover:from-primary-700 hover:to-primary-500 text-white py-2 rounded-lg transition duration-300 text-sm sm:text-base"
           >
             Aceptar
           </button>

@@ -5,6 +5,7 @@ import { useAuth, useAuthStore } from '../contex/AuthContext';
 import { useEffect, useState } from 'react';
 import { Alert } from '../core/ui/Alert';
 import { useNavigate } from 'react-router-dom';
+import { IoSettings } from "react-icons/io5";
 
 import { Link } from '../core/ui/Link';
 import { useParametrizacionContext } from '@/context/parametrizacionContext';
@@ -54,7 +55,7 @@ export function LoginPage() {
           }}
           className="absolute top-3 bg-transparent"
         >
-          Cambiar parametrización
+          <IoSettings />
         </Button>
         <picture className="text-center flex justify-center mt-3">
           <img src={parametros.logo} alt="Logo" className="w-48 h-auto" />
