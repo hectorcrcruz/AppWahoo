@@ -10,13 +10,15 @@ export const Navbar: React.FC = () => {
    
 
   return (
-    <nav className=' w-auto absolute top-5 left-4 '>
-      <div className='col-span-1  flex '>
+    <nav className=' w-auto absolute top-5 left-4  '>
+      <div className='col-span-1  flex  '>
           <DropList />
-          <div className='flex justify-end '>
+          <div className='flex justify-between  flex-row  w-auto '>
             <Tooltip text={user?.nombreUsuario ?? ''} position='bottom'> 
-           <FaUserCircle  className='text-white w-7 h-7 mt-1  mx-3 md:mx-10 hover:text-gray-500 cursor-pointer' />
+           <FaUserCircle  className='text-white w-7 h-7 mt-1  mx-3 md:mx-5 hover:text-gray-500 cursor-pointer' />
+            
            </Tooltip>
+           <span className=' hidden md:block text-white -mx-2 mt-2'>{`Hola ${user?.nombreUsuario ?? ''}`}</span>
            </div>
           </div> 
 

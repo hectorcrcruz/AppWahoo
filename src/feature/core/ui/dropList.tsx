@@ -7,7 +7,7 @@ import {
   Button
 } from "@/feature/core/ui";
 import { IoIosMenu } from "react-icons/io";
-import { useEffect, useState } from "react";
+
 import { useParametrizacionContext } from "@/context/parametrizacionContext";
 import { useGetList } from "../services/useGetList";
 import { useAuth } from "@/feature/contex/AuthContext";
@@ -28,22 +28,22 @@ export interface DropListProps {
 
 export default function DropList() {
   const { parametros } = useParametrizacionContext();
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  // const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const { dataList } = useGetList<DropListProps>({ moduleRour: "CategoriaProducto" });
   const { user } = useAuth();
 
-  useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 768);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  // useEffect(() => {
+  //   const handleResize = () => setIsMobile(window.innerWidth < 768);
+  //   window.addEventListener("resize", handleResize);
+  //   return () => window.removeEventListener("resize", handleResize);
+  // }, []);
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button style={{ backgroundColor: parametros?.colorPrimario }}
                 className="px-4 py-2 text-white rounded-md shadow-none md:text-lg">
-          <IoIosMenu size={24} /> {!isMobile && "Menu"}
+          <IoIosMenu size={24} /> 
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent

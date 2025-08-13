@@ -30,7 +30,7 @@ export const ModalTypePay: React.FC<PaymentMethodModalProps> = ({
         </h2>
 
         {/* Opciones de pago */}
-        <div className="grid grid-cols-2 gap-4 pt-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
           <Button
             onClick={() => onSelect('virtual')}
             className="flex flex-col items-center justify-center p-4 bg-gradient-to-br from-blue-400 to-blue-600 text-white rounded-lg hover:from-blue-500 hover:to-blue-700 transform hover:scale-105 transition"
