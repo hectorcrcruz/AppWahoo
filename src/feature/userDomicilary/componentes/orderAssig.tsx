@@ -1,12 +1,10 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { useMediaQuery } from "react-responsive";
 import Lottie from "lottie-react";
-
 
 import homeGif from "@/assets/Emptybox.json";
 import { FaStopwatch } from "react-icons/fa6";
-
-
 import scooterAnimation from "@/assets/Manredscooter.json";
 
 interface Pedido {
@@ -24,12 +22,13 @@ const pedidosMock: Pedido[] = [
 
 export const OrderAssig = () => {
   const [pedidos, setPedidos] = useState<Pedido[]>(pedidosMock);
+  // 👇 breakpoints
+  const isSmall = useMediaQuery({ maxWidth: 640 });
+ 
 
   const cambiarEstado = (id: number, nuevoEstado: Pedido["estado"]) => {
     setPedidos(prev =>
-      prev.map(p =>
-        p.id === id ? { ...p, estado: nuevoEstado } : p
-      )
+      prev.map(p => (p.id === id ? { ...p, estado: nuevoEstado } : p))
     );
   };
 
@@ -65,22 +64,19 @@ export const OrderAssig = () => {
             {/* Animación según estado */}
             {pedido.estado === "pendiente" && (
               <div className="absolute bottom-4 left-64 w-16 h-16">
-               <FaStopwatch className="text-3xl text-primary-500" />
+                <FaStopwatch className="text-3xl text-primary-500" />
               </div>
             )}
-        {pedido.estado === "en_camino" && (
-         <motion.div
-          className="
-          absolute bottom-4 
-          left-[100px] sm:left-[-60px] md:left-[200px] // 👈 cambia según tamaño
-          w-28 h-28
-          "
-          animate={{ x: [0, 100, 0] }}
-          transition={{ duration: 4, repeat: Infinity }}
-        >
-          <Lottie animationData={scooterAnimation} loop={true} />
-        </motion.div>
-         )}
+
+            {pedido.estado === "en_camino" && (
+              <motion.div
+                className="absolute bottom-4 w-28 h-28"
+                animate={{ x: [0, isSmall ? -60 : 100, 0] }} // 👈 depende del tamaño de pantalla
+                transition={{ duration: 4, repeat: Infinity }}
+              >
+                <Lottie animationData={scooterAnimation} loop={true} />
+              </motion.div>
+            )}
 
             {pedido.estado === "entregado" && (
               <motion.div
@@ -89,8 +85,10 @@ export const OrderAssig = () => {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 1 }}
               >
-               <Lottie animationData={homeGif} loop={true} />
-                <span className="text-green-700 font-semibold mt-20 absolute">¡Entregado!</span>
+                <Lottie animationData={homeGif} loop={true} />
+                <span className="text-green-700 font-semibold mt-20 absolute">
+                  ¡Entregado!
+                </span>
               </motion.div>
             )}
 
