@@ -8,7 +8,7 @@ export const login = async (data: AuthValues): Promise<AuthUser> => {
  
   const responseWithRole = {
     ...response.data,
-    roleId: 2, // aquí lo quemas por ahora
+    roleId: 1, // aquí lo quemas por ahora
   }
 
   
