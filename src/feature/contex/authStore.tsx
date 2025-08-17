@@ -1,3 +1,4 @@
+import { Roles } from '../core/const/roles';
 import { AuthUser } from '../core/types/user';
 import { Nulleable } from '../core/types/utils';
 import type { StateCreator } from 'zustand'
@@ -7,7 +8,6 @@ import type { StateCreator } from 'zustand'
 export interface User {
   userId: string;
   username: string;
-  role: string;
   email: string;
 }
 
@@ -15,6 +15,7 @@ export interface AuthState extends Nulleable<AuthUser> {
   isAuthenticated: boolean
   loggedInDate: Date | null
   token: string | null;
+  roleId: Roles | null;
 }
 
 
@@ -37,6 +38,7 @@ const initialState: AuthState = {
   token: null,
   password: null,
   message: null,
+  roleId: null,
 }
 
 export  const createAuthSlice: StateCreator<AuthSlice> = (set) => ({

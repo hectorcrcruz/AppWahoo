@@ -32,6 +32,7 @@ export const AuthUserSchema = z.object({
   password: z.string(),
   message: z.string(),
   token: z.string(),
+  roleId:z.number()
 })
 
 export const ApiListUsersCreateSchema = z.object({

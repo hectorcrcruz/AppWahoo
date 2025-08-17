@@ -16,19 +16,23 @@ export function LoginPage() {
   const [colorBg, setColorBg] = useState('#3343a0');
 
   const navigate = useNavigate();
-  const { isAuthenticated } = useAuthStore();
+  const { isAuthenticated , roleId } = useAuthStore();
   const { parametros, loading } = useParametrizacionContext();
   const colorPrimary = parametros?.colorPrimario;
 
-  const handleSuccess = (values: AuthValues): void => {
-    login(values, () => navigate('/home'));
-  };
+ const handleSuccess = (values: AuthValues): void => {
+  login(values);
+};
 
-  useEffect(() => {
-    if (isAuthenticated) {
+useEffect(() => {
+  if (isAuthenticated) {
+    if (roleId === 2) {
+      navigate('/home/domi');
+    } else {
       navigate('/home');
     }
-  }, [isAuthenticated]);
+  }
+}, [isAuthenticated, roleId]);
 
   useEffect(() => {
     if (colorPrimary !== undefined) {

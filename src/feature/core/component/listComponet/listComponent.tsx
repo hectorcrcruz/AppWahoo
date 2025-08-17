@@ -74,7 +74,7 @@ export const ListComponent = <T extends { id: number; imagen?: string }>(
 
       ...keys
         .filter((key) => ![
-          'id', 'usuarioId', 'estado', 'usuarioAdd', 'usuarioUp', 'circulacion',
+          'id', 'usuarioId', 'usuarioAdd', 'usuarioUp', 'circulacion',
           'login', 'password', 'fechaAdd', 'fechaUp',
           'imagenUsuario', 'direccionUsuario', 'causacionPagos',
           'expedicionCedula', 'tipoIdentificacionId', 'licenciaConduccion',

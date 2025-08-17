@@ -1,18 +1,31 @@
 import { Wrapper } from "@/feature/core/ui/wrapper";
-import backgroundLogin from '../assets/fondoLogin.png';
 import { LoginForm } from "./login-form";
 import { AuthValues } from "@/feature/core/types/user";
+import { useParametrizacionContext } from "@/context/parametrizacionContext";
+import { FaArrowCircleLeft } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 export const ForgotPassword = () => {
   const handleSuccess = (values: AuthValues) => {
     console.log(values);
-  };
+  }; 
+
+    const { parametros } = useParametrizacionContext();
+    const navigate = useNavigate()
+
+    const handleNavigations = () => {
+      navigate(-1);
+    };
 
   return (
     <div className="min-h-screen w-full flex flex-col items-center justify-center bg-gray-50 relative">
       {/* Encabezado fijo */}
-      <div className='bg-primary-700 w-full h-16 fixed top-0 left-0 z-10 flex items-center justify-center'>
-        <h1 className='text-2xl text-white font-extrabold'>WAHOO</h1>
+      <div style={{ backgroundColor: parametros?.colorPrimario }} className=' w-full h-16 fixed top-0 left-0 z-10 flex items-center justify-center'>
+         <img src={parametros?.logo} alt='Logo' className='h-12' />
+          <div className="fixed left-4">
+            <FaArrowCircleLeft onClick={() => handleNavigations()} className="text-white w-7 h-7 hover:text-gray-500 cursor-pointer" />
+          </div>
+
       </div>
 
       {/* Contenido principal */}
@@ -23,7 +36,7 @@ export const ForgotPassword = () => {
           <div className="hidden md:flex items-center justify-center">
             <picture>
               <img
-                src={backgroundLogin}
+                src={parametros?.backgroundImagen}
                 alt="backgroundLogin"
                 className="w-80 lg:w-96 xl:w-[450px]"
               />

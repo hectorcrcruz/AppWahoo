@@ -44,6 +44,7 @@ const useAuthProvider = (): AuthContextValue => {
       token,
       message,
       login,
+      roleId,
       password
 
    }) => ({
@@ -52,7 +53,8 @@ const useAuthProvider = (): AuthContextValue => {
       setLogin,
       setLogout,
       nombreUsuario,
-      apellidoUsuario,  
+      apellidoUsuario, 
+      roleId, 
       id,
       token,
       message,
@@ -72,6 +74,7 @@ const useAuthProvider = (): AuthContextValue => {
     setIsLoggingIn(true)
     setError('')
     try {
+  
     const response = await loginWithApi(values)
 
     // Mapea los campos correctamente según lo que espera setLogin
@@ -83,6 +86,7 @@ const useAuthProvider = (): AuthContextValue => {
       login: response.login,
       password: response.password,
       message: response.message ?? "",
+      roleId: response.roleId ?? null,
     }
 
     authStore.setLogin(mappedData)
@@ -111,10 +115,13 @@ const useAuthProvider = (): AuthContextValue => {
       nombreUsuario: authStore.nombreUsuario,
       apellidoUsuario: authStore.apellidoUsuario,
       id: authStore.id,
+  
       // Add missing AuthState properties with default values or from authStore
       login: authStore.login ?? "",
       password: authStore.password ?? "",
       message: authStore.message ?? "",
+     roleId: authStore.roleId,
+
     
     },
     login,
@@ -138,6 +145,7 @@ export const useAuthStore = (): Omit<AuthState, 'token' | 'refreshToken'> =>
       id,
       login,
       password,
+      roleId,
       message
     }) => ({
       isAuthenticated,
@@ -145,6 +153,7 @@ export const useAuthStore = (): Omit<AuthState, 'token' | 'refreshToken'> =>
       nombreUsuario,
       apellidoUsuario,
       id,
+      roleId,
       login,
       password,
       message

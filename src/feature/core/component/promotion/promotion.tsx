@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { SearchComponent } from '../searchComponent/searchComponent'
 import { useGetList } from '../../services/useGetList'
+import { useAuthStore } from '@/feature/contex/AuthContext';
 
 interface PromotionItem {
   imagenPrimariaPromocion?: string;
@@ -21,6 +22,8 @@ export const Promotion: React.FC<PromotionProps> = ({ OnchagueValues, searchValu
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
+  const {  roleId } = useAuthStore();
+
   // Auto slider cada 5 segundos
   useEffect(() => {
     if (!dataList || dataList.length === 0) return;
@@ -35,7 +38,7 @@ export const Promotion: React.FC<PromotionProps> = ({ OnchagueValues, searchValu
   const currentPromotion = dataList[currentIndex];
 
   return (
-    <div>
+    <div >
       <div className='bg-primary-50 h-auto p-2 rounded-md mr-4 ml-4 mt-5'>
         <h1 className='w-full text-lg'>Promociones y descuentos especiales</h1>
       </div>
@@ -51,7 +54,7 @@ export const Promotion: React.FC<PromotionProps> = ({ OnchagueValues, searchValu
         )}
 
         {/* Capa oscura y texto */}
-        <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center rounded-lg">
+        <div className="absolute inset-0 bg-black bg-opacity-40 mr-5 ml-5 flex items-center justify-center rounded-lg">
           <span className="text-white font-bold text-center text-lg md:text-3xl px-2">
             {currentPromotion?.descripcionPromocion}
           </span>
@@ -59,7 +62,7 @@ export const Promotion: React.FC<PromotionProps> = ({ OnchagueValues, searchValu
 
         {/* Controles manuales */}
         <button
-          className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-80"
+          className="absolute -left-1 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-80"
           onClick={() =>
             setCurrentIndex((prevIndex) =>
               prevIndex === 0 ? dataList.length - 1 : prevIndex - 1
@@ -69,7 +72,7 @@ export const Promotion: React.FC<PromotionProps> = ({ OnchagueValues, searchValu
           ‹
         </button>
         <button
-          className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-80"
+          className="absolute -right-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-80"
           onClick={() =>
             setCurrentIndex((prevIndex) =>
               (prevIndex + 1) % dataList.length
@@ -81,7 +84,7 @@ export const Promotion: React.FC<PromotionProps> = ({ OnchagueValues, searchValu
       </div>
 
       {/* Search Component */}
-      <div className='bg-primary-50 md:h-16 p-2 rounded-md mr-4 ml-4 mt-10'>
+      <div hidden={roleId ===2} className='bg-primary-50 md:h-16 p-2 rounded-md mr-4 ml-4 mt-10'>
         <SearchComponent
           onSearch={(values) => {
             OnchagueValues(values.id)

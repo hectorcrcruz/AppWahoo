@@ -6,18 +6,14 @@ import { AuthUser, AuthValues } from '../core/types/user'
 
 
 export const login = async (data: AuthValues): Promise<AuthUser> => {
-  return AuthUserSchema.parse(await wahooApi.post('/Login/Login', data))
+  const response = await wahooApi.post('/Login/Login', data)
+
+  // 👇 agrega el roleId ANTES del parse
+  const responseWithRole = {
+    ...response,
+    roleId:2,
+  }
+
+  return AuthUserSchema.parse(responseWithRole)
 }
 
-// interface RefreshTokenDTO {
-//   token: string
-//   refreshToken: string
-// }
-// export const refreshToken = async (data: RefreshTokenDTO): Promise<AuthUser> => {
-// //   const res = (await wahooApi.post('/LOGIN/refreshToken', data)) as AuthUser
-// //   if (!res.roleName) {
-// //     res.roleName = Roles.jefe
-// //   }
-
-// //   return AuthUserSchema.parse(res)
-// }

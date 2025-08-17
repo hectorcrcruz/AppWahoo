@@ -80,6 +80,8 @@ export const VoucherPage = () => {
       />
 
       <ModalDelivery
+      TitleText='¡Pedido confirmado!'
+       textTwo='Tu número de entrega es:'
         showModal={showDeliveryModal}
         onClose={() => setShowDeliveryModal(false)}
         numeroEntrega={numeroEntrega}

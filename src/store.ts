@@ -20,9 +20,9 @@ export const useBoundStore = createWithEqualityFn(
     {
       name: 'auth-store',
       version: 1,
-      partialize: ({ token, loggedInDate, apellidoUsuario ,  id ,  nombreUsuario ,isAuthenticated}) => {
-        const hasValues = token  && loggedInDate && id && isAuthenticated && nombreUsuario && apellidoUsuario
-        if (hasValues) return { token, loggedInDate, id, isAuthenticated, nombreUsuario, apellidoUsuario}
+      partialize: ({ token, loggedInDate, apellidoUsuario ,  id , roleId,  nombreUsuario ,isAuthenticated}) => {
+        const hasValues = token  && loggedInDate && id && isAuthenticated && nombreUsuario && apellidoUsuario && roleId
+        if (hasValues) return { token, loggedInDate, id, isAuthenticated, nombreUsuario, apellidoUsuario, roleId}
 
         return null
       }

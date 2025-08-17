@@ -5,13 +5,17 @@ import { useNavigate } from "react-router-dom";
 interface ModalDeliveryProps {
   showModal: boolean;
   onClose: () => void;
-  numeroEntrega: string | number;
+  numeroEntrega?: string | number;
+  TitleText:string
+  textTwo?:string
 }
 
 export const ModalDelivery: React.FC<ModalDeliveryProps> = ({
   showModal,
   onClose,
   numeroEntrega,
+  TitleText,
+  textTwo
 }) => {
   const navigate = useNavigate();
   const { setProductNotificacion } = useProductContext();
@@ -31,11 +35,11 @@ export const ModalDelivery: React.FC<ModalDeliveryProps> = ({
       <Modal.Body>
         <div className="flex flex-col items-center text-center px-4 py-6 sm:px-6">
           <h2 className="text-xl sm:text-2xl font-bold text-gray-800">
-            ¡Pedido confirmado!
+            {TitleText}
           </h2>
 
           <p className="mt-4 text-sm sm:text-base text-gray-600">
-            Tu número de entrega es:
+            {textTwo}
           </p>
 
           <p className="mt-2 text-2xl sm:text-3xl font-bold text-indigo-600 break-all">

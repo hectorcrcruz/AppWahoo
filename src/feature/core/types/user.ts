@@ -19,7 +19,7 @@ export type InfoRegisterUser = {
   numberIdentification: string | number;
   expeditionCedula: string;
   correo: string;
-  rolId: string;
+  rolId: number;
   telefonoUsuario: string;
   direccionUsuario: string;
   login: string;

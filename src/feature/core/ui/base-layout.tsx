@@ -15,6 +15,7 @@ import { useProductContext } from '@/feature/contex/buyNotifications';
 import { ModalBuyEarrings } from '../component/modal';
 import { useEffect, useState } from 'react';
 import { useParametrizacionContext } from '@/context/parametrizacionContext';
+import { getNotificaciones, Notificacion } from '@/feature/userDomicilary/services/servicesUserDomi';
 
 
 export function BaseLayout({
@@ -25,14 +26,39 @@ export function BaseLayout({
   navBar = true,
 }: Readonly<BaseLayoutProps>) {
  const [showModal, setShowModal] = useState(false)
+  const [showModalNotificaciones, setShowModalNotificaciones] = useState(false)
  const [colorbg, setColorBg] = useState('blue')
   const date = new Date()
    const dateRep = ( dayjs(date).format('YYYY'))
-  const { logout } = useAuth();
+  const { logout, user } = useAuth();
   const navigation = useNavigate();
-   const location = useLocation()
-    const locationSearch = location.pathname.includes('/home/voucher') 
-    console.log(locationSearch)
+  const location = useLocation()
+  const locationSearch = location.pathname.includes('/home/voucher') 
+    const [dataTable, setDataTable] = useState<Notificacion[]>([])
+
+     
+    const someNotificactions = dataTable.some((items) =>  items.enviada === true)
+    const filterNotifications = dataTable.filter((items) =>  items.enviada === true)
+
+       const getListDomi = async () => {
+          try {
+           const resp = await getNotificaciones()
+           setDataTable(resp)
+          } catch (error) {
+           console.log(error)
+          }
+       }
+   
+   
+       useEffect(() => {
+        if(user.roleId === 2){
+         getListDomi()
+        }
+       }, [])
+       
+
+
+
 
   const handleNavigate = () => {
     navigation('/home'); 
@@ -75,10 +101,17 @@ export function BaseLayout({
            </div>
             {!locationSearch && ( 
               <> 
-            <div className='flex justify-end ' >
-           <IoIosNotificationsOutline  className='text-white w-7 h-7 absolute top-6 2xl:top-8 mx-16 hover:text-gray-500 cursor-pointer' />
+            <div  className='flex justify-end ' >
+           <IoIosNotificationsOutline  onClick={() => setShowModalNotificaciones(!showModalNotificaciones)}  className='text-white w-7 h-7 absolute top-6 2xl:top-8 mx-16 hover:text-gray-500 cursor-pointer' />
+           {someNotificactions && (
+            <button 
+               onClick={() => setShowModalNotificaciones(!showModalNotificaciones)}
+              className='absolute top-5 md:top-6 2xl:top-7 right-20 bg-red-500 text-white rounded-full w-3 h-3 flex items-center justify-center text-xs font-bold'
+              type='button'
+            />
+           )}
            </div>
-            <div className='flex justify-end ' >
+            {user.roleId === 1 && (<div className='flex justify-end ' >
            <GiShoppingCart   onClick={() => setShowModal(true)} className='text-white w-7 h-7 absolute top-6 2xl:top-8 mx-28 hover:text-gray-500 cursor-pointer' />
            {productNotificacion.length > 0 && (
             <button 
@@ -87,12 +120,28 @@ export function BaseLayout({
               type='button'
             />
            )}
-           </div>
+           </div> ) }
+            
                  
             </>
             )}
           </div>
         )}
+
+
+       {showModalNotificaciones && (
+              <div  className='fixed top-10 bg-white w-60 rounded-md h-40 z-40 right-14 p-3'>
+        {filterNotifications.map((item) => (
+          <div className='flex flex-row justify-center mx-auto space-x-5' key={item.id}>
+              <p className='leading-4'>{item.descripcionNotificacion}</p>
+              <small>{dayjs(item.fechaAdd).format('DD/MM/YYYY')}</small>
+            </div>
+        ))}
+         </div>
+       )} 
+     
+
+       
         <Wrapper>
           <main
             className={cn(

@@ -1,18 +1,55 @@
 import { Wrapper } from "@/feature/core/ui/wrapper";
 import { RegisterUserForm } from "@/feature/auth/login/register-user-form";
-import backgroundLogin from '@/feature/auth/assets/fondoLogin.png';
+
 import { InfoRegisterUser } from "@/feature/core/types/user";
+import { useParametrizacionContext } from "@/context/parametrizacionContext";
+import { useNavigate } from "react-router-dom";
+import { FaArrowCircleLeft } from "react-icons/fa";
+import { useState } from "react";
+import { createUser } from "../services/createUser";
+import { Spinner } from "@/feature/core";
+import { ModalDelivery } from "@/feature/core/component/modal";
 
 export const RegisterUser = () => {
-  const handleSuccess = (values: InfoRegisterUser): void => {
-    console.log(values);
+  
+  const [isLoading, setIsLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+
+  const handleSuccess = async (values: InfoRegisterUser) => {
+    setIsLoading(true);
+    try {
+      await createUser(values);
+      setShowModal(true);
+    } catch (error) {
+      console.error("Error creating user:", error);
+      throw error; 
+    } finally { 
+        setIsLoading(false);
+    }
+   
   };
 
+   const { parametros } = useParametrizacionContext();
+      const navigate = useNavigate()
+  
+      const handleNavigations = () => {
+        navigate(-1);
+      };
+
+     if (isLoading) {
   return (
+    <Spinner className="fixed inset-0 flex items-center justify-center text-red-300" />
+  );
+}
+  return (
+    <>  
     <div className="min-h-screen w-full flex flex-col items-center justify-center bg-gray-50 relative">
       {/* Header fijo */}
-      <div className="bg-primary-700 w-full h-16 fixed top-0 left-0 z-10 flex items-center justify-center">
-        <h1 className="text-2xl text-white font-extrabold">WAHOO</h1>
+      <div style={{ backgroundColor: parametros?.colorPrimario }} className="w-full h-16 fixed top-0 left-0 z-10 flex items-center justify-center">
+         <img src={parametros?.logo} alt='Logo' className='h-12' />
+          <div className="fixed left-4">
+            <FaArrowCircleLeft onClick={() => handleNavigations()} className="text-white w-7 h-7 hover:text-gray-500 cursor-pointer" />
+          </div>
       </div>
 
       {/* Contenido principal */}
@@ -23,7 +60,7 @@ export const RegisterUser = () => {
           <div className="hidden md:flex items-center justify-center">
             <picture>
               <img
-                src={backgroundLogin}
+                src={parametros?.backgroundImagen}
                 alt="backgroundLogin"
                 className="w-80 lg:w-96 xl:w-[450px] mt-10"
               />
@@ -53,5 +90,15 @@ export const RegisterUser = () => {
         </div>
       </Wrapper>
     </div>
+  <div>
+    <ModalDelivery
+      TitleText='Usuario creado con éxito'
+      textTwo='Ya puedes iniciar sesión con tus credenciales.'
+      showModal={showModal}
+      onClose={() => setShowModal(false)}
+    />
+  </div>
+
+ </>
   );
 };
