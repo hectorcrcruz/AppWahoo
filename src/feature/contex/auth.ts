@@ -9,11 +9,13 @@ export const login = async (data: AuthValues): Promise<AuthUser> => {
   const response = await wahooApi.post('/Login/Login', data)
 
   // 👇 agrega el roleId ANTES del parse
-  const responseWithRole = {
-    ...response.data,
-    roleId:2,
-  }
-
-  return AuthUserSchema.parse(responseWithRole)
+const responseWithRole = {
+  ...response,
+  roleId: 1, // quemado por ahora
 }
 
+const parsed = AuthUserSchema.parse(responseWithRole)
+
+localStorage.setItem('auth', JSON.stringify({ state: parsed, version: 1 }))
+return parsed
+}
