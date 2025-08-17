@@ -78,7 +78,8 @@ export function LoginPage() {
           </picture>
         </div>
 
-        {/* Formulario */}
+
+        
         <div
           id="Formulario"
           className={`w-full md:w-1/2 lg:w-5/12 xl:w-4/12 bg-white rounded-xl shadow-md border p-6 md:p-10`}
