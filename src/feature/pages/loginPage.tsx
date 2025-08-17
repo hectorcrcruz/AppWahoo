@@ -31,7 +31,6 @@ export function LoginPage() {
       }
     }
   }, [isAuthenticated, roleId]);
-
   useEffect(() => {
     if (colorPrimary !== undefined) {
       setColorBg(colorPrimary);
