@@ -1,27 +1,19 @@
+
+
 import { wahooApi } from '../core/api/wahoo'
 import { AuthUserSchema } from '../core/schemas/userSchema'
 import { AuthUser, AuthValues } from '../core/types/user'
 
+
 export const login = async (data: AuthValues): Promise<AuthUser> => {
   const response = await wahooApi.post('/Login/Login', data)
 
- 
+  // 👇 agrega el roleId ANTES del parse
   const responseWithRole = {
     ...response.data,
-    roleId: 1, // aquí lo quemas por ahora
+    roleId:2,
   }
 
-  
-  const parsed = AuthUserSchema.parse(responseWithRole)
-
-  
-  localStorage.setItem('auth', JSON.stringify({ state: parsed, version: 1 }))
-
-  return parsed // 👈 importante retornar el usuario autenticado
+  return AuthUserSchema.parse(responseWithRole)
 }
 
-
-// const parsed = AuthUserSchema.parse(response.data)
-
-// localStorage.setItem('auth', JSON.stringify({ state: parsed, version: 1 }))
-// return parsed
