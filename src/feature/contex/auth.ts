@@ -11,7 +11,7 @@ export const login = async (data: AuthValues): Promise<AuthUser> => {
   // 👇 agrega el roleId ANTES del parse
 const responseWithRole = {
   ...response,
-  roleId: 1, // quemado por ahora
+  roleId: 2, // quemado por ahora
 }
 
 const parsed = AuthUserSchema.parse(responseWithRole)
