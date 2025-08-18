@@ -10,14 +10,14 @@ import deliveryRoutes from './feature/userDomicilary/routesDomicilary';
 
 
 export const AppRoutes: React.FC = () => {
-  const { isAuthenticated , roleId}  = useAuthStore();
+  const { isAuthenticated , rolId}  = useAuthStore();
   
   let roleRoutes = authRoutes;
 
-  if (isAuthenticated && roleId) {
-    if (roleId === Roles.Domiciliario) {
+  if (isAuthenticated && rolId) {
+    if (rolId === Roles.Domiciliario) {
       roleRoutes = [...authRoutes, ...deliveryRoutes];
-    } else if (roleId=== Roles.Usuario) {
+    } else if (rolId=== Roles.Usuario) {
       roleRoutes = [...authRoutes, ...adminRoutes];
     } else {
       roleRoutes = [...authRoutes];

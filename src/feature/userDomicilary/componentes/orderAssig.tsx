@@ -68,15 +68,17 @@ export const OrderAssig = () => {
               </div>
             )}
 
-            {pedido.estado === "en_camino" && (
-              <motion.div
-                className="absolute bottom-4 w-28 h-28"
-                animate={{ x: [0, isSmall ? -60 : 100, 0] }} // 👈 depende del tamaño de pantalla
-                transition={{ duration: 4, repeat: Infinity }}
-              >
-                <Lottie animationData={scooterAnimation} loop={true} />
-              </motion.div>
-            )}
+                 {pedido.estado === "en_camino" && (
+                 <motion.div
+                 className="absolute bottom-4 left-60 w-24 h-24 flex flex-col items-center "
+                 animate={{ x: [0, isSmall ? -40 : 80, 0] }} // 👈 se adapta al breakpoint
+                 transition={{ duration: 4, repeat: Infinity }}
+                >
+                
+                   <Lottie animationData={scooterAnimation} loop={true} />
+                
+                </motion.div>
+              )}
 
             {pedido.estado === "entregado" && (
               <motion.div

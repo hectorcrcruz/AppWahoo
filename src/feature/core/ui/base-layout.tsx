@@ -51,7 +51,7 @@ export function BaseLayout({
    
    
        useEffect(() => {
-        if(user.roleId === 2){
+        if(user.rolId === 2){
          getListDomi()
         }
        }, [])
@@ -111,7 +111,7 @@ export function BaseLayout({
             />
            )}
            </div>
-            {user.roleId === 1 && (<div className='flex justify-end ' >
+            {user.rolId === 1 && (<div className='flex justify-end ' >
            <GiShoppingCart   onClick={() => setShowModal(true)} className='text-white w-7 h-7 absolute top-6 2xl:top-8 mx-28 hover:text-gray-500 cursor-pointer' />
            {productNotificacion.length > 0 && (
             <button 

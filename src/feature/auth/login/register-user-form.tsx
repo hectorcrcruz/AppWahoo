@@ -22,31 +22,25 @@ const optionTipeDocument = [
   { value: 2, label: 'Cédula de extranjería' },
 ]
 
-
-
 const classStyle = 'hover:!border-primary-500 focus:outline-none focus:ring focus:!border-primary-500'
 
 export const RegisterUserForm: React.FC<RegisterUserFormProps> = ({ className, onSuccess, isLocation, onSucces }) => {
 
-  // 1) Creamos una versión del esquema buyRegister sin el campo tipoFormaPago (runtime)
   const buyRegisterNoPayment = buyRegister.omit({ tipoFormaPago: true })
-
-  // 2) Elegimos el esquema runtime según isLocation
   const schema = isLocation ? buyRegisterNoPayment : FormRegisterUser
 
-  // 3) Tipos TypeScript derivados de cada esquema (usamos unión para cubrir ambos casos)
   type RegisterUserType = z.infer<typeof FormRegisterUser>
   type BuyRegisterType = z.infer<typeof buyRegisterNoPayment>
   type FormValues = RegisterUserType | BuyRegisterType
 
-  // 4) Hook de formulario — el resolver usa el schema runtime correcto
   const { control, formState: { errors }, handleSubmit, setValue } = useForm<FormValues>({
     resolver: zodResolver(schema),
   })
 
-  // 5) Extraemos los campos del esquema runtime y garantizamos que 'tipoFormaPago' quede fuera.
-  const fields = (Object.keys((schema as any).shape)
-    .filter((f) => f !== 'tipoFormaPago')) as Array<keyof RegisterUserType | keyof BuyRegisterType>;
+ 
+  const fields = Object.keys((schema as any).shape)
+    .filter((f) => f !== 'tipoFormaPago' && f !== 'rolId') 
+    
 
   const clearLabel = (field: string) => {
     const labels: Record<string, string> = {
@@ -56,21 +50,18 @@ export const RegisterUserForm: React.FC<RegisterUserFormProps> = ({ className, o
       numberIdentification: 'Número de identificación',
       expeditionCedula: 'Expedición de Cédula',
       correo: 'Correo',
-      rolId: 'Rol',
       telefonoUsuario: 'Teléfono',
       direccionUsuario: 'Dirección',
-      login: 'Login',
+      login: 'Ingresa contraseña',
     }
     return labels[field] ?? field
   }
-  
 
-const location = useLocation();
+  const location = useLocation();
 
-useEffect(() => {
+  useEffect(() => {
     if (location.pathname.includes('home/voucher/:virtual')) {
       const authData = localStorage.getItem('auth-store');
-      console.log(authData)
       if (authData) {
         try {
           const parsed = JSON.parse(authData);
@@ -85,7 +76,6 @@ useEffect(() => {
       }
     }
   }, [location.pathname, setValue]);
-
 
   const isSelectField = (fieldName: string) => {
     return fieldName === 'tipoIdentificacionId'
@@ -112,7 +102,6 @@ useEffect(() => {
                   );
                 }
 
-                // detección segura del tipo Zod para elegir input type
                 const zodDef = (schema as any).shape?.[field]
                 const zodTypeName = zodDef?._def?.typeName
                 const type = String(field) === 'expeditionCedula' ? 'date'
@@ -125,7 +114,7 @@ useEffect(() => {
                     {...controllerField}
                     className={classStyle}
                     type={type}
-                    maxLength={String(field) === 'numberIdentification' || String(field) === 'telefonoUsuario' ? 10 : undefined}
+                    maxLength={String(field) === 'numberIdentification' || String(field) === 'telefonoUsuario' ? 8 : undefined}
                     label=""
                   />
                 );

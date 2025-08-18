@@ -16,7 +16,7 @@ export function LoginPage() {
   const [colorBg, setColorBg] = useState('#3343a0');
 
   const navigate = useNavigate();
-  const { isAuthenticated , roleId } = useAuthStore();
+  const { isAuthenticated , rolId } = useAuthStore();
   const { parametros, loading } = useParametrizacionContext();
   const colorPrimary = parametros?.colorPrimario;
 
@@ -26,13 +26,13 @@ export function LoginPage() {
 
 useEffect(() => {
   if (isAuthenticated) {
-    if (roleId === 2) {
+    if (rolId === 2) {
       navigate('/home/domi');
     } else {
       navigate('/home');
     }
   }
-}, [isAuthenticated, roleId]);
+}, [isAuthenticated, rolId]);
 
   useEffect(() => {
     if (colorPrimary !== undefined) {

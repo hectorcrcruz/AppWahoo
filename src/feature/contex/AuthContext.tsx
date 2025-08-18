@@ -44,8 +44,8 @@ const useAuthProvider = (): AuthContextValue => {
       token,
       message,
       login,
-      roleId,
-      password
+      rolId,
+      
 
    }) => ({
       isAuthenticated,
@@ -54,12 +54,12 @@ const useAuthProvider = (): AuthContextValue => {
       setLogout,
       nombreUsuario,
       apellidoUsuario, 
-      roleId, 
+      rolId, 
       id,
       token,
       message,
       login,
-      password
+      
    }),
    shallow
   )
@@ -84,9 +84,8 @@ const useAuthProvider = (): AuthContextValue => {
       nombreUsuario: response.nombreUsuario,
       apellidoUsuario: response.apellidoUsuario,
       login: response.login,
-      password: response.password,
       message: response.message ?? "",
-      roleId: response.roleId ?? null,
+      rolId: response.rolId ?? null,
     }
 
     authStore.setLogin(mappedData)
@@ -118,11 +117,8 @@ const useAuthProvider = (): AuthContextValue => {
   
       // Add missing AuthState properties with default values or from authStore
       login: authStore.login ?? "",
-      password: authStore.password ?? "",
       message: authStore.message ?? "",
-     roleId: authStore.roleId,
-
-    
+      rolId: authStore.rolId,
     },
     login,
     isLoggingIn,
@@ -144,8 +140,7 @@ export const useAuthStore = (): Omit<AuthState, 'token' | 'refreshToken'> =>
       apellidoUsuario,
       id,
       login,
-      password,
-      roleId,
+      rolId,
       message
     }) => ({
       isAuthenticated,
@@ -153,9 +148,8 @@ export const useAuthStore = (): Omit<AuthState, 'token' | 'refreshToken'> =>
       nombreUsuario,
       apellidoUsuario,
       id,
-      roleId,
+      rolId,
       login,
-      password,
       message
     }),
     shallow

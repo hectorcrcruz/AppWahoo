@@ -22,7 +22,7 @@ export const Promotion: React.FC<PromotionProps> = ({ OnchagueValues, searchValu
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const {  roleId } = useAuthStore();
+  const {  rolId } = useAuthStore();
 
   // Auto slider cada 5 segundos
   useEffect(() => {
@@ -84,7 +84,7 @@ export const Promotion: React.FC<PromotionProps> = ({ OnchagueValues, searchValu
       </div>
 
       {/* Search Component */}
-      <div hidden={roleId ===2} className='bg-primary-50 md:h-16 p-2 rounded-md mr-4 ml-4 mt-10'>
+      <div hidden={rolId ===2} className='bg-primary-50 md:h-16 p-2 rounded-md mr-4 ml-4 mt-10'>
         <SearchComponent
           onSearch={(values) => {
             OnchagueValues(values.id)

@@ -15,7 +15,7 @@ export interface AuthState extends Nulleable<AuthUser> {
   isAuthenticated: boolean
   loggedInDate: Date | null
   token: string | null;
-  roleId: Roles | null;
+  rolId: Roles | null;
 }
 
 
@@ -36,9 +36,9 @@ const initialState: AuthState = {
   id: null,
   login: null,
   token: null,
-  password: null,
+
   message: null,
-  roleId: null,
+  rolId: null,
 }
 
 export  const createAuthSlice: StateCreator<AuthSlice> = (set) => ({

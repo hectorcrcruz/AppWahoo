@@ -20,7 +20,7 @@ export type InfoRegisterUser = {
   expeditionCedula: string;
   correo: string;
   rolId: number;
-  telefonoUsuario: string;
+  telefonoUsuario:number;
   direccionUsuario: string;
   login: string;
 };

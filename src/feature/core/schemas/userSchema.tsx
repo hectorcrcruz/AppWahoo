@@ -4,7 +4,7 @@ import { z } from 'zod'
 export const UserSchema = z.object({
   name: z.string(),
   lastName: z.string(),
-  roleId: z.string(),
+  rolId: z.string(),
   role: z.string(),
   id: z.string(),
   userName: z.string(),
@@ -25,14 +25,14 @@ export const UserSchema = z.object({
 })
 
 export const AuthUserSchema = z.object({
-  id: z.string(),
+  id: z.number(),
   nombreUsuario: z.string().optional(),
   apellidoUsuario: z.string(),
   login: z.string(),
-  password: z.string(),
+
   message: z.string(),
   token: z.string(),
-  roleId:z.number()
+  rolId:z.number()
 })
 
 export const ApiListUsersCreateSchema = z.object({

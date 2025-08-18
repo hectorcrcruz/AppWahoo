@@ -15,18 +15,29 @@ export const RegisterUser = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
-  const handleSuccess = async (values: InfoRegisterUser) => {
+   const handleSuccess = async (values: InfoRegisterUser) => {
     setIsLoading(true);
     try {
-      await createUser(values);
-      setShowModal(true);
+     
+      const payload = {
+        ...values,
+        telefonoUsuario: Number(values.telefonoUsuario),
+        usuarioAdd: "sistema",
+        rolId: 2,
+        estado: 2, 
+        login: values.login,
+        fechaAdd: new Date().toISOString(), 
+      };
+
+      await createUser(payload);
+     
     } catch (error) {
       console.error("Error creating user:", error);
-      throw error; 
-    } finally { 
-        setIsLoading(false);
+      throw error;
+    } finally {
+      setIsLoading(false);
+       setShowModal(true);
     }
-   
   };
 
    const { parametros } = useParametrizacionContext();
@@ -41,6 +52,9 @@ export const RegisterUser = () => {
     <Spinner className="fixed inset-0 flex items-center justify-center text-red-300" />
   );
 }
+
+
+
   return (
     <>  
     <div className="min-h-screen w-full flex flex-col items-center justify-center bg-gray-50 relative">
@@ -90,15 +104,15 @@ export const RegisterUser = () => {
         </div>
       </Wrapper>
     </div>
-  <div>
-    <ModalDelivery
+ {showModal && (
+   <ModalDelivery
       TitleText='Usuario creado con éxito'
       textTwo='Ya puedes iniciar sesión con tus credenciales.'
       showModal={showModal}
       onClose={() => setShowModal(false)}
     />
-  </div>
-
+  )}
+   
  </>
   );
 };

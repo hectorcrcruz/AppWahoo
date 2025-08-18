@@ -35,8 +35,8 @@ export const FormRegisterUser = z.object({
   .or(z.number()),
   expeditionCedula: z.string().min(1, 'La expedición de la cédula es obligatoria'),
   correo: z.string().email('Por favor digita un correo válido').min(1, 'El correo es obligatorio'),
-  rolId: z.string().min(1, 'El rol es obligatorio'),
-  telefonoUsuario: z.string().min(1, 'El teléfono es obligatorio'),
+
+  telefonoUsuario: z.string().or(z.number().min(1, 'El teléfono es obligatorio')),
   direccionUsuario: z.string().min(1, 'La dirección es obligatoria'),
   login: z.string().min(1, 'El login es obligatorio')
 })
