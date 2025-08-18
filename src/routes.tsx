@@ -17,7 +17,7 @@ export const AppRoutes: React.FC = () => {
   if (isAuthenticated && rolId) {
     if (rolId === Roles.Domiciliario) {
       roleRoutes = [...authRoutes, ...deliveryRoutes];
-    } else if (rolId=== Roles.Usuario) {
+    } else if (rolId=== Roles.Cleinte) {
       roleRoutes = [...authRoutes, ...adminRoutes];
     } else {
       roleRoutes = [...authRoutes];
