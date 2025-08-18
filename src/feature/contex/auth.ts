@@ -13,6 +13,8 @@ export const login = async (data: AuthValues): Promise<AuthUser> => {
     ...response,
   }
 
-  return AuthUserSchema.parse(responseWithRole)
-}
+const parsed = AuthUserSchema.parse(responseWithRole)
 
+localStorage.setItem('auth', JSON.stringify({ state: parsed, version: 1 }))
+return parsed
+}

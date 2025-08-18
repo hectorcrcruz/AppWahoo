@@ -6,7 +6,6 @@ import { useEffect, useState } from 'react';
 import { Alert } from '../core/ui/Alert';
 import { useNavigate } from 'react-router-dom';
 import { IoSettings } from "react-icons/io5";
-
 import { Link } from '../core/ui/Link';
 import { useParametrizacionContext } from '@/context/parametrizacionContext';
 import { Button, Spinner } from '../core';
@@ -14,15 +13,14 @@ import { Button, Spinner } from '../core';
 export function LoginPage() {
   const { login, error } = useAuth();
   const [colorBg, setColorBg] = useState('#3343a0');
-
   const navigate = useNavigate();
   const { isAuthenticated , rolId } = useAuthStore();
   const { parametros, loading } = useParametrizacionContext();
   const colorPrimary = parametros?.colorPrimario;
 
- const handleSuccess = (values: AuthValues): void => {
-  login(values);
-};
+  const handleSuccess = (values: AuthValues): void => {
+    login(values);
+  };
 
 useEffect(() => {
   if (isAuthenticated) {
@@ -47,75 +45,75 @@ useEffect(() => {
   }
 
   return (
-    <div className="min-h-screen w-auto items-center justify-center flex">
+    <div className="min-h-screen w-full flex flex-col items-center justify-center bg-gray-50">
+      {/* 🔹 Header con logo */}
       <div
         style={{ backgroundColor: colorBg }}
-        className={`w-full h-16 absolute top-0`}
+        className="w-full h-16 absolute top-0 left-0 flex items-center justify-between px-4"
       >
         <Button
           onClick={() => {
             localStorage.removeItem('id');
             window.location.reload();
           }}
-          className="absolute top-3 bg-transparent"
+          className="bg-transparent text-white"
         >
-          <IoSettings />
+          <IoSettings size={22} />
         </Button>
-        <picture className="text-center flex justify-center mt-3">
-          <img src={parametros.logo} alt="Logo" className="w-48 h-auto" />
+
+        <picture className="flex justify-center w-full">
+          <img src={parametros.logo} alt="Logo" className="w-32 md:w-40 lg:w-48 h-auto" />
         </picture>
       </div>
 
-      <Wrapper className="flex h-full items-center justify-center md:pl-0">
-        <div className="grid grid-cols-1 md:grid-cols-12 w-full">
-          <div className="col-span-7 hidden mx-auto h-full md:flex items-center justify-center">
-            <picture>
-              <img
-                src={parametros.backgroundImagen}
-                alt="backgroundLogin"
-                className="w-9/12 h-9/12 2xl:w-10/12 2xl:h-10/12 mx-20 2xl:mx-16 object-cover"
-              />
-            </picture>
+      {/* 🔹 Contenedor principal */}
+      <Wrapper className="flex flex-col md:flex-row h-full w-full md:px-10 lg:px-20 mt-20">
+        {/* Imagen (solo visible en md+) */}
+        <div className="hidden md:flex md:w-1/2 lg:w-7/12 items-center justify-center p-5">
+          <picture>
+            <img
+              src={parametros.backgroundImagen}
+              alt="backgroundLogin"
+              className="max-w-full max-h-[500px] object-contain"
+            />
+          </picture>
+        </div>
+
+        <div
+          id="Formulario"
+          className={`w-full md:w-1/2 lg:w-5/12 xl:w-4/12 bg-white rounded-xl shadow-md border p-6 md:p-10`}
+          style={{ borderColor: colorPrimary }}
+        >
+          <h2 className="text-xl md:text-2xl font-semibold text-center mb-6">
+            Iniciar Sesión
+          </h2>
+
+          {/* ✅ Alerta de error */}
+          {error && (
+            <div className="mb-5">
+              <Alert showIcon variant="danger">{error}</Alert>
+            </div>
+          )}
+
+          <LoginForm
+            className="w-full max-w-sm mx-auto mt-5"
+            onSuccess={handleSuccess}
+          />
+
+          <div className="text-center mt-6 space-y-2">
+            <Link aria-label="Ir al ForgotPassword" to={'/ForgotPassword'}>
+              <p className="text-sm text-blue-600 hover:underline">¿Olvidó su contraseña?</p>
+            </Link>
+            <Link aria-label="Ir al RegisterUser" to={'/RegisterUser'}>
+              <p className="text-sm text-blue-600 hover:underline">Registrarse</p>
+            </Link>
           </div>
 
-          <div
-            id="Formulario"
-            className={`lg:col-span-4 2xl:col-span-3 border-[1px] rounded-md border-[${colorPrimary}] md:mt-10 2xl:mt-0`}
-          >
-            <div className="mt-10 mb-7">
-              <h2 className="text-xl text-center">Iniciar Sesión</h2>
-            </div>
-
-            {/* ✅ Alerta visible pero sin detener renderizado */}
-            {error && (
-              <div className="mb-5 px-5">
-                <Alert showIcon variant="danger">
-                  {error}
-                </Alert>
-              </div>
-            )}
-
-            <LoginForm
-              className="mx-auto w-9/12 justify-center 2xl:w-[394px] mt-5"
-              onSuccess={handleSuccess}
-            />
-
-            <div className="text-center mt-4">
-              <Link aria-label="Ir al ForgotPassword" to={'/ForgotPassword'}>
-                <p>¿Olvidó su contraseña?</p>
-              </Link>
-              <Link aria-label="Ir al RegisterUser" to={'/RegisterUser'}>
-                <p>Registrarse</p>
-              </Link>
-            </div>
-
-            <div className="flex flex-col items-center text-center justify-around pb-10 mt-10">
-              <p className="text-sm opacity-75 text-primaryText-50">
-                {`© ${new Date().getFullYear()} Copyright ${
-                  parametros?.nombreApp
-                } - Todos los derechos reservados`}
-              </p>
-            </div>
+          {/* Footer */}
+          <div className="flex flex-col items-center text-center justify-around mt-10">
+            <p className="text-xs md:text-sm opacity-75 text-primaryText-50">
+              {`© ${new Date().getFullYear()} ${parametros?.nombreApp} - Todos los derechos reservados`}
+            </p>
           </div>
         </div>
       </Wrapper>
