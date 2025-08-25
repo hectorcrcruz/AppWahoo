@@ -7,7 +7,7 @@ import { useAuthStore } from './feature/contex/AuthContext';
 import deliveryRoutes from './feature/userDomicilary/routesDomicilary';
 
 import { NotFoundPage } from './feature/pages/notFoundPage';
-import { roleNames, Roles } from './feature/core/const/roles';
+import { Roles } from './feature/core/const/roles';
 
 
 
