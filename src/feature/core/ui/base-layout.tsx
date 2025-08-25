@@ -51,7 +51,7 @@ export function BaseLayout({
    
    
        useEffect(() => {
-        if(user.rolId === 2){
+        if(user.rolId === 9){
          getListDomi()
         }
        }, [])

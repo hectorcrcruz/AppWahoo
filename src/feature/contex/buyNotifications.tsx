@@ -14,7 +14,6 @@ type BuyNotificationContextType = {
 
 const ProductContext = createContext<BuyNotificationContextType | undefined>(undefined);
 
-
 export const ProductProvider = ({children}: {children: React.ReactNode}) => {
     const [totalProduct, setTotalProductos] = useState<number>(0);
     const [totalCantidad, setTotalCantidad] = useState<{ [id: string]: number }>({});

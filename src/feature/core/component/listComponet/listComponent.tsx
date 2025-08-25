@@ -30,6 +30,7 @@ export const ListComponent = <T extends { id: number; imagen?: string }>(
 
   const location = useLocation();
   const locationSearch = location.pathname.includes('/home/voucher');
+  const locationDomicilio = location.pathname.includes('/home/domi/list');
 
   const navigatee = useNavigate();
   const handleUpdate = (path: string, id: number) => {
@@ -38,7 +39,7 @@ export const ListComponent = <T extends { id: number; imagen?: string }>(
 
   // Column visibility state
   const [columnVisibility, setColumnVisibility] = useState<Record<string, boolean>>({
-    acciones: !locationSearch,
+    acciones: !(locationSearch || locationDomicilio),
     categoriaProductoId: false,
     imagenProducto:false,
     id:false
@@ -76,8 +77,8 @@ export const ListComponent = <T extends { id: number; imagen?: string }>(
         .filter((key) => ![
           'id', 'usuarioId', 'usuarioAdd', 'usuarioUp', 'circulacion',
           'login', 'password', 'fechaAdd', 'fechaUp',
-          'imagenUsuario', 'direccionUsuario', 'causacionPagos',
-          'expedicionCedula', 'tipoIdentificacionId', 'licenciaConduccion',
+          'imagenUsuario', 'direccionUsuario', 'causacionPagos', 'aceptaEntidad' , 'fechaEntrega', 'fechaAceptaEntidad',
+          'expedicionCedula', 'tipoIdentificacionId', 'aceptaDomiciliario', 'licenciaConduccion','fechaAceptaDomiciliario','domicilioExitoso',
           'imagen' // si ya renderizamos imagen por separado
         ].includes(String(key)))
         .map((key) =>
@@ -85,7 +86,7 @@ export const ListComponent = <T extends { id: number; imagen?: string }>(
             id: String(key),
             header: () => {
               const headerText = String(key);
-              const truncated = headerText.length > 5 ? headerText.substring(0, 7) + "..." : headerText;
+              const truncated = headerText.length > 10 ? headerText.substring(0, 10) + "..." : headerText;
               return (
                 <div className="font-normal text-center capitalize whitespace-nowrap">
                   <Tooltip text={headerText} position="bottom">
@@ -105,7 +106,7 @@ export const ListComponent = <T extends { id: number; imagen?: string }>(
         ),
       columnHelper.display({
         id: 'acciones',
-        header: () => <div className="md:w-40 font-normal text-center">Acciones</div>,
+        header: () => <div  className="md:w-40 font-normal text-center">Acciones</div>,
         cell: ({ row }) => (
           <div className="flex justify-center space-x-4">
             <Tooltip text="Información">

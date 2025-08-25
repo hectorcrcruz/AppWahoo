@@ -23,7 +23,7 @@ export const RegisterUser = () => {
         ...values,
         telefonoUsuario: Number(values.telefonoUsuario),
         usuarioAdd: "sistema",
-        rolId: 2,
+        rolId: 8,
         estado: 2, 
         login: values.login,
         fechaAdd: new Date().toISOString(), 

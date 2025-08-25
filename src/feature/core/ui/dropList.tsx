@@ -12,7 +12,8 @@ import { useParametrizacionContext } from "@/context/parametrizacionContext";
 import { useGetList } from "../services/useGetList";
 import { useAuth } from "@/feature/contex/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { Roles } from "../const/roles";
+import { roleNames } from "../const/roles";
+
 
 
 export interface DropListProps {
@@ -26,18 +27,14 @@ export interface DropListProps {
 
 }
 
-const roleNames: Record<Roles, string> = {
-  [Roles.Cleinte]: "Cleinte",
-  [Roles.Domiciliario]: "Domiciliario",
-  [Roles.Administrador]: "Administrador",
-  [Roles.Supervisor]: "Supervisor",
-};
+
 
 export default function DropList() {
   const { parametros } = useParametrizacionContext();
   // const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const { dataList } = useGetList<DropListProps>({ moduleRour: "CategoriaProducto" });
   const { user } = useAuth();
+
 
   const navigate = useNavigate()
 
@@ -70,7 +67,7 @@ export default function DropList() {
         "
         onCloseAutoFocus={(e) => e.preventDefault()} // evita el foco al cerrar:contentReference[oaicite:1]{index=1}
       >
-        {user.rolId === 1 ? dataList.map((module) => (
+        {user.rolId === 7 ? dataList.map((module) => (
           <DropdownMenuItem key={module.id}
                             className="hover:!bg-primary-200 hover:text-white cursor-pointer">
             <h1 className="text-lg hover:text-xl">{module.descripcionCategoriaProducto}</h1>

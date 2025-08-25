@@ -24,13 +24,13 @@ export function LoginPage() {
 
 useEffect(() => {
   if (isAuthenticated) {
-    if (rolId === 2) {
-      navigate('/home/domi');
+    if (rolId === 9) {
+      navigate('/home/domi',  { replace: true });
     } else {
-      navigate('/home');
+      navigate('/home',  { replace: true });
     }
   }
-}, [isAuthenticated, rolId]);
+}, [isAuthenticated, rolId, navigate]);
 
   useEffect(() => {
     if (colorPrimary !== undefined) {

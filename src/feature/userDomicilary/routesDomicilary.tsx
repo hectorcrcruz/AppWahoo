@@ -1,6 +1,7 @@
 
 import { CustomRouteObject } from '../core/types/routes'
 import { lazyImport } from '../core/utils/lazyImport'
+import { DomicilioProvider } from './contex/useContexDomicilio'
 
 
 
@@ -18,13 +19,22 @@ const deliveryRoutes: CustomRouteObject[] = [
   {
     name: '',
     path: '/home/domi',
-    element: <HomePage />
+    element: (
+       <DomicilioProvider>
+         <HomePage />
+       </DomicilioProvider>
+         
+    ) 
   },
 
   {
     name: '',
     path: '/home/domi/list',
-    element: <ListOrderPage />
+    element:( 
+    <DomicilioProvider>
+    <ListOrderPage />
+    </DomicilioProvider>
+    )
   },
   
  

@@ -6,6 +6,7 @@ import { BaseLayout } from "@/feature/core/ui/base-layout";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { OrderAssig } from "../componentes";
+import { useDomicilioContext } from "../contex/useContexDomicilio";
 
 
 
@@ -15,8 +16,12 @@ export const HomePage = () => {
     const { isAuthenticated } = useAuthStore();
     const [searchValues, setSearchValues] = useState<string | number | undefined>();
     const navigate = useNavigate();
-  
-  
+
+
+
+      const {  setSearchFilter } = useDomicilioContext();
+
+
     useEffect(() => {
       if (!isAuthenticated) {
         navigate('/login');
@@ -37,7 +42,12 @@ export const HomePage = () => {
               <div>
                 <Promotion
                   searchValues={searchValues}
-                  OnchagueValues={(values) => setSearchValues(values)}
+                  OnchagueValues={
+                    (values) =>{
+                      setSearchFilter(values as number | undefined);
+                      setSearchValues(values)
+                    }
+                  }
                 />
               </div>
     
