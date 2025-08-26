@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import  { useEffect, useState } from 'react'
 import { SearchComponent } from '../searchComponent/searchComponent'
 import { useGetList } from '../../services/useGetList'
 
