@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { SearchComponent } from '../searchComponent/searchComponent'
 import { useGetList } from '../../services/useGetList'
-import { useAuthStore } from '@/feature/contex/AuthContext';
+
 
 interface PromotionItem {
   imagenPrimariaPromocion?: string;
@@ -12,19 +12,12 @@ interface PromotionItem {
   usuarioUp?: string;
 }
 
-interface PromotionProps {
-  OnchagueValues: (values: string | number) => void;
-  searchValues: string | number | undefined
-}
 
-export const Promotion: React.FC<PromotionProps> = ({ OnchagueValues, searchValues }) => {
+
+export const Promotion = () => {
   const { dataList } = useGetList({ moduleRour: 'Promoción' }) as { dataList: PromotionItem[], isLoading: boolean };
 
   const [currentIndex, setCurrentIndex] = useState(0);
-
-  const {  rolId } = useAuthStore();
-
-  // Auto slider cada 5 segundos
   useEffect(() => {
     if (!dataList || dataList.length === 0) return;
 
@@ -84,13 +77,9 @@ export const Promotion: React.FC<PromotionProps> = ({ OnchagueValues, searchValu
       </div>
 
       {/* Search Component */}
-      <div hidden={rolId ===2} className='bg-primary-50 md:h-16 p-2 rounded-md mr-4 ml-4 mt-10'>
+      <div  className='bg-primary-50 md:h-16 p-2 rounded-md mr-4 ml-4 mt-10'>
         <SearchComponent
-          onSearch={(values) => {
-            OnchagueValues(values.id)
-          }}
           label={'Categorías +  | Ofertas | Mís Compras'}
-          searchParams={searchValues}
         />
       </div>
     </div>

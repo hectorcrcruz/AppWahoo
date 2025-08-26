@@ -36,7 +36,7 @@ export const OrderAssig = () => {
             >
               <div>
                 <p className="font-semibold">
-                  Cliente: {pedido.usuarioAdd}
+                  Cliente: {pedido.cliente}
                 </p>
                 <p className="font-semibold">
                   {pedido.descripcionDomicilio}

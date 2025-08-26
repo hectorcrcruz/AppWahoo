@@ -9,13 +9,15 @@ import { useGetList } from "../core/services/useGetList";
 import { BiSolidUserPin } from "react-icons/bi";
 import Tooltip from "../core/ui/Tooltip/Tooltip";
 import { ModalChatBox } from "../core/component/modal/modalChatBox";
+import { useDomicilioContext } from "../userDomicilary/contex/useContexDomicilio";
 
 export const HomePage = () => {
   const { isAuthenticated } = useAuthStore();
-  const [searchValues, setSearchValues] = useState<string | number | undefined>();
+     const {  searchFilter } = useDomicilioContext();
+ 
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
-  const { dataList } = useGetList<Producto>({ moduleRour: 'Producto', searchId: searchValues });
+  const { dataList } = useGetList<Producto>({ moduleRour: 'Producto', searchId: searchFilter });
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -34,10 +36,7 @@ export const HomePage = () => {
       <BaseLayout header navBar={true}>
         <div className="p-0 min-h-screen relative">
           <div>
-            <Promotion
-              searchValues={searchValues}
-              OnchagueValues={(values) => setSearchValues(values)}
-            />
+            <Promotion />
           </div>
 
           <div>

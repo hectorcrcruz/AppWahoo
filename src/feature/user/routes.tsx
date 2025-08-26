@@ -1,6 +1,7 @@
 import { ListProvider } from '../core/context/listContext'
 import { CustomRouteObject } from '../core/types/routes'
 import { lazyImport } from '../core/utils/lazyImport'
+import { DomicilioProvider } from '../userDomicilary/contex/useContexDomicilio'
 
 
 
@@ -22,7 +23,11 @@ const adminRoutes: CustomRouteObject[] = [
   {
     name: '',
     path: '/home',
-    element: <HomePage />
+    element: (
+     <DomicilioProvider>
+      <HomePage />
+     </DomicilioProvider>
+    )
   },
   {
     name: '',
@@ -41,7 +46,7 @@ const adminRoutes: CustomRouteObject[] = [
     path: '/home/:module/listarPage',
     element: (
       <ListProvider> 
-    <ListPage />
+      <ListPage />
     </ListProvider> 
   )
 

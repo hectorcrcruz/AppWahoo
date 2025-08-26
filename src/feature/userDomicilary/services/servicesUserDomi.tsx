@@ -23,6 +23,7 @@ export interface FaseDomicilio extends BaseEntity {
   descripcionFaseDomicilio: string;
   usuarioAdd?: string;
   
+  
 }
 
 export interface Notificacion extends BaseEntity {
@@ -45,6 +46,7 @@ type descripcionFaseDomicilio = {
 
 export interface DomicilioList {
   descripcionDomicilio: string;
+  cliente:string
   usuarioId:number;
   faseDomicilioId:number;
   productoId: number;
@@ -95,7 +97,7 @@ export const getNotificaciones = async (params?:ListResponseNotificacion) : Prom
 
 
 type ListResponseDomicilio = {
-   IdDomicilio?: number,
+   FaseDomicilioId?: number,
 }
 
 export const getDomicilioList = async (params?: ListResponseDomicilio) : Promise<DomicilioList[]> => {

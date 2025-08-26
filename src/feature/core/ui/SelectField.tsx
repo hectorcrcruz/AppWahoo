@@ -106,7 +106,7 @@ export const SelectField = forwardRef(
         </select>
 
         <BsChevronDown
-          className={clsx('absolute right-3 text-[#9F9F9F]', 'cursor-pointer', {
+          className={clsx('absolute right-4 text-[#9F9F9F]', 'cursor-pointer', {
             '!bottom-[12px]': !error, // Ajusta la posición normal
             'bottom-4': error,
             'text-secondary-500': isSelected

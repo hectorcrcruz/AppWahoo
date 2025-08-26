@@ -23,12 +23,14 @@ export const DomicilioProvider = ({children}: {children: React.ReactNode}) => {
     const [domicilioList, setDomicilioList] = useState<DomicilioList[]>([]);
     const [searchFilter, setSearchFilter] = useState<number | undefined>(undefined);
 
-   
-
+    
     const fetchDomicilios = async () => {
     try {
-      const data = await getDomicilioList({ IdDomicilio: searchFilter } );
-      setDomicilioList(data);
+       const data = searchFilter === undefined 
+      ? await getDomicilioList() 
+      : await getDomicilioList({ FaseDomicilioId: searchFilter });
+
+    setDomicilioList(data);
     } catch (err) {
       console.error("Error al obtener domicilios", err);
     }

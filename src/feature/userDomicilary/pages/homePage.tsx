@@ -3,23 +3,16 @@ import { Spinner } from "@/feature/core";
 import { Promotion } from "@/feature/core/component/promotion";
 
 import { BaseLayout } from "@/feature/core/ui/base-layout";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { OrderAssig } from "../componentes";
-import { useDomicilioContext } from "../contex/useContexDomicilio";
+
 
 
 
 export const HomePage = () => {
-
-
     const { isAuthenticated } = useAuthStore();
-    const [searchValues, setSearchValues] = useState<string | number | undefined>();
     const navigate = useNavigate();
-
-
-
-      const {  setSearchFilter } = useDomicilioContext();
 
 
     useEffect(() => {
@@ -40,15 +33,7 @@ export const HomePage = () => {
           <BaseLayout header navBar={true}>
             <div className="p-0  relatived w-full min-h-screen overflow-y-scroll ">
               <div>
-                <Promotion
-                  searchValues={searchValues}
-                  OnchagueValues={
-                    (values) =>{
-                      setSearchFilter(values as number | undefined);
-                      setSearchValues(values)
-                    }
-                  }
-                />
+                <Promotion/>
               </div>
     
               <div className="p-4">
