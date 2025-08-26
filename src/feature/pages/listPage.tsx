@@ -4,21 +4,18 @@ import { Button, Spinner } from '../core'
 import { ListComponent } from '../core/component'
 import { SearchComponent } from '../core/component/searchComponent/searchComponent'
 import { BaseLayout } from '../core/ui/base-layout'
-import { Search } from '../core/component/searchComponent/search-schema'
-
 import { useGetList } from '../core/services/useGetList'
-import { useState } from 'react'
+
 
 export const ListPage = <T extends { id: number }>() => {
-  const [searchParams, setSearchParams] = useState<Search>()
+
   const { module = '' } = useParams();
   const navigate = useNavigate()
-   const searchId =  searchParams?.id
   
   const hadleReturn = () =>{
     navigate(-1)
   }
-  const {dataList, isLoading} = useGetList<T>({moduleRour: module, searchId}) 
+  const {dataList, isLoading} = useGetList<T>({moduleRour: module}) 
   
 
 
@@ -41,10 +38,7 @@ export const ListPage = <T extends { id: number }>() => {
     </div>
     <div> 
     <SearchComponent 
-     searchParams={searchParams?.id}
-     onSearch={(values) => {
-       setSearchParams(values)
-    }} label={module} />
+    label={module} />
     </div>
     <div className=' mt-10 md:mt-5'>
      <ListComponent<T> dataList={dataList} module={module} />
