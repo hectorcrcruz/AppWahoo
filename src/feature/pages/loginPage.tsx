@@ -26,7 +26,10 @@ useEffect(() => {
   if (isAuthenticated) {
     if (rolId === 9) {
       navigate('/home/domi',  { replace: true });
-    } else {
+     }else if (rolId === 5 || rolId === 6) {
+      navigate('/home',  { replace: true });
+     }
+    else {
       navigate('/home',  { replace: true });
     }
   }

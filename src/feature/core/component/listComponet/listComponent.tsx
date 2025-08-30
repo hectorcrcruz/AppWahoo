@@ -18,10 +18,11 @@ import { useNavigate, useLocation } from 'react-router-dom';
 export interface ListComponentProps<T extends { id: number }> {
   dataList: T[];
   module: string;
+  showColums? :boolean;
 }
 
 export const ListComponent = <T extends { id: number; imagen?: string }>(
-  { dataList, module }: ListComponentProps<T>
+  { dataList, module, showColums }: ListComponentProps<T>
 ) => {
   const [showModal, setShowModal] = useState(false);
   const [idCustomer, setIdCustomer] = useState<number | string>(0);
@@ -31,6 +32,8 @@ export const ListComponent = <T extends { id: number; imagen?: string }>(
   const location = useLocation();
   const locationSearch = location.pathname.includes('/home/voucher');
   const locationDomicilio = location.pathname.includes('/home/domi/list');
+  
+
 
   const navigatee = useNavigate();
   const handleUpdate = (path: string, id: number) => {
@@ -39,7 +42,7 @@ export const ListComponent = <T extends { id: number; imagen?: string }>(
 
   // Column visibility state
   const [columnVisibility, setColumnVisibility] = useState<Record<string, boolean>>({
-    acciones: !(locationSearch || locationDomicilio),
+    acciones: !(locationSearch || locationDomicilio || showColums ),
     categoriaProductoId: false,
     imagenProducto:false,
     id:false

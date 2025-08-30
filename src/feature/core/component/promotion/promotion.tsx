@@ -1,6 +1,7 @@
 import  { useEffect, useState } from 'react'
 import { SearchComponent } from '../searchComponent/searchComponent'
 import { useGetList } from '../../services/useGetList'
+import { useParametrizacionContext } from '@/context/parametrizacionContext';
 
 
 interface PromotionItem {
@@ -17,6 +18,8 @@ interface PromotionItem {
 export const Promotion = () => {
   const { dataList } = useGetList({ moduleRour: 'Promoción' }) as { dataList: PromotionItem[], isLoading: boolean };
 
+   const { parametros} = useParametrizacionContext()
+
   const [currentIndex, setCurrentIndex] = useState(0);
   useEffect(() => {
     if (!dataList || dataList.length === 0) return;
@@ -30,9 +33,12 @@ export const Promotion = () => {
 
   const currentPromotion = dataList[currentIndex];
 
+
   return (
     <div >
-      <div className='bg-primary-50 h-auto p-2 rounded-md mr-4 ml-4 mt-5'>
+      <div style={{backgroundColor: parametros?.colorSecundario,
+         color: parametros?.colorTexto
+      }} className=' h-auto p-2 rounded-md mr-4 ml-4 mt-5'>
         <h1 className='w-full text-lg'>Promociones y descuentos especiales</h1>
       </div>
 
@@ -77,7 +83,9 @@ export const Promotion = () => {
       </div>
 
       {/* Search Component */}
-      <div  className='bg-primary-50 md:h-16 p-2 rounded-md mr-4 ml-4 mt-10'>
+      <div  style={{backgroundColor: parametros?.colorSecundario,
+         color: parametros?.colorTexto
+      }} className=' md:h-16 p-2 rounded-md mr-4 ml-4 mt-10'>
         <SearchComponent
           label={'Categorías +  | Ofertas | Mís Compras'}
         />

@@ -457,6 +457,7 @@ export interface Calificacion {
             tipoTransaccionId: number;
             entidadId: number;
             domicilioId: number;
+            tipoTransaccion:string
             descripcionAdicional: string;
             id: number;
             estado: number;

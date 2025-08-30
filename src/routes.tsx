@@ -8,6 +8,7 @@ import deliveryRoutes from './feature/userDomicilary/routesDomicilary';
 
 import { NotFoundPage } from './feature/pages/notFoundPage';
 import { Roles } from './feature/core/const/roles';
+import proveedorRoutes from './feature/userProveedor/routesProveedor';
 
 
 
@@ -24,7 +25,10 @@ export const AppRoutes: React.FC = () => {
       roleRoutes = [...authRoutes, ...deliveryRoutes];
     } else if (rolId === Roles.Cliente  ) {
       roleRoutes = [...authRoutes, ...adminRoutes];
-    } else {
+    } else if (rolId === Roles.Proveedor  || rolId === Roles.Comercio) {
+      roleRoutes = [...authRoutes, ...proveedorRoutes];
+    }
+    else {
       roleRoutes = [
       ...authRoutes,
       {

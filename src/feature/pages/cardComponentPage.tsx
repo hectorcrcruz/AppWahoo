@@ -4,6 +4,8 @@ import { FaList } from "react-icons/fa";
 import { IoIosCreate } from "react-icons/io";
 import { BaseLayout } from '../core/ui/base-layout';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useAuthStore } from '../contex/AuthContext';
+import { Roles } from '../core/const/roles';
 
 type CardContent = {
   id: number;
@@ -30,16 +32,18 @@ const titleCard: CardContent[] = [
 
 export  const CardComponentPage = () => {
   const { module } = useParams();
+    const { rolId}  = useAuthStore();
 
   
 
   const navigate = useNavigate();
 
   const  handleNavigate = (route:string) => {
-    if (module) {
-      navigate(`/home/${module}/${route}`); 
+    if (rolId === Roles.Proveedor || rolId === Roles.Comercio) {
+      navigate(`/home/${'Producto'}/${route}`); 
+    } else if (module) {
+       navigate(`/home/${module}/${route}`);
     } 
-
   }
 
 
@@ -50,7 +54,7 @@ export  const CardComponentPage = () => {
         
       >
 
-        <h1 className="text-2xl text-center font-semibold md:mt-10 text-gray-500">Modulo de {module}</h1>
+        <h1 className="text-2xl text-center font-semibold md:mt-10 text-gray-500">Modulo de {module ?? 'Producto'}</h1>
        <div className=' space-y-10 md:space-y-0 md:flex gap-5 justify-center items-center mx-auto p-4 mt-5'>
         {titleCard.map((item) => (
         <Card className="w-72 h-44 flex mx-auto md:mx-0 flex-col items-center justify-center p-4 

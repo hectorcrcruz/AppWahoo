@@ -17,6 +17,8 @@ export interface ModalProps {
 export const ModalActions:React.FC<ModalProps> = ({showModal, onSucces, title, icon, id}) => {
    
     const { module } = useParams();
+     
+   
 
   return (
     <div>
@@ -43,7 +45,7 @@ export const ModalActions:React.FC<ModalProps> = ({showModal, onSucces, title, i
               </div>
             </div>
                  <div className="mt-5">  
-                   <CreateComponent idCustomer={id} label={module} ModalOpen={true} />
+                   <CreateComponent idCustomer={id} label={module ?? 'Transacción'} ModalOpen={true} />
                    </div>
 
             <div className='flex w-full justify-end'>

@@ -14,6 +14,8 @@ type useProps = {
 
 export const useCreateData = ({ label, Update }: useProps) => {
 
+  
+
 
      const navigate = useNavigate()
      const newUrlGet = arrayModules.find(module => module.name === label)
@@ -43,14 +45,13 @@ export const useCreateData = ({ label, Update }: useProps) => {
                  icon: "success",
                  confirmButtonText: "Aceptar",
                });
-           
-               if (result.isConfirmed) {
-                 navigate(`/home/${label}/listarPage`);
-               }
-             } catch (error) {
-              console.error(error);
-               Swal.fire({
-                 title: "Ups!",
+           if (result.isConfirmed) {
+               label === 'Producto' ? navigate(`/home`) : navigate(`/home/${label}/listarPage`);
+             }
+           } catch (error) {
+            console.error(error);
+             Swal.fire({
+               title: "Ups!",
                  text: `Error al ${labelProps} el ${label}. Por favor, tenemos problemas con el servidor`,
                  icon: "error",
                });

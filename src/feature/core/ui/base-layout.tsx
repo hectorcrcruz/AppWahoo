@@ -154,7 +154,9 @@ export function BaseLayout({
 
          
         </Wrapper>
-        <div className='bg-primary-100 h-32 text-center '>
+        <div style={{backgroundColor: parametros?.textoTerciario,
+         color: parametros?.colorTexto
+      }} className='bg-primary-100 h-32 text-center '>
            <p className='mt-3'>{parametros?.nombreApp}</p>
            <p>{dateRep}</p>
            <small>Todos los derechos reservados</small>

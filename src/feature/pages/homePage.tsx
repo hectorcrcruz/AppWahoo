@@ -50,7 +50,7 @@ export const HomePage = () => {
           >
             <Tooltip text="Chat" className="!top-0 !left-0">
               <BiSolidUserPin
-                className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-primary-600 hover:cursor-pointer hover:text-primary-700 transition-colors"
+                className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-primary-300 hover:cursor-pointer hover:text-primary-500 transition-colors"
               />
             </Tooltip>
           </div>

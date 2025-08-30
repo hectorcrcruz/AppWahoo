@@ -87,8 +87,7 @@ useEffect(() => {
        {...register('id')}
         type="number"
         label={'Selecciona'} 
-         className={'mt-[4px] md:mx-3  md:w-11/12 '}
-         
+         className={'mt-[4px] md:mx-3  md:w-11/12 '} 
         />
       </div>
        <div className="mt-2" hidden={rolId !== 9} >

@@ -24,6 +24,7 @@ export const CreateComponent: React.FC<CreateComponentProps> = ({ label, idCusto
   const isUpdatePage = location.pathname.includes("/actualizarPage");
   const { id } = useParams();
 
+
   const customerId = isUpdatePage ? id : idCustomer;
   const isFile = location.pathname.includes("AzureBlob/crearPage");
 
@@ -139,9 +140,10 @@ export const CreateComponent: React.FC<CreateComponentProps> = ({ label, idCusto
           <div className="w-full justify-center space-x-3 md:space-x-0 md:justify-between mx-auto flex mt-10">
             <div>
               <Button
+                style={{ backgroundColor: `${parametros?.colorBotonEliminar}` }}
                 onClick={handleReset}
                 type="button"
-                className={`w-44 h-14 rounded-md bg-[${parametros?.colorSecundario}] text-black transition-all hover:brightness-110`}
+                className={`w-44 h-14 rounded-md  text-black transition-all hover:brightness-110`}
               >
                 <ImCancelCircle /> Cancelar
               </Button>
@@ -149,9 +151,10 @@ export const CreateComponent: React.FC<CreateComponentProps> = ({ label, idCusto
             <div>
               <Button
                 type="submit"
-                className={`w-44 h-14 rounded-md bg-[${parametros?.colorSecundario}] text-black transition-all hover:brightness-110`}
+                style={{ backgroundColor: isUpdatePage ? `${parametros?.colorBotonActualizar}` : `${parametros?.colorBotonCrear}` }}
+                className={`w-44 h-14 rounded-md  text-black transition-all hover:brightness-110`}
               >
-                <CiSaveDown1 /> Guardar
+                <CiSaveDown1 /> {isUpdatePage ? "Actualizar" : "Crear"}
               </Button>
             </div>
           </div>

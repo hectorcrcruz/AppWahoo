@@ -31,23 +31,21 @@ export interface DropListProps {
 
 export default function DropList() {
   const { parametros } = useParametrizacionContext();
-  // const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const { dataList } = useGetList<DropListProps>({ moduleRour: "CategoriaProducto" });
   const { user } = useAuth();
 
 
   const navigate = useNavigate()
 
-  // useEffect(() => {
-  //   const handleResize = () => setIsMobile(window.innerWidth < 768);
-  //   window.addEventListener("resize", handleResize);
-  //   return () => window.removeEventListener("resize", handleResize);
-  // }, []);
+ 
 
   const handleNavigate = () => {
     navigate('/home/domi/list');
   }
 
+  const handleNavigateProvee = () => {
+    navigate('/home/provee');
+  }
 
   return (
     <DropdownMenu>
@@ -67,7 +65,7 @@ export default function DropList() {
         "
         onCloseAutoFocus={(e) => e.preventDefault()} // evita el foco al cerrar:contentReference[oaicite:1]{index=1}
       >
-        {user.rolId === 7 ? dataList.map((module) => (
+        {user.rolId === 7 && dataList.map((module) => (
           <DropdownMenuItem key={module.id}
                             className="hover:!bg-primary-200 hover:text-white cursor-pointer">
             <h1 className="text-lg hover:text-xl">{module.descripcionCategoriaProducto}</h1>
@@ -76,13 +74,21 @@ export default function DropList() {
 
           </DropdownMenuItem>
           
-        )) : (
-          <DropdownMenuItem   onClick={handleNavigate} className="hover:!bg-primary-200 hover:text-white cursor-pointer mt-5">
+        ))}
+        {user.rolId === 9 && (
+          <DropdownMenuItem  onClick={handleNavigate} className="hover:!bg-primary-200 hover:text-white cursor-pointer">
             <h1 className="text-lg">Ver listado de Pedidos</h1>
             <span>›</span>
           </DropdownMenuItem>
         )}
 
+
+       {(user.rolId === 5 || user.rolId === 6) && (
+          <DropdownMenuItem onClick={handleNavigateProvee} className="hover:!bg-primary-200 hover:text-white cursor-pointer">
+            <h1 className="text-lg">Productos</h1>
+            <span>›</span>
+          </DropdownMenuItem>
+        )}
 
 
         <DropdownMenuSeparator className="my-2" /> 

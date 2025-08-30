@@ -373,13 +373,14 @@ Log: z.object({
     }),
   }),
 
-  Transaccion: z.object({
+  Transacción: z.object({
     id: z.preprocess((val) => Number(val), z.number()),
     descripcionTransaccion: z.string().min(1, 'La descripción de la transacción es obligatoria'),
     tipoTransaccionId: z.number().or( z.string().min(1, 'El campo es obigatorio')),
     entidadId: z.number().or( z.string().min(1, 'El campo es obigatorio')),
     domicilioId: z.number().or( z.string().min(1, 'El campo es obigatorio')),
     descripcionAdicional: z.string().optional(),
+    tipoTransaccion: z.string().min(1, 'El tipo de transacción es obligatorio'),
     usuarioAdd: z.string(),
     estado: z.number().or( z.string().min(1, 'El campo es obigatorio')),
     fechaAdd: z.string().refine((date) => !isNaN(Date.parse(date)), {
