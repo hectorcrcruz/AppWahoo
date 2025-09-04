@@ -12,56 +12,85 @@ import { Search } from "lucide-react";
 import { useProveedor } from "../component/hook/useProveedor";
 import { useAuthStore } from "@/feature/contex/AuthContext";
 
-
 export const HomePage = <T extends { id: number }>(): JSX.Element => {
-     const {  rolId } = useAuthStore();
+  const { rolId } = useAuthStore();
 
-  
-     const isRoleId = rolId === 3 || rolId === 4 ?  'Domicilio' : 'Transacción' ;
-
-
+  // Asigno módulo dinámico
+  const isRoleId = rolId === 3 || rolId === 4 ? "Domicilio" : "Transacción";
+  console.log("Modulo activo:", isRoleId);
 
   const { dataList, isLoading } = useGetList<T>({ moduleRour: isRoleId });
 
-  const [filters, setFilters] = useState( isRoleId === 'Domicilio' ? {
-    descripcionDomicilio: "",
-    cliente: "",
-    estado: "",
-  }: {
-    descripcionTransaccion: "",
-    tipoTransaccion: "",
-    estado: "",
-  }
-
-); 
+  // Estado inicial según el módulo
+  const [filters, setFilters] = useState(
+    isRoleId === "Domicilio"
+      ? {
+          descripcionDomicilio: "",
+          cliente: "",
+          estado: "",
+        }
+      : {
+          descripcionTransaccion: "",
+          tipoTransaccion: "",
+          estado: "",
+        }
+  );
 
   const { handleExportPDF, filteredData } = useProveedor(dataList, filters);
 
-    const fields = [
-    {
-      name: isRoleId ? 'descripcionDomicilio' : "descripcionTransaccion",
-      label: "Descripción",
-      type: "text" as "text",
-      placeholder: "Buscar descripción...",
-      icon: <Search className="w-4 h-4" />,
-    },
-    {
-      name: isRoleId ? 'cliente' : "tipoTransaccion",
-      label: isRoleId ? "Cliente" : "Tipo de transacción",
-      type: "text" as "text",
-      placeholder: "Ej: Compra, Venta...",
-    },
-    {
-      name: "estado",
-      label: "Estado",
-      type: "select" as "select",
-      options: [
-        { value: "", label: "Todos" },
-        { value:  2, label: "Activo" },
-        { value: 1 , label: "Inactivo" },
-      ],
-    },
-  ];
+  // Campos del filtro según módulo
+  const fields =
+    isRoleId === "Domicilio"
+      ? [
+          {
+            name: "descripcionDomicilio",
+            label: "Descripción Domicilio",
+            type: "text" as const,
+            placeholder: "Buscar descripción...",
+            icon: <Search className="w-4 h-4" />,
+          },
+          {
+            name: "cliente",
+            label: "Cliente",
+            type: "text" as const,
+            placeholder: "Ej: Juan Pérez...",
+          },
+          {
+            name: "estado",
+            label: "Estado",
+            type: "select" as const,
+            options: [
+              { value: "", label: "Todos" },
+              { value: "2", label: "Activo" },
+              { value: "1", label: "Inactivo" },
+            ],
+          },
+        ]
+      : [
+          {
+            name: "descripcionTransaccion",
+            label: "Descripción Transacción",
+            type: "text" as const,
+            placeholder: "Buscar descripción...",
+            icon: <Search className="w-4 h-4" />,
+          },
+          {
+            name: "tipoTransaccion",
+            label: "Tipo de transacción",
+            type: "text" as const,
+            placeholder: "Ej: Compra, Venta...",
+          },
+          {
+            name: "estado",
+            label: "Estado",
+            type: "select" as const,
+            options: [
+              { value: "", label: "Todos" },
+              { value: "2", label: "Activo" },
+              { value: "1", label: "Inactivo" },
+            ],
+          },
+        ];
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -69,9 +98,6 @@ export const HomePage = <T extends { id: number }>(): JSX.Element => {
     const { name, value } = e.target;
     setFilters((prev) => ({ ...prev, [name]: value }));
   };
-
-  // Filtrar los datos en memoria
- 
 
   const handleExportExcel = () => {
     const ws = XLSX.utils.json_to_sheet(filteredData);
@@ -93,15 +119,25 @@ export const HomePage = <T extends { id: number }>(): JSX.Element => {
 
   return (
     <BaseLayout header navBar={true}>
-      <h2 className="text-xl font-semibold ml-5 mt-5">Transacciones</h2>
-      <ComponentFilter filters={filters} handleChange={handleChange} fields={fields} />
+      <h2 className="text-xl font-semibold ml-5 mt-5">{isRoleId}</h2>
+
+      <ComponentFilter
+        filters={filters}
+        handleChange={handleChange}
+        fields={fields}
+      />
+
       {/* Tabla */}
       <div className="mt-5 mr-4 ml-4">
-        <ListComponent<T> dataList={filteredData} module={isRoleId} showColums={true} />
+        <ListComponent<T>
+          dataList={filteredData}
+          module={isRoleId}
+          showColums={true}
+        />
       </div>
 
       {/* Botones exportar */}
-      <div className="flex  justify-center mx-auto  md:justify-end md:mr-10 mb-10 mt-6 gap-4">
+      <div className="flex justify-center mx-auto md:justify-end md:mr-10 mb-10 mt-6 gap-4">
         <Button
           onClick={handleExportPDF}
           type="button"
