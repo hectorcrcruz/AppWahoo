@@ -10,14 +10,18 @@ import { BiSolidUserPin } from "react-icons/bi";
 import Tooltip from "../core/ui/Tooltip/Tooltip";
 import { ModalChatBox } from "../core/component/modal/modalChatBox";
 import { useDomicilioContext } from "../userDomicilary/contex/useContexDomicilio";
+import { CardComponentPage } from "./cardComponentPage";
 
 export const HomePage = () => {
-  const { isAuthenticated } = useAuthStore();
+  const { isAuthenticated  , rolId} = useAuthStore();
      const {  searchFilter } = useDomicilioContext();
  
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
   const { dataList } = useGetList<Producto>({ moduleRour: 'Producto', searchId: searchFilter });
+
+
+  const userRole = (rolId === 1 || rolId === 2 ) 
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -33,16 +37,16 @@ export const HomePage = () => {
 
   return (
     <>
+    { userRole ? (<CardComponentPage />) :(
+      <>
       <BaseLayout header navBar={true}>
         <div className="p-0 min-h-screen relative">
           <div>
             <Promotion />
           </div>
-
           <div>
             <CarruselHome Producto={dataList} />
           </div>
-
           {/* Botón flotante del chat, responsive */}
           <div
             onClick={() => setShowModal(true)}
@@ -61,6 +65,10 @@ export const HomePage = () => {
         showModal={showModal}
         onSucces={() => setShowModal(false)}
       />
+       </>
+
+    )}
+      
     </>
   );
 };

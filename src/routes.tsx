@@ -23,7 +23,7 @@ export const AppRoutes: React.FC = () => {
 
     if (rolId === Roles.Domiciliario_Propio || rolId === Roles.Domiciliario_Externo)  {
       roleRoutes = [...authRoutes, ...deliveryRoutes];
-    } else if (rolId === Roles.Cliente  ) {
+    } else if (rolId === Roles.Cliente || rolId === Roles.Administrador || rolId === Roles.Soporte) {
       roleRoutes = [...authRoutes, ...adminRoutes];
     } else if (rolId === Roles.Proveedor  || rolId === Roles.Comercio || rolId === Roles.Servicio_al_cliente_PQRS || rolId === Roles.Supervisor) {
       roleRoutes = [...authRoutes, ...proveedorRoutes];
