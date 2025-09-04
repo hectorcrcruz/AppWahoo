@@ -83,9 +83,9 @@ export default function DropList() {
         )}
 
 
-       {(user.rolId === 5 || user.rolId === 6) && (
+       {(user.rolId === 5 || user.rolId === 6 || user.rolId === 4 || user.rolId === 3) && (
           <DropdownMenuItem onClick={handleNavigateProvee} className="hover:!bg-primary-200 hover:text-white cursor-pointer">
-            <h1 className="text-lg">Productos</h1>
+            <h1 className="text-lg">{user.rolId === 4 || user.rolId === 3 ? "PQRS" : "Productos"}</h1>
             <span>›</span>
           </DropdownMenuItem>
         )}

@@ -7,6 +7,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useAuthStore } from '../contex/AuthContext';
 import { Roles } from '../core/const/roles';
 
+
 type CardContent = {
   id: number;
   title: string;
@@ -38,9 +39,13 @@ export  const CardComponentPage = () => {
 
   const navigate = useNavigate();
 
+  const isModulo = (rolId === Roles.Proveedor || rolId === Roles.Comercio)  ? 'Producto' : 'PQRS' ;
+
+
   const  handleNavigate = (route:string) => {
-    if (rolId === Roles.Proveedor || rolId === Roles.Comercio) {
-      navigate(`/home/${'Producto'}/${route}`); 
+    if (isModulo) {
+        
+      navigate(`/home/${isModulo}/${route}`); 
     } else if (module) {
        navigate(`/home/${module}/${route}`);
     } 
@@ -54,7 +59,7 @@ export  const CardComponentPage = () => {
         
       >
 
-        <h1 className="text-2xl text-center font-semibold md:mt-10 text-gray-500">Modulo de {module ?? 'Producto'}</h1>
+        <h1 className="text-2xl text-center font-semibold md:mt-10 text-gray-500">Modulo de {module ?? isModulo}</h1>
        <div className=' space-y-10 md:space-y-0 md:flex gap-5 justify-center items-center mx-auto p-4 mt-5'>
         {titleCard.map((item) => (
         <Card className="w-72 h-44 flex mx-auto md:mx-0 flex-col items-center justify-center p-4 

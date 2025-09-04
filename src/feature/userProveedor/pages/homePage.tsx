@@ -10,30 +10,44 @@ import { useState } from "react";
 import { ComponentFilter } from "../component/componentFilter";
 import { Search } from "lucide-react";
 import { useProveedor } from "../component/hook/useProveedor";
+import { useAuthStore } from "@/feature/contex/AuthContext";
 
 
 export const HomePage = <T extends { id: number }>(): JSX.Element => {
-  const { dataList, isLoading } = useGetList<T>({ moduleRour: "Transacción" });
+     const {  rolId } = useAuthStore();
 
-  const [filters, setFilters] = useState({
+  
+     const isRoleId = rolId === 3 || rolId === 4 ?  'Domicilio' : 'Transacción' ;
+
+
+
+  const { dataList, isLoading } = useGetList<T>({ moduleRour: isRoleId });
+
+  const [filters, setFilters] = useState( isRoleId === 'Domicilio' ? {
+    descripcionDomicilio: "",
+    cliente: "",
+    estado: "",
+  }: {
     descripcionTransaccion: "",
     tipoTransaccion: "",
     estado: "",
-  }); 
+  }
+
+); 
 
   const { handleExportPDF, filteredData } = useProveedor(dataList, filters);
 
     const fields = [
     {
-      name: "descripcionTransaccion",
+      name: isRoleId ? 'descripcionDomicilio' : "descripcionTransaccion",
       label: "Descripción",
       type: "text" as "text",
       placeholder: "Buscar descripción...",
       icon: <Search className="w-4 h-4" />,
     },
     {
-      name: "tipoTransaccion",
-      label: "Tipo de transacción",
+      name: isRoleId ? 'cliente' : "tipoTransaccion",
+      label: isRoleId ? "Cliente" : "Tipo de transacción",
       type: "text" as "text",
       placeholder: "Ej: Compra, Venta...",
     },
@@ -83,7 +97,7 @@ export const HomePage = <T extends { id: number }>(): JSX.Element => {
       <ComponentFilter filters={filters} handleChange={handleChange} fields={fields} />
       {/* Tabla */}
       <div className="mt-5 mr-4 ml-4">
-        <ListComponent<T> dataList={filteredData} module={"Transacción"} showColums={true} />
+        <ListComponent<T> dataList={filteredData} module={isRoleId} showColums={true} />
       </div>
 
       {/* Botones exportar */}

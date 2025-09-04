@@ -25,7 +25,7 @@ export const AppRoutes: React.FC = () => {
       roleRoutes = [...authRoutes, ...deliveryRoutes];
     } else if (rolId === Roles.Cliente  ) {
       roleRoutes = [...authRoutes, ...adminRoutes];
-    } else if (rolId === Roles.Proveedor  || rolId === Roles.Comercio) {
+    } else if (rolId === Roles.Proveedor  || rolId === Roles.Comercio || rolId === Roles.Servicio_al_cliente_PQRS || rolId === Roles.Supervisor) {
       roleRoutes = [...authRoutes, ...proveedorRoutes];
     }
     else {
