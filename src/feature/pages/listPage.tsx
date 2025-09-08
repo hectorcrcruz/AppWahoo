@@ -1,3 +1,4 @@
+// src/pages/ListPage.tsx
 import { useNavigate, useParams } from "react-router-dom";
 import { Button, Spinner } from "../core";
 import { ListComponent } from "../core/component";
@@ -5,58 +6,33 @@ import { BaseLayout } from "../core/ui/base-layout";
 import { useGetList } from "../core/services/useGetList";
 import { useAuthStore } from "../contex/AuthContext";
 import { Roles } from "../core/const/roles";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { ComponentFilter } from "../userProveedor/component/componentFilter";
-import { Search } from "lucide-react";
+import { EntityMap } from "../core/types/entityTypes";
+import { filterConfig } from "../core/types/filterCampus";
+
 
 export const ListPage = <T extends { id: number }>() => {
   const { module = "" } = useParams();
   const { rolId } = useAuthStore();
+  const navigate = useNavigate();
 
-  // Si es Proveedor o Comercio, siempre es "Producto"
+  
   const modules =
     rolId === Roles.Proveedor || rolId === Roles.Comercio ? "Producto" : module;
 
-  const navigate = useNavigate();
 
-  // Definición dinámica de los campos del filtro
-  const fields =
-    modules === "PQRS"
-      ? [
-          {
-            name: "descripcionPQRS",
-            label: "Descripción PQRS",
-            type: "text" as const,
-            placeholder: "Buscar descripción...",
-            icon: <Search className="w-4 h-4" />,
-          },
-        ]
-      : [
-          {
-            name: "descripcionProducto",
-            label: "Descripción",
-            type: "text" as const,
-            placeholder: "Buscar descripción...",
-            icon: <Search className="w-4 h-4" />,
-          },
-          {
-            name: "detalleProducto",
-            label: "Detalle de Producto",
-            type: "text" as const,
-            placeholder: "Ej: Compra, Venta...",
-          },
-        ];
+  const fields = useMemo(() => {
+    if (rolId === Roles.Administrador || rolId === Roles.Soporte) {
+      return filterConfig[modules as keyof EntityMap] ?? [];
+    }
+   
+    return filterConfig[modules as keyof EntityMap] ?? [];
+  }, [rolId, modules]);
 
-  // Estado inicial dinámico según el módulo
-  const [filters, setFilters] = useState(
-    modules === "PQRS"
-      ? {
-          descripcionPQRS: "",
-        }
-      : {
-          descripcionProducto: "",
-          detalleProducto: "",
-        }
+  // Estado de filtros dinámico
+  const [filters, setFilters] = useState<Record<string, string>>(
+    fields.reduce((acc, f) => ({ ...acc, [f.name]: "" }), {})
   );
 
   const handleChange = (
@@ -70,30 +46,19 @@ export const ListPage = <T extends { id: number }>() => {
     navigate(-1);
   };
 
+  
   const { dataList, isLoading } = useGetList<T>({ moduleRour: modules });
 
-  // Filtro dinámico según el módulo
-  const filteredData = dataList.filter((item: any) => {
-    if (modules === "PQRS") {
-      return (
-        filters.descripcionPQRS === "" ||
-        item.descripcionPQRS
-          ?.toLowerCase()
-          .includes((filters.descripcionPQRS ?? "").toLowerCase())
-      );
-    }
 
-    return (
-      (filters.descripcionProducto === "" ||
-        item.descripcionProducto
-          ?.toLowerCase()
-          .includes((filters.descripcionProducto ?? "").toLowerCase())) &&
-      (filters.detalleProducto === "" ||
-        item.detalleProducto
-          ?.toLowerCase()
-          .includes((filters.detalleProducto ?? "").toLowerCase()))
-    );
-  });
+  const filteredData = dataList.filter((item: any) =>
+    fields.every((f) => {
+      const filterValue = filters[f.name]?.toLowerCase() || "";
+      return (
+        filterValue === "" ||
+        String(item[f.name] ?? "").toLowerCase().includes(filterValue)
+      );
+    })
+  );
 
   if (isLoading) {
     return (
@@ -104,6 +69,7 @@ export const ListPage = <T extends { id: number }>() => {
   return (
     <BaseLayout header navBar={true}>
       <div className="p-10">
+        {/* Botón volver */}
         <div>
           <Button
             onClick={handleReturn}
@@ -113,14 +79,18 @@ export const ListPage = <T extends { id: number }>() => {
           </Button>
         </div>
 
-        <div>
-          <ComponentFilter
-            fields={fields}
-            handleChange={handleChange}
-            filters={filters}
-          />
-        </div>
+        {/* Filtros dinámicos */}
+        {fields.length > 0 && (
+          <div className="mt-6">
+            <ComponentFilter
+              fields={fields}
+              handleChange={handleChange}
+              filters={filters}
+            />
+          </div>
+        )}
 
+        {/* Listado */}
         <div className="mt-10 md:mt-5">
           <ListComponent<T> dataList={filteredData} module={modules} />
         </div>

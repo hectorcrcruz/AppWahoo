@@ -11,6 +11,7 @@ import Tooltip from "../core/ui/Tooltip/Tooltip";
 import { ModalChatBox } from "../core/component/modal/modalChatBox";
 import { useDomicilioContext } from "../userDomicilary/contex/useContexDomicilio";
 import { CardComponentPage } from "./cardComponentPage";
+import { DashboardReports } from "./dashboarReports";
 
 export const HomePage = () => {
   const { isAuthenticated  , rolId} = useAuthStore();
@@ -37,7 +38,13 @@ export const HomePage = () => {
 
   return (
     <>
-    { userRole ? (<CardComponentPage />) :(
+    { userRole ? (
+      <BaseLayout header navBar={true}>
+      <DashboardReports />
+      </BaseLayout>
+
+      
+    ) :(
       <>
       <BaseLayout header navBar={true}>
         <div className="p-0 min-h-screen relative">

@@ -183,6 +183,8 @@ export interface Calificacion {
 
     export type FaseDomicilioResponse = FaseDomicilio[];
 
+
+    
     interface Horario {
         descripcionHorario: string;
         franjasHorario: any; // Ajusta el tipo según la estructura real de franjasHorario

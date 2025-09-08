@@ -13,6 +13,7 @@ import { useGetList } from "../services/useGetList";
 import { useAuth } from "@/feature/contex/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { roleNames } from "../const/roles";
+import { arrayModules } from "../const/modules";
 
 
 
@@ -46,6 +47,11 @@ export default function DropList() {
   const handleNavigateProvee = () => {
     navigate('/home/provee');
   }
+
+  const handleNavigateAdmin = (module:string) => {
+    navigate(`/home/${module}`);
+  }
+
 
   return (
     <DropdownMenu>
@@ -91,9 +97,18 @@ export default function DropList() {
         )}
 
 
+         {(user.rolId === 1 || user.rolId === 2) && arrayModules.map((module) => (
+          <DropdownMenuItem onClick={() => handleNavigateAdmin(module.name)} key={module.id}
+            className="hover:!bg-primary-200 hover:text-white cursor-pointer">
+            <h1 className="text-lg hover:text-xl">{module.name}</h1>
+            <span>›</span> 
+          </DropdownMenuItem>
+          
+        ))}
+
+
         <DropdownMenuSeparator className="my-2" /> 
         <DropdownMenuItem
-         
           className=" mx-auto items-end"
         >
           <h1 className="text-md">

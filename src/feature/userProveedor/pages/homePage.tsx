@@ -17,7 +17,7 @@ export const HomePage = <T extends { id: number }>(): JSX.Element => {
 
   // Asigno módulo dinámico
   const isRoleId = rolId === 3 || rolId === 4 ? "Domicilio" : "Transacción";
-  console.log("Modulo activo:", isRoleId);
+  
 
   const { dataList, isLoading } = useGetList<T>({ moduleRour: isRoleId });
 

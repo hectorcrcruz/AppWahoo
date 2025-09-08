@@ -40,12 +40,12 @@ export  const CardComponentPage = () => {
   const navigate = useNavigate();
 
   const isModulo = (rolId === Roles.Proveedor || rolId === Roles.Comercio)  ? 'Producto' : 'PQRS' ;
-
+  const isModuloAdmin = (rolId === Roles.Administrador || rolId === Roles.Soporte) ? module : isModulo 
 
   const  handleNavigate = (route:string) => {
-    if (isModulo) {
+    if (isModuloAdmin) {
         
-      navigate(`/home/${isModulo}/${route}`); 
+      navigate(`/home/${isModuloAdmin}/${route}`); 
     } else if (module) {
        navigate(`/home/${module}/${route}`);
     } 
